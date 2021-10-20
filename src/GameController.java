@@ -22,17 +22,21 @@ public class GameController {
     // todo: main commands
     // author: Joseph Ongchangco
     public void mainCommands() {
+        // show main menu
+        view.showMenu();
+
+        // informs the user that the program is ready to receive the next command
         view.nextCommand();
-        String input = userInput.nextLine();
 
         // throws to lowercase to easily verify user commands
         while(true){
-            switch (input.toLowerCase()){
+            switch (userInput.nextLine().toLowerCase()){
                 case "h":
                 case "help":
                     // todo: help command
                     break;
-                case "New Game":
+                case "new":
+                case "new game":
                     // todo new game()
                     break;
                 case "save":
@@ -49,9 +53,14 @@ public class GameController {
                 case "inspect":
                     // todo: inspect an item in the room or inventory
                     break;
+                case "look":
+                case "look around":
+                case "explore":
+                case "exp":
+                    // todo: explore room
+                    break;
                 default:
                     view.invalidCommand();
-                    input = userInput.nextLine();
                     break;
 
             }
@@ -61,6 +70,8 @@ public class GameController {
     // todo: puzzle commands
 
     // todo: monster encounter commands
+
+    //
 
     // shows main menu from view
     public void showMainMenu() {

@@ -12,12 +12,13 @@ public class PlayerView {
                 "    \\|_______|\\|_______|\\|_______|\\|__|    |\\_________\\   \\|__|  \\|_______|\\|__| \\|__|\\|_______|        \\|__|\\|__|\\|__|     \\|_______|\n" +
                 "                                           \\|_________|                                                                               ");
 
-        System.out.println("---------------------------->>>>" + "\n");
+        System.out.println("---------------------------->>>>");
         System.out.println("-- New game --");
         System.out.println("-- Load game --");
+        System.out.println("---------------------------->>>>");
     }
 
-    // command intro
+    // nextCommand
     // tells the user that the program is waiting for the next command
     public void nextCommand() {
         System.out.println("Type in [h]elp if you don't know what to do");

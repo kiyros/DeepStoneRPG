@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class Puzzle {
+	private String name;
 	private String riddle;
 	private String type;
 	private String solution;
@@ -36,12 +37,20 @@ public class Puzzle {
 		this.solution = aSolution;
 	}
 
-	public boolean getSolved() {
-		return this.solved;
-	}
-
 	public void setSolved(boolean aSolved) {
 		this.solved = aSolved;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public boolean isSolved() {
+		return solved;
 	}
 
 	public String getHint() {
@@ -74,5 +83,17 @@ public class Puzzle {
 
 	public void setPuzzleModifier(String aPuzzleModifier) {
 		this.puzzleModifier = aPuzzleModifier;
+	}
+
+	public String toString() {
+		String title = "Puzzle: " + this.name + "\n";
+		String riddle = "riddle: "+ this.riddle + "\n";
+		String modifier = "";
+
+		if(this.puzzleModifier != null){
+			modifier = this.puzzleModifier + "\n";
+		}
+
+		return title + riddle + modifier;
 	}
 }
