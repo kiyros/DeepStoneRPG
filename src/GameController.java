@@ -1,7 +1,11 @@
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Scanner;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class GameController {
     private Player player;
@@ -31,7 +35,7 @@ public class GameController {
 
     // todo: commands
     // author: Joseph Ongchangco
-    public void commands() {
+    public void commands() throws IOException, ParseException {
         // show main menu
         view.showMenu();
 
@@ -46,6 +50,7 @@ public class GameController {
                     break;
                 case "new":
                 case "new game":
+                    newGame();
                     // todo new game()
                     break;
                 case "save":
@@ -205,12 +210,20 @@ public class GameController {
 
     // todo: starts a new game
     // load the default room values into the room object
-    public void newGame() {
-        
+    public void newGame() throws IOException, ParseException {
+        JSONParser roomJSON = new JSONParser();
+
+        FileReader reader = new FileReader("rooms.json");
+        Object obj = roomJSON.parse(new FileReader("rooms.json"));
+        JSONObject objJSON = (JSONObject) obj;
+
+
+        System.out.println(objJSON);
 
 
 
-        throw new UnsupportedOperationException();
+
+        //throw new UnsupportedOperationException();
     }
 
     /*
