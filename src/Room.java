@@ -3,15 +3,20 @@ import java.util.HashMap;
 import java.util.Vector;
 
 public class Room {
+
+	// main attributes
 	private String name;
 	private int roomID;
 	private String description;
+	private HashMap<String, Integer> exits;
+	private ArrayList<Integer> lockedExits;
+
+	// Object attributes addon
 	private ArrayList<Item> items;
 	private Puzzle puzzle;
-	private ArrayList<Monster>  monsters;
-	private HashMap<String, Integer> exits;
+	private ArrayList<Monster> monsters;
 	private boolean visited;
-	private ArrayList<Integer> lockedExits;
+
 
 	public ArrayList<Item> getItems() {
 		return items;
@@ -46,6 +51,7 @@ public class Room {
 		this.visited = aVisited;
 	}
 
+	// returns the room object in a string format
 	public String toString() {
 		String name = "Name: " + this.name + "\n";
 		String roomNumber = "room ID: " +  this.roomID + "\n";

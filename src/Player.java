@@ -7,7 +7,13 @@ public class Player {
     private int currentRoom = 0;
     private ArrayList<Item> inventory;
     private Item equipedItem;
-    private double avoidChance = .75;
+    private double avoidChance;
+
+    public Player(){
+        this.inventory = new ArrayList<>();
+        this.equipedItem = null;
+        this.avoidChance = .75;
+    }
 
     public int getHealth() {
         return this.health;
@@ -74,6 +80,16 @@ public class Player {
         String currentRoom = "Current room number: " + this.currentRoom + "\n";
 
         return player + health + currentRoom;
+    }
+
+    public String inventoryToString() {
+        StringBuilder inventory = new StringBuilder("[Inventory] : \n");
+
+        for (Item i : this.inventory){
+            inventory.append(i.getName()).append("\n");
+        }
+
+        return inventory.toString();
     }
 
     public double getAvoidChance() {

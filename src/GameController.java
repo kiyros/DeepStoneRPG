@@ -1,10 +1,12 @@
+import java.io.FileReader;
 import java.util.HashMap;
 import java.util.Scanner;
+import org.json.simple.JSONObject;
 
 public class GameController {
     private Player player;
     private PlayerView view;
-    private HashMap<Integer, Room> rooms;
+    private HashMap<Integer, Room> rooms = new HashMap<>();
     private Scanner userInput;
 
 	/*
@@ -19,18 +21,25 @@ public class GameController {
         userInput = new Scanner(System.in);
     }
 
-    // todo: main commands
+    // todo: main menu commands, separates the commands from the main menus 2 commands which are new/load game
+    public void mainMenuCommands(){
+        // show main menu
+        view.showMenu();
+        throw new UnsupportedOperationException();
+    }
+
+
+    // todo: commands
     // author: Joseph Ongchangco
-    public void mainCommands() {
+    public void commands() {
         // show main menu
         view.showMenu();
 
-        // informs the user that the program is ready to receive the next command
-        view.nextCommand();
-
         // throws to lowercase to easily verify user commands
-        while(true){
-            switch (userInput.nextLine().toLowerCase()){
+        while (true) {
+            // informs the user that the program is ready to receive the next command
+            view.nextCommand();
+            switch (userInput.nextLine().toLowerCase()) {
                 case "h":
                 case "help":
                     // todo: help command
@@ -46,18 +55,21 @@ public class GameController {
                 case "load":
                     // todo load command
                     break;
+                case "x":
                 case "exit":
                     view.exitView(player.getName());
+                    userInput.close();
                     return;
                 case "ins":
                 case "inspect":
+                    inspectItem();
                     // todo: inspect an item in the room or inventory
                     break;
                 case "look":
                 case "look around":
                 case "explore":
                 case "exp":
-                    // todo: explore room
+                    exploreRoom();
                     break;
                 default:
                     view.invalidCommand();
@@ -71,12 +83,11 @@ public class GameController {
 
     // todo: monster encounter commands
 
-    //
-
     // shows main menu from view
     public void showMainMenu() {
         view.showMenu();
     }
+
 
     // todo: sets the health of the player
     public void setPlayerHealth() {
@@ -128,7 +139,11 @@ public class GameController {
         throw new UnsupportedOperationException();
     }
 
-    public void inspectItem(){
+    // todo: inspects item that is in the room or in the players inventory
+    // inspects item that is in the room or in the players inventory
+    public void inspectItem() {
+        view.showInventory(player);
+//        String itemName = userInput.nextLine();
 
     }
 
@@ -143,8 +158,8 @@ public class GameController {
     }
 
     // todo: get room number from player
-    public void getCurrentRoomNumber() {
-        throw new UnsupportedOperationException();
+    public int getCurrentRoomNumber() {
+        return player.getCurrentRoom();
     }
 
     // todo: set room number into player
@@ -155,6 +170,11 @@ public class GameController {
     // todo: move player to another room
     public void moveToRoom() {
         throw new UnsupportedOperationException();
+    }
+
+    // shows ALL the information from the room: items, puzzle, title, monsters, room number.
+    public void exploreRoom() {
+        view.showRoom(rooms.get(player.getCurrentRoom()));
     }
 
     // todo: gets the player name
@@ -184,7 +204,12 @@ public class GameController {
     }
 
     // todo: starts a new game
+    // load the default room values into the room object
     public void newGame() {
+        
+
+
+
         throw new UnsupportedOperationException();
     }
 
