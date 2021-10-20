@@ -7,10 +7,17 @@ public class GameController {
 	private HashMap<Integer, Room> rooms;
 	private Scanner userInput;
 
+	/*
+	author: Joseph Ongchangco
+
+	 */
 	public GameController(Player player, PlayerView view) {
 		this.player = player;
 		this.view = view;
-		throw new UnsupportedOperationException();
+	}
+
+	public void showMainMenu(){
+		view.showMenu();
 	}
 
 	public void setPlayerHealth() {

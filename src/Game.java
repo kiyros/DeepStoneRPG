@@ -1,8 +1,14 @@
 public class Game {
-	public GameController _unnamed_GameController_;
 
 	// todo: run main code here
-	public void main() {
-		throw new UnsupportedOperationException();
+	public static void main(String[] args) {
+		Player player = new Player();
+		PlayerView view = new PlayerView();
+		GameController game = new GameController(player, view);
+
+		game.showMainMenu();
+
+		// todo: room initialization for loading game and making a starting a new game
+
 	}
 }

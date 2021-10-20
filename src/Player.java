@@ -1,9 +1,11 @@
+import java.util.ArrayList;
+
 public class Player {
 	private String name;
 	private int health;
 	private String description;
-	private int currentRoom;
-	private Object inventory;
+	private int currentRoom = 0;
+	private ArrayList<Item> inventory;
 	private Item equipedItem;
 	private double avoidChance = .75;
 
@@ -43,7 +45,7 @@ public class Player {
 		return this.inventory;
 	}
 
-	public void setInventory(Object aInventory) {
+	public void setInventory(ArrayList<Item> aInventory) {
 		this.inventory = aInventory;
 	}
 
