@@ -1,6 +1,8 @@
 public class PlayerView {
 
+    // main menu Screen
     public void showMenu(){
+        // Text art for the game, main menu Screen
         System.out.println(" ________  _______   _______   ________  ________  _________  ________  ________   _______           ________  ________  ________     \n" +
                 "|\\   ___ \\|\\  ___ \\ |\\  ___ \\ |\\   __  \\|\\   ____\\|\\___   ___\\\\   __  \\|\\   ___  \\|\\  ___ \\         |\\   __  \\|\\   __  \\|\\   ____\\    \n" +
                 "\\ \\  \\_|\\ \\ \\   __/|\\ \\   __/|\\ \\  \\|\\  \\ \\  \\___|\\|___ \\  \\_\\ \\  \\|\\  \\ \\  \\\\ \\  \\ \\   __/|        \\ \\  \\|\\  \\ \\  \\|\\  \\ \\  \\___|    \n" +
@@ -13,7 +15,6 @@ public class PlayerView {
         System.out.println("---------------------------->>>>" + "\n");
         System.out.println("-- New game --");
         System.out.println("-- Load game --");
-
     }
 
 }

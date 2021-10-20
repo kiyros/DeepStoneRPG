@@ -1,62 +1,63 @@
 import java.util.ArrayList;
 
 public class Puzzle {
-	private String _riddle;
-	private String _type;
-	private String _solution;
-	private boolean _solved;
-	private String _hint;
-	private Item _itemReward;
-	private ArrayList<Integer> _roomUnlock;
-	private String _puzzleModifier;
-	public Room _unnamed_Room_;
+	private String riddle;
+	private String type;
+	private String solution;
+	private boolean solved;
+	private String hint;
+	private Item itemReward;
+	private ArrayList<Integer> roomUnlock;
+
+	// puts the room in a condition, like everytime you pick up an item, you fight a random monster
+	private String puzzleModifier;
 
 	public String getRiddle() {
-		return this._riddle;
+		return this.riddle;
 	}
 
 	public void setRiddle(String aRiddle) {
-		this._riddle = aRiddle;
+		this.riddle = aRiddle;
 	}
 
 	public String getType() {
-		return this._type;
+		return this.type;
 	}
 
 	public void setType(String aType) {
-		this._type = aType;
+		this.type = aType;
 	}
 
 	public String getSolution() {
-		return this._solution;
+		return this.solution;
 	}
 
 	public void setSolution(String aSolution) {
-		this._solution = aSolution;
+		this.solution = aSolution;
 	}
 
 	public boolean getSolved() {
-		return this._solved;
+		return this.solved;
 	}
 
 	public void setSolved(boolean aSolved) {
-		this._solved = aSolved;
+		this.solved = aSolved;
 	}
 
 	public String getHint() {
-		return this._hint;
+		return this.hint;
 	}
 
 	public void setHint(String aHint) {
-		this._hint = aHint;
+		this.hint = aHint;
 	}
 
 	public Item getItemReward() {
-		return this._itemReward;
+		return this.itemReward;
 	}
 
 	public void setItemReward(Item aItemReward) {
-		this._itemReward = aItemReward;
+		this.itemReward = aItemReward;
 	}
 
 	public ArrayList<Integer> getRoomUnlock() {
@@ -68,10 +69,10 @@ public class Puzzle {
 	}
 
 	public String getPuzzleModifier() {
-		return this._puzzleModifier;
+		return this.puzzleModifier;
 	}
 
 	public void setPuzzleModifier(String aPuzzleModifier) {
-		this._puzzleModifier = aPuzzleModifier;
+		this.puzzleModifier = aPuzzleModifier;
 	}
 }
