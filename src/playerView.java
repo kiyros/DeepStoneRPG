@@ -1,6 +1,6 @@
 public class playerView {
 
-    public static void showMenu(){
+    public void showMenu(){
         System.out.println(" ________  _______   _______   ________  ________  _________  ________  ________   _______           ________  ________  ________     \n" +
                 "|\\   ___ \\|\\  ___ \\ |\\  ___ \\ |\\   __  \\|\\   ____\\|\\___   ___\\\\   __  \\|\\   ___  \\|\\  ___ \\         |\\   __  \\|\\   __  \\|\\   ____\\    \n" +
                 "\\ \\  \\_|\\ \\ \\   __/|\\ \\   __/|\\ \\  \\|\\  \\ \\  \\___|\\|___ \\  \\_\\ \\  \\|\\  \\ \\  \\\\ \\  \\ \\   __/|        \\ \\  \\|\\  \\ \\  \\|\\  \\ \\  \\___|    \n" +
@@ -14,8 +14,5 @@ public class playerView {
         System.out.println("-- Load game --");
 
     }
-
-    public static void main(String[] args) {
-        playerView.showMenu();
-    }
+    
 }
