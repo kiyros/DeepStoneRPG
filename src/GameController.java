@@ -20,8 +20,42 @@ public class GameController {
     }
 
     // todo: main commands
+    // author: Joseph Ongchangco
     public void mainCommands() {
+        view.nextCommand();
+        String input = userInput.nextLine();
 
+        // throws to lowercase to easily verify user commands
+        while(true){
+            switch (input.toLowerCase()){
+                case "h":
+                case "help":
+                    // todo: help command
+                    break;
+                case "New Game":
+                    // todo new game()
+                    break;
+                case "save":
+                    // todo save command
+                    break;
+                case "lo":
+                case "load":
+                    // todo load command
+                    break;
+                case "exit":
+                    view.exitView(player.getName());
+                    return;
+                case "ins":
+                case "inspect":
+                    // todo: inspect an item in the room or inventory
+                    break;
+                default:
+                    view.invalidCommand();
+                    input = userInput.nextLine();
+                    break;
+
+            }
+        }
     }
 
     // todo: puzzle commands
@@ -83,6 +117,10 @@ public class GameController {
         throw new UnsupportedOperationException();
     }
 
+    public void inspectItem(){
+
+    }
+
     // todo: sets Rooms when loading a game
     public void setRooms() {
         throw new UnsupportedOperationException();
@@ -130,6 +168,7 @@ public class GameController {
 
     // todo: loads the game from a .txt file
     public void loadGame() {
+
         throw new UnsupportedOperationException();
     }
 

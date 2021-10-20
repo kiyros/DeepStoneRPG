@@ -1,7 +1,7 @@
 public class WeaponItem extends Item {
 	private int _damage;
 
-	// gets the damage of a weapon item
+	// gets the damage from a weapon item
 	public int getDamage() {
 		return this._damage;
 	}
