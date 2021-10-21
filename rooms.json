@@ -1,15 +1,5 @@
 [
   {
-    "id": "template, put number here and not a string",
-    "description": "",
-    "exits": [
-      {
-        "direction": "roomID"
-      }
-    ],
-    "locked": [1,2,3,4,5]
-  },
-  {
     "id": 0,
     "description": "You walk through the dungeon, a dark place tainted by evil in-tent. You stare at the mysterious dark splatters on the stone and smell the copper and iron in the air.",
     "exits": [
@@ -36,6 +26,336 @@
     "exits": [
       {
         "east": 3
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "description": "The room is very dark, and you can see barely more than a few feet in front. You hear a low growl nearby.",
+    "exits": [
+      {
+        "east": 4
+      },
+      {
+        "west": 2
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "description": "On the other side of the room is a room with nothing but a large, empty coffin and next to it, a spiral staircase.",
+    "exits": [
+      {
+        "east": 5
+      },
+      {
+        "west": 3
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "description": "There is a large hole in the ground. The dungeon walls are very damp and there is water leaking from the ceiling.",
+    "exits": [
+      {
+        "south": 11
+      },
+      {
+        "west": 4
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "description": "You enter a room with bones littered across the floor, a broken statue in the middle of the floor and a single exit.",
+    "exits": [
+      {
+        "east": 7
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "description": "You walk down a dark passageway with tunnels on both sides. You see a rat scurry across the passage.",
+    "exits": [
+      {
+        "east": 8
+      },
+      {
+        "west": 6
+      },
+      {
+        "north": 1
+      }
+    ],
+    "locked": [
+      6
+    ]
+  },
+  {
+    "id": 8,
+    "description": "The room has no light except that given by the torches that are placed along the wall. You see a large shadow looming up ahead.",
+    "exits": [
+      {
+        "east": 9
+      },
+      {
+        "west": 7
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "description": "You are in a large dungeon room. The walls are decorated with paintings of mysterious figures.",
+    "exits": [
+      {
+        "east": 4
+      },
+      {
+        "west": 2
+      },
+      {
+        "south": 15
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "description": "The room is circular and about twenty feet across. A deep moat of water with a bridge. The smell of mold is omnipresent.",
+    "exits": [
+      {
+        "east": 9
+      },
+      {
+        "west": 11
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "description": "You find yourself in a large, dank room. The air is thick with the smell of death and rottenness.",
+    "exits": [
+      {
+        "north": 4
+      },
+      {
+        "west": 10
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "description": "The room is very dark, and you can see barely more than a few feet in front. You hear a low growl nearby.",
+    "exits": [
+      {
+        "east": 13
+      },
+      {
+        "south": 18
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "description": "You walk into a room where you see a large symbol on the floor with strange symbols in the center. You hear some echoes in the distance.",
+    "exits": [
+      {
+        "east": 14
+      },
+      {
+        "west": 12
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "description": "You walk into a dimly lit room with many chains and shackles hanging from the ceiling. You hear a rattling sound as you enter..",
+    "exits": [
+      {
+        "east": 15
+      },
+      {
+        "west": 13
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "description": "The room is a large cave area, stalactites hang from the ceiling, there is a large crack in the ground.",
+    "exits": [
+      {
+        "north": 9
+      },
+      {
+        "east": 14
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "description": "You are in a dark room. A window is above you, letting bright sunlight into the dark room. There are odd designs on the floor.",
+    "exits": [
+      {
+        "east": 17
+      },
+      {
+        "south": 22
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "description": "You enter a brightly lit room. There is a red metal door that is surprisingly large. It must lead to a great treasure, or possibly a great danger.",
+    "exits": [
+      {
+        "west": 16
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "description": "The room has a small stream of water running down one wall. An odd greenish glow emanates from the walls.",
+    "exits": [
+      {
+        "north": 12
+      },
+      {
+        "south": 24
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "description": "Bright light enters the dungeon room, emanating from a rectangular hole in the ceiling. Faint cries for help can be heard.",
+    "exits": [
+      {
+        "east": 20
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "description": "There is a large table in the room. On it sits a large book and a goblet. The book appears to have no title, while the goblet bears the King's crest.",
+    "exits": [
+      {
+        "east": 21
+      },
+      {
+        "west": 19
+      },
+      {
+        "south": 26
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "description": "The room smells foul, and dark corners seem to lurk around every corner. You hear a bunch of whispers.",
+    "exits": [
+      {
+        "east": 22
+      },
+      {
+        "west": 20
+      },
+      {
+        "south": 27
+      }
+    ],
+    "locked": [
+      27
+    ]
+  },
+  {
+    "id": 22,
+    "description": "You walk into the room, and you are overcome with a sense of dread. The wooden floor creaks and moans, and the ceiling sways in and out with each breath you take.",
+    "exits": [
+      {
+        "north": 16
+      },
+      {
+        "east": 23
+      },
+      {
+        "west": 21
+      },
+      {
+        "south": 28
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "description": "You walk into a room decorated to look like a swamp. The walls are water based, with small cypress trees growing out of the water.",
+    "exits": [
+      {
+        "west": 22
+      }
+    ],
+    "locked": [
+      29
+    ]
+  },
+  {
+    "id": 24,
+    "description": "You find yourself in a cylindrical room, lit by a red light which you suspect comes from deep in the walls.",
+    "exits": [
+      {
+        "east": 25
+      },
+      {
+        "north": 18
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "description": "You walk down a long chute of rings, descending into the under-ground. You are in a room filled with large menacing statues. ",
+    "exits": [
+      {
+        "east": 26
+      },
+      {
+        "west": 24
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "description": "The room is dark, as your torch provides the only light. You see piles of bones and a large dragon skull in the center of the room.",
+    "exits": [
+      {
+        "north": 20
+      },
+      {
+        "west": 26
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "description": "The room is made out of solid black stone, it's not even decorated, though the walls do have faint designs along them, almost like ancient runes.",
+    "exits": [
+      {
+        "north": 21
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "description": "The dungeon room is large and dark. Red and black torches line the walls. A large rock in the center of the room feeds an active volcano in the distance. The ground is almost entirely made from lava.",
+    "exits": [
+      {
+        "north": 22
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "description": "You enter a room that is large and elaborate. Huge statues of giant beasts surround the room and strange symbols cover the walls. You have a feeling that this is the final room.",
+    "exits": [
+      {
+        "north": 29
       }
     ]
   }
