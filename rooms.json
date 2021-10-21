@@ -1,44 +1,42 @@
-{
-  "rooms": [
-    {
-      "id": "template, put number here and not a string",
-      "description" : "",
-      "exits":[
-        {
-          "locked" : true,
-          "direction" : "roomID"
-        }
-      ]
-    },
-    {
-      "id": 0,
-      "description" : "You walk through the dungeon, a dark place tainted by evil in-tent. You stare at the mysterious dark splatters on the stone and smell the copper and iron in the air.",
-      "exits":[
-        {
-          "east" : 1
-        }
-      ]
-    },
-    {
-      "id": 1,
-      "description" : "The room is large and rectangular with a giant stone staircase that spirals down into the darkness.",
-      "exits":[
-        {
-          "west" : 0
-        },
-        {
-          "south" : 7
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "description" : "The room is made out of strange looking stone. There is a single well in the center of it.",
-      "exits":[
-        {
-          "east" : 3
-        }
-      ]
-    }
-  ]
-}
+[
+  {
+    "id": "template, put number here and not a string",
+    "description": "",
+    "exits": [
+      {
+        "direction": "roomID"
+      }
+    ],
+    "locked": [1,2,3,4,5]
+  },
+  {
+    "id": 0,
+    "description": "You walk through the dungeon, a dark place tainted by evil in-tent. You stare at the mysterious dark splatters on the stone and smell the copper and iron in the air.",
+    "exits": [
+      {
+        "east": 1
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "description": "The room is large and rectangular with a giant stone staircase that spirals down into the darkness.",
+    "exits": [
+      {
+        "west": 0
+      },
+      {
+        "south": 7
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "description": "The room is made out of strange looking stone. There is a single well in the center of it.",
+    "exits": [
+      {
+        "east": 3
+      }
+    ]
+  }
+]

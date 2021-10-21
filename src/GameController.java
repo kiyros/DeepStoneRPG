@@ -1,11 +1,9 @@
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Scanner;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.parser.ParseException;
+
+import java.io.*;
+import java.util.*;
 
 public class GameController {
     private Player player;
@@ -26,7 +24,7 @@ public class GameController {
     }
 
     // todo: main menu commands, separates the commands from the main menus 2 commands which are new/load game
-    public void mainMenuCommands(){
+    public void mainMenuCommands() {
         // show main menu
         view.showMenu();
         throw new UnsupportedOperationException();
@@ -210,20 +208,37 @@ public class GameController {
 
     // todo: starts a new game
     // load the default room values into the room object
-    public void newGame() throws IOException, ParseException {
-        JSONParser roomJSON = new JSONParser();
+    public void newGame() throws IOException {
+        JsonToRoom("rooms.json");
+    }
 
-        FileReader reader = new FileReader("rooms.json");
-        Object obj = roomJSON.parse(new FileReader("rooms.json"));
-        JSONObject objJSON = (JSONObject) obj;
-
-
-        System.out.println(objJSON);
+    // turns the JSON files and reads the information into game Objects
+    public void JsonToRoom(String pathName) throws IOException {
+        Map<Integer, Room> rooms = new HashMap<>();
 
 
+        File roomJSON = new File("rooms.json");
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode root = mapper.readTree(roomJSON);
 
+        // iterator
+        for (JsonNode jsonNode : root) {
+            Room temp = new Room();
 
-        //throw new UnsupportedOperationException();
+            // assign values to temp room object
+            temp.setRoomID(jsonNode.get("id").asInt());
+            temp.setDescription(jsonNode.get("description").toString());
+
+            // room exits
+            for (JsonNode exits : jsonNode.get("exits")) {
+                System.out.println(exits.toString());
+//                temp.getExits().put(
+//                temp.getExits().put(exits., exits.toString());
+            }
+
+            // add the temporary room object to Map
+            rooms.put(jsonNode.get("id").asInt() ,temp);
+        }
     }
 
     /*
