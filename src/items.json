@@ -30,6 +30,43 @@
       "description" : "A tooth from the notorious megalodon. Equipping this gives a 10% boost to players damage",
       "stat" : "damage",
       "statBoost" : 0.1
+    },
+    {
+      "name" : "Sharks tooth",
+      "type" : "equip",
+      "monster" : "Xenomorph Shark",
+      "description" : "A tooth from the notorious megalodon. Equipping this gives a 10% boost to players damage",
+      "stat" : "damage",
+      "statBoost" : 0.1
+    },
+    {
+      "name" : "Ancient vase",
+      "type" : "equip",
+      "monster" : "Skeleton King",
+      "description" : "King Tut’s favorite vase. It is rumored that whoever possesses it is doomed for eternity. Lowers players defense by 10% if equipped",
+      "stat" : "defense",
+      "statDecrease" : 0.1
+    },
+    {
+      "name" : "Crystal skull",
+      "type" : "misc",
+      "description" : "A crystal skull that was taken by Indiana Jones himself.",
+      "room" : 20,
+      "puzzle" : true
+    },
+    {
+      "name" : "Aegis Shield",
+      "type" : "misc",
+      "description" : "A magical shield that was once carried by the Greek god Zeus.",
+      "room" : 9,
+      "puzzle" : true
+    },
+    {
+      "name" : "Ragnarok",
+      "type" : "weapon",
+      "damage" : 30,
+      "monster" : "Garland",
+      "description" : "A God-Slaying Divine sword fused from rage of the gods, capable of mass destruction. Equipping this sword allows the player to do -30 damage to an enemy.",
     }
   ]
 }
