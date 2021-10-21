@@ -11,7 +11,7 @@ public class Puzzle {
 	private ArrayList<Integer> roomUnlock;
 
 	// puts the room in a condition, like everytime you pick up an item, you fight a random monster
-	private String puzzleModifier;
+	private String Penalty;
 
 	public String getRiddle() {
 		return this.riddle;
@@ -77,12 +77,12 @@ public class Puzzle {
 		throw new UnsupportedOperationException();
 	}
 
-	public String getPuzzleModifier() {
-		return this.puzzleModifier;
+	public String getPenalty() {
+		return this.Penalty;
 	}
 
-	public void setPuzzleModifier(String aPuzzleModifier) {
-		this.puzzleModifier = aPuzzleModifier;
+	public void setPenalty(String aPuzzleModifier) {
+		this.Penalty = aPuzzleModifier;
 	}
 
 	public String toString() {
@@ -90,8 +90,8 @@ public class Puzzle {
 		String riddle = "riddle: "+ this.riddle + "\n";
 		String modifier = "";
 
-		if(this.puzzleModifier != null){
-			modifier = this.puzzleModifier + "\n";
+		if(this.Penalty != null){
+			modifier = this.Penalty + "\n";
 		}
 
 		return title + riddle + modifier;

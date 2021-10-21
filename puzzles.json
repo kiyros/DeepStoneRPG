@@ -1,0 +1,13 @@
+{
+  "puzzles": [
+    {
+      "name" : "Template",
+      "riddle" : "copy paste value here",
+      "solution" : "put name of the item here",
+      "hint" : "",
+      "penalty" : "",
+      "reward" : "put item name here",
+      "unlock" : ["west", 6]
+    }
+  ]
+}
