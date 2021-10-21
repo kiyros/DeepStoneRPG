@@ -195,6 +195,9 @@ public class GameController {
             return;
         }
 
+        // set room to visited as the player is leaving the room
+        rooms.get(player.getCurrentRoom()).setVisited(true);
+
         switch(direction)
         {
             case "west":

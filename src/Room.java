@@ -147,7 +147,6 @@ public class Room {
 
     // checks if it is a valid exit and room that a user can go to
     public boolean checkDirection(String direction){
-        System.out.println("Exit int: " + exits.get(direction));
         if(exits.containsKey(direction) && !lockedExits.contains(exits.get(direction))){
             return true;
         }
