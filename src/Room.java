@@ -17,7 +17,7 @@ public class Room {
 
     // instantiate
     public Room(){
-        this.exits = new HashMap<String, Integer>();
+        this.exits = new HashMap<>();
         this.items = new ArrayList<>();
         this.monsters = new ArrayList<>();
         this.lockedExits = new ArrayList<>();
@@ -147,11 +147,16 @@ public class Room {
 
     // checks if it is a valid exit and room that a user can go to
     public boolean checkDirection(String direction){
-        if(exits.containsKey(direction) && !lockedExits.contains(exits.get(direction))){
+        if(exits.containsKey(direction)){
             return true;
         }
         else {
             return false;
         }
+    }
+
+    // check if the room is locked
+    public boolean checkLocked(String direction){
+        return !lockedExits.contains(exits.get(direction));
     }
 }

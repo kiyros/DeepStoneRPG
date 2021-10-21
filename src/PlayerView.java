@@ -38,6 +38,16 @@ public class PlayerView {
         System.out.println("Invalid command try typing it correctly or type 'h' for help");
     }
 
+    // invalidRoom, show when a player can't go in that direction
+    public void invalidRoom(){
+        System.out.println("You can't go this way!");
+    }
+
+    // locked room, display to the user,
+    public void lockedRoom(){
+        System.out.println("The room is locked, you cannot enter/ maybe solve a [puzzle] or defeat a [monster]");
+    }
+
     // show players inventory
     public void showInventory(Player player){
         System.out.println(player.inventoryToString());

@@ -186,12 +186,16 @@ public class GameController {
         throw new UnsupportedOperationException();
     }
 
-    // todo: move player to another room
+    // moves a player into a room
     public void moveToRoom(String direction) {
-
-        if(!rooms.get(player.getCurrentRoom()).checkDirection(direction)){
-            // todo: view
-            System.out.println("can't go this way");
+        // check if the room is locked
+        if(!rooms.get(player.getCurrentRoom()).checkLocked(direction)){
+            view.lockedRoom();
+            return;
+        }
+        // check if the player can go in that direction
+        else if(!rooms.get(player.getCurrentRoom()).checkDirection(direction)){
+            view.invalidRoom();
             return;
         }
 
