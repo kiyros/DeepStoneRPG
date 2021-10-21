@@ -210,6 +210,7 @@ public class GameController {
                 player.setCurrentRoom(rooms.get(player.getCurrentRoom()).getExits().get("north"));
                 break;
         }
+        view.showRoom(rooms.get(player.getCurrentRoom()));
     }
 
     // shows ALL the information from the room: items, puzzle, title, monsters, room number.
@@ -269,7 +270,7 @@ public class GameController {
 
             // room exits
             for (JsonNode exits : jsonNode.get("exits")) {
-                temp.setExits(mapper.readValue(exits.toString(), HashMap.class));
+                temp.addExits(mapper.readValue(exits.toString(), HashMap.class));
             }
 
             // locked rooms
@@ -291,7 +292,6 @@ public class GameController {
         }
         // set the game room to the generated Map the method made from JSON values
         this.rooms = rooms;
-        System.out.println("player: =-----------==--");
         System.out.println(rooms.get(player.getCurrentRoom()));
     }
 

@@ -55,6 +55,10 @@ public class Room {
         this.exits = exits;
     }
 
+    public void addExits(HashMap<String, Integer> exits){
+        this.exits.putAll(exits);
+    }
+
     public void setPuzzle(Puzzle puzzle) {
         this.puzzle = puzzle;
     }
@@ -130,7 +134,7 @@ public class Room {
             }
         }
 
-        return name + roomNumber + desc + visited + monster + puzzle + items;
+        return name + roomNumber + desc + visited + monster + puzzle + items + exits.toString();
     }
 
     public ArrayList<Integer> getLockedExits() {
@@ -143,6 +147,7 @@ public class Room {
 
     // checks if it is a valid exit and room that a user can go to
     public boolean checkDirection(String direction){
+        System.out.println("Exit int: " + exits.get(direction));
         if(exits.containsKey(direction) && !lockedExits.contains(exits.get(direction))){
             return true;
         }
