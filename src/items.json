@@ -1,0 +1,35 @@
+{
+  "items": [
+    {
+      "name": "Example",
+      "type": "Weapon or consumable or misc",
+      "description" : "desc",
+      "room" : "put an int here instead of a string",
+      "monster": "monster name here"
+    },
+    {
+      "name" : "The Philosophers sword",
+      "type": "weapon",
+      "damage": 15,
+      "description": "A powerful sword that was wielded by a great king from the kingdom of Rohan. This sword will deal damage of -15hp to any monster that comes across it.",
+      "room" : 0
+    },
+    {
+      "name": "The Queen’s Jewel",
+      "type": "equip",
+      "description": "A rare gemstone from a dynasty of royalty. Putting this ring on will regenerate a player’s HP% Faster.",
+      "room" : 7,
+      "puzzle" : true,
+      "stat" : "health",
+      "statBoost" : 0.1
+    },
+    {
+      "name" : "Sharks tooth",
+      "type" : "equip",
+      "monster" : "Xenomorph Shark",
+      "description" : "A tooth from the notorious megalodon. Equipping this gives a 10% boost to players damage",
+      "stat" : "damage",
+      "statBoost" : 0.1
+    }
+  ]
+}
