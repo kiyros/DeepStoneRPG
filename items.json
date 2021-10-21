@@ -32,14 +32,6 @@
       "statBoost" : 0.1
     },
     {
-      "name" : "Sharks tooth",
-      "type" : "equip",
-      "monster" : "Xenomorph Shark",
-      "description" : "A tooth from the notorious megalodon. Equipping this gives a 10% boost to players damage",
-      "stat" : "damage",
-      "statBoost" : 0.1
-    },
-    {
       "name" : "Ancient vase",
       "type" : "equip",
       "monster" : "Skeleton King",
@@ -66,7 +58,47 @@
       "type" : "weapon",
       "damage" : 30,
       "monster" : "Garland",
-      "description" : "A God-Slaying Divine sword fused from rage of the gods, capable of mass destruction. Equipping this sword allows the player to do -30 damage to an enemy.",
+      "description" : "A God-Slaying Divine sword fused from rage of the gods, capable of mass destruction. Equipping this sword allows the player to do -30 damage to an enemy."
+    },
+    {
+      "name" : "Broken Sword and Shield",
+      "type" : "puzzle",
+      "description" : "A broken and rusted pair of armory, it looks like it belongs to the statue nearby."
+    },
+    {
+      "name" : "Iron",
+      "type" : "puzzle",
+      "description" : "An iron ingot."
+    },
+    {
+      "name" : "Gold",
+      "type" : "puzzle",
+      "description" : "A gold ingot."
+    },
+    {
+      "name" : "Steel",
+      "type" : "puzzle",
+      "description" : "A steel ingot."
+    },
+    {
+      "name" : "Key",
+      "type" : "puzzle",
+      "description" : "A key that fits many keyholes, but only unlocks one."
+    },
+    {
+      "name" : "Rock",
+      "type" : "puzzle",
+      "description" : "A large, heavy, rock."
+    },
+    {
+      "name" : "Hourglass",
+      "type" : "puzzle",
+      "description" : "A large hourglass with time slowly ticking."
+    },
+    {
+      "name" : "Dynamite",
+      "type" : "puzzle",
+      "description" : "A large explosive that can be used to tear down large walls."
     }
   ]
 }
