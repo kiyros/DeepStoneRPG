@@ -109,10 +109,10 @@
     "description": "You are in a large dungeon room. The walls are decorated with paintings of mysterious figures.",
     "exits": [
       {
-        "east": 4
+        "east": 10
       },
       {
-        "west": 2
+        "west": 8
       },
       {
         "south": 15
