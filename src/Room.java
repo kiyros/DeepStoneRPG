@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Vector;
 
 public class Room {
     // main attributes
@@ -15,6 +14,14 @@ public class Room {
     private Puzzle puzzle;
     private ArrayList<Monster> monsters;
     private boolean visited;
+
+    // instantiate
+    public Room(){
+        this.exits = new HashMap<String, Integer>();
+        this.items = new ArrayList<>();
+        this.monsters = new ArrayList<>();
+        this.lockedExits = new ArrayList<>();
+    }
 
     public String getName() {
         return name;
@@ -127,10 +134,20 @@ public class Room {
     }
 
     public ArrayList<Integer> getLockedExits() {
-        throw new UnsupportedOperationException();
+        return lockedExits;
     }
 
-    public void setLockedExits(ArrayList<Integer> aLockedExits) {
-        throw new UnsupportedOperationException();
+    public void setLockedExits(ArrayList<Integer> lockedExits) {
+        this.lockedExits = lockedExits;
+    }
+
+    // checks if it is a valid exit and room that a user can go to
+    public boolean checkDirection(String direction){
+        if(exits.containsKey(direction) && !lockedExits.contains(exits.get(direction))){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
