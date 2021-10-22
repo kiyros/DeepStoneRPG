@@ -3,7 +3,6 @@ import java.util.HashMap;
 
 public class Room {
     // main attributes
-    private String name;
     private int roomID;
     private String description;
     private HashMap<String, Integer> exits;
@@ -21,14 +20,6 @@ public class Room {
         this.items = new ArrayList<>();
         this.monsters = new ArrayList<>();
         this.lockedExits = new ArrayList<>();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getRoomID() {
@@ -102,7 +93,6 @@ public class Room {
 
     // returns the room object in a string format
     public String toString() {
-        String name = "Name: " + this.name + "\n";
         String roomNumber = "room ID: " + this.roomID + "\n";
         String desc = "Description: " + this.description + "\n";
 
@@ -134,7 +124,7 @@ public class Room {
             }
         }
 
-        return name + roomNumber + desc + visited + monster + puzzle + items + exits.toString();
+        return roomNumber + desc + visited + monster + puzzle + items + exits.toString();
     }
 
     public ArrayList<Integer> getLockedExits() {
