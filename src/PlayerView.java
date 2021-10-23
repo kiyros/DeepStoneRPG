@@ -35,8 +35,14 @@ public class PlayerView {
 
     // invalid command input, shows this message
     public void error(String errorMessage){
-        System.out.println(errorMessage);
+        System.out.println("[error]: \n"+ errorMessage);
     }
+
+    // invalid command input, shows this message
+    public void notifier(String action){
+        System.out.println(action);
+    }
+
 
     // locked room, display to the user,
     public void lockedRoom(){

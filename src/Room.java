@@ -101,7 +101,7 @@ public class Room {
         String desc = "Description: " + this.description + "\n";
 
 
-        String visited = "you have not visited this room before \n";
+        String visited = "[New Room] \n";
         StringBuilder monster = new StringBuilder();
         StringBuilder items = new StringBuilder();
         String puzzle = "";
@@ -129,6 +129,20 @@ public class Room {
         }
 
         return roomNumber + desc + visited + monster + puzzle + items + exits.toString();
+    }
+
+    public String itemsToString(){
+        if (!items.isEmpty()) {
+            StringBuilder items = new StringBuilder("[item(s)]: \n");
+            for (Item i : this.items) {
+                items.append(i.getName()).append("\n");
+            }
+
+            return items.toString();
+        }
+        else{
+            return "no [items] found";
+        }
     }
 
     public ArrayList<Integer> getLockedExits() {

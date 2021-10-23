@@ -2,17 +2,23 @@ import java.util.ArrayList;
 
 public class Player {
     private String name;
-    private int health;
     private String description;
     private int currentRoom = 0;
     private ArrayList<Item> inventory;
     private final Item equipedItem;
-    private final double avoidChance;
 
-    public Player(){
+    // player values
+    private int health;
+    private int defense;
+    private int damage;
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public Player() {
         this.inventory = new ArrayList<>();
         this.equipedItem = null;
-        this.avoidChance = .75;
     }
 
     public int getHealth() {
@@ -72,6 +78,18 @@ public class Player {
         throw new UnsupportedOperationException();
     }
 
+    public void setDefense(int defense) {
+        this.defense = defense;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
     // toString for Easy printing
     // author: Joseph Ongchangco
     public String toString() {
@@ -85,16 +103,39 @@ public class Player {
     public String inventoryToString() {
         StringBuilder inventory = new StringBuilder("[Inventory] : \n");
 
-        for (Item i : this.inventory){
+        for (Item i : this.inventory) {
             inventory.append(i.getName()).append("\n");
         }
 
         return inventory.toString();
     }
 
-    public double getAvoidChance() {
-        throw new UnsupportedOperationException();
+    // picks up an item in the current room by item name or integer
+    // author : Joseph Ongchangco
+    public String pickupItem(Room room, String item){
+        try {
+            for (Item i : room.getItems()){
+                // String
+                if(i.getName().equals(item)){
+                    inventory.add(i);
+                    room.getItems().remove(i);
+                }
+                // int
+                else if(room.getItems().size() >= Integer.parseInt(item)-1){
+                    inventory.add(i);
+                    room.getItems().remove(i);
+                }
+                else{
+                    return "[Item] does not exist in this room";
+                }
+                return "Added [item] : " + i.getName() +" to inventory";
+            }
+        }catch(Exception ignored){
+            ;
+        }
+        return "[Item] does not exist in this room";
     }
+
 
     // sets to avoid chance which defaults at 75% chance of "avoiding" a monster
     public void setAvoidChance(double aDouble_value) {

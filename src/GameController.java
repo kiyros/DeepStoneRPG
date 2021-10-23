@@ -1,12 +1,15 @@
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 public class GameController {
-    private final Player player;
+    private Player player = new Player();
     private final PlayerView view;
     private HashMap<Integer, Room> rooms = new HashMap<>();
     private final Scanner userInput;
@@ -43,6 +46,7 @@ public class GameController {
                 case "load":
                 case "lo":
                 case "load game":
+                    loadGame();
                     gameLoaded = gameCheck();
                     break;
                 default:
@@ -66,6 +70,7 @@ public class GameController {
                     // todo new game()
                     break;
                 case "save":
+                    saveGame();
                     // todo save command
                     break;
                 case "lo":
@@ -103,6 +108,10 @@ public class GameController {
                 case "south":
                 case "s":
                     moveToRoom("south");
+                    break;
+                case "pickup":
+                case "p":
+                    pickupItem();
                     break;
                 default:
                     view.error("Invalid command try typing it correctly or type 'h' for help");
@@ -261,14 +270,25 @@ public class GameController {
     }
 
     // todo: saves game into an .txt file
-    public void saveGame() {
-        throw new UnsupportedOperationException();
+    public void saveGame() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+
+        // player
+        mapper.writeValue(Paths.get("saveFiles/userData.json").toFile(), player);
+
+        // rooms
+        mapper.writeValue(Paths.get("saveFiles/roomData.json").toFile(), rooms);
+
     }
 
     // todo: loads the game from a .txt file
-    public void loadGame() {
+    public void loadGame() throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
 
-        throw new UnsupportedOperationException();
+        player = mapper.readValue((JsonParser) Paths.get("saveFiles/userData.json"), Player.class);
+        //rooms = mapper.readValue((JsonParser) Paths.get("saveFiles/userData.json"), HashMap.class);
+
+
     }
 
     // todo: starts a new game
@@ -305,7 +325,7 @@ public class GameController {
 
             // assign values to temp room object
             temp.setRoomID(roomJson.get("id").asInt());
-            temp.setDescription(roomJson.get("description").toString());
+            temp.setDescription(roomJson.get("description").toString().replace("\"",""));
 
             // room exits
             for (JsonNode exits : roomJson.get("exits")) {
@@ -334,8 +354,8 @@ public class GameController {
             Item item = new MiscItem();
 
             // basic item attributes
-            item.setName(itemJson.get("name").toString());
-            item.setDescription(itemJson.get("description").toString());
+            item.setName(itemJson.get("name").toString().replace("\"",""));
+            item.setDescription(itemJson.get("description").toString().replace("\"",""));
 
 
             // cast to proper item type
@@ -373,5 +393,13 @@ public class GameController {
     // todo: gets puzzle object from where a player current is
     public void getPuzzle() {
         throw new UnsupportedOperationException();
+    }
+
+    public void pickupItem() {
+        view.notifier(rooms.get(player.getCurrentRoom()).itemsToString());
+        view.notifier("What [item] would you like to pick up in the room:");
+
+        // get input from user
+        view.notifier(player.pickupItem(rooms.get(player.getCurrentRoom()), userInput.nextLine()));
     }
 }
