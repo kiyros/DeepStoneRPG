@@ -23,19 +23,31 @@ public class GameController {
         userInput = new Scanner(System.in);
     }
 
-    // todo: main menu commands, separates the commands from the main menus 2 commands which are new/load game
-    public void mainMenuCommands() {
-        // show main menu
-        view.showMenu();
-        throw new UnsupportedOperationException();
-    }
-
-
     // todo: commands
     // author: Joseph Ongchangco
     public void commands() throws IOException, ParseException {
         // show main menu
         view.showMenu();
+
+        //prompt user to load game or start a new one
+        boolean gameLoaded = gameCheck();
+        while(!gameLoaded){
+            switch (userInput.nextLine().toLowerCase()) {
+                case "n":
+                case "new":
+                case "new game":
+                    newGame();
+                    break;
+                case "l":
+                case "load":
+                case "lo":
+                case "load game":
+                    break;
+                default:
+                    view.error("try typing in [n]ew or [l]oad ");
+                    break;
+            }
+        }
 
         // throws to lowercase to easily verify user commands
         while (true) {
@@ -91,10 +103,20 @@ public class GameController {
                     moveToRoom("south");
                     break;
                 default:
-                    view.invalidCommand();
+                    view.error("Invalid command try typing it correctly or type 'h' for help");
                     break;
 
             }
+        }
+    }
+
+    // loadCheck
+    public boolean gameCheck(){
+        if(rooms.isEmpty() || player == null){
+            return false;
+        }
+        else{
+            return true;
         }
     }
 
@@ -127,6 +149,8 @@ public class GameController {
     public void setPlayerInventory() {
         throw new UnsupportedOperationException();
     }
+
+    // todo: addToPlayerInventory(), adds an item from a room to user inventory
 
     // todo: picks up an item from the room
     public void pickUpItem() {
@@ -195,7 +219,7 @@ public class GameController {
         }
         // check if the player can go in that direction
         else if(!rooms.get(player.getCurrentRoom()).checkDirection(direction)){
-            view.invalidRoom();
+            view.error("");
             return;
         }
 

@@ -34,13 +34,8 @@ public class PlayerView {
     }
 
     // invalid command input, shows this message
-    public void invalidCommand(){
-        System.out.println("Invalid command try typing it correctly or type 'h' for help");
-    }
-
-    // invalidRoom, show when a player can't go in that direction
-    public void invalidRoom(){
-        System.out.println("You can't go this way!");
+    public void error(String errorMessage){
+        System.out.println(errorMessage);
     }
 
     // locked room, display to the user,
