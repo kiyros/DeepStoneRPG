@@ -6,8 +6,8 @@ public class Player {
     private String description;
     private int currentRoom = 0;
     private ArrayList<Item> inventory;
-    private Item equipedItem;
-    private double avoidChance;
+    private final Item equipedItem;
+    private final double avoidChance;
 
     public Player(){
         this.inventory = new ArrayList<>();

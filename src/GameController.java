@@ -6,10 +6,10 @@ import java.io.*;
 import java.util.*;
 
 public class GameController {
-    private Player player;
-    private PlayerView view;
+    private final Player player;
+    private final PlayerView view;
     private HashMap<Integer, Room> rooms = new HashMap<>();
-    private Scanner userInput;
+    private final Scanner userInput;
 
 	/*
 	author: Joseph Ongchangco
@@ -31,20 +31,22 @@ public class GameController {
 
         //prompt user to load game or start a new one
         boolean gameLoaded = gameCheck();
-        while(!gameLoaded){
+        while (!gameLoaded) {
             switch (userInput.nextLine().toLowerCase()) {
                 case "n":
                 case "new":
                 case "new game":
                     newGame();
+                    gameLoaded = gameCheck();
                     break;
                 case "l":
                 case "load":
                 case "lo":
                 case "load game":
+                    gameLoaded = gameCheck();
                     break;
                 default:
-                    view.error("try typing in [n]ew or [l]oad ");
+                    view.error("Command error:  \n try typing in [n]ew or [l]oad to play a game!");
                     break;
             }
         }
@@ -111,13 +113,8 @@ public class GameController {
     }
 
     // loadCheck
-    public boolean gameCheck(){
-        if(rooms.isEmpty() || player == null){
-            return false;
-        }
-        else{
-            return true;
-        }
+    public boolean gameCheck() {
+        return !rooms.isEmpty();
     }
 
     // todo: puzzle commands
@@ -213,21 +210,20 @@ public class GameController {
     // moves a player into a room
     public void moveToRoom(String direction) {
         // check if the room is locked
-        if(!rooms.get(player.getCurrentRoom()).checkLocked(direction)){
-            view.lockedRoom();
+        if (!rooms.get(player.getCurrentRoom()).checkLocked(direction)) {
+            view.error("The room is locked, you cannot enter/ maybe solve a [puzzle] or defeat a [monster]");
             return;
         }
         // check if the player can go in that direction
-        else if(!rooms.get(player.getCurrentRoom()).checkDirection(direction)){
-            view.error("");
+        else if (!rooms.get(player.getCurrentRoom()).checkDirection(direction)) {
+            view.error("You can't go that way!!");
             return;
         }
 
         // set room to visited as the player is leaving the room
         rooms.get(player.getCurrentRoom()).setVisited(true);
 
-        switch(direction)
-        {
+        switch (direction) {
             case "west":
                 player.setCurrentRoom(rooms.get(player.getCurrentRoom()).getExits().get("west"));
                 break;
@@ -281,46 +277,87 @@ public class GameController {
         JsonToRoom("rooms.json", "items.json", "puzzles.json");
     }
 
+    // todo: items, puzzles, monsters
     // turns the JSON files and reads the information into game Objects and sets the gameController's room to this
     public void JsonToRoom(String roomPathName, String itemPathName, String puzzlePathName) throws IOException {
-         HashMap<Integer, Room> rooms = new HashMap<>();
-
-        // reads room from given file
-        File roomJSON = new File(roomPathName);
+        HashMap<Integer, Room> rooms = new HashMap<>();
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode root = mapper.readTree(roomJSON);
 
-        // iterator ; JSON to room object(s)
-        for (JsonNode jsonNode : root) {
+        // rooms
+        File roomJSON = new File(roomPathName);
+
+        // items
+        File itemJSON = new File(itemPathName);
+
+        // puzzles
+        File puzzleJson = new File(puzzlePathName);
+
+        // monsters
+
+        JsonNode rootRooms = mapper.readTree(roomJSON);
+        JsonNode rootItems = mapper.readTree(itemJSON);
+        JsonNode rootPuzzles = mapper.readTree(puzzleJson);
+
+        // iterator ; roomJSON to room object(s)
+        for (JsonNode roomJson : rootRooms) {
             // temporary room
             Room temp = new Room();
 
             // assign values to temp room object
-            temp.setRoomID(jsonNode.get("id").asInt());
-            temp.setDescription(jsonNode.get("description").toString());
+            temp.setRoomID(roomJson.get("id").asInt());
+            temp.setDescription(roomJson.get("description").toString());
 
             // room exits
-            for (JsonNode exits : jsonNode.get("exits")) {
+            for (JsonNode exits : roomJson.get("exits")) {
                 temp.addExits(mapper.readValue(exits.toString(), HashMap.class));
             }
 
             // locked rooms
-            if (jsonNode.get("locked") != null) {
+            if (roomJson.get("locked") != null) {
                 ArrayList<Integer> tempLocked = new ArrayList<>();
-                for (JsonNode locked : jsonNode.get("locked")) {
+                for (JsonNode locked : roomJson.get("locked")) {
                     tempLocked.add(locked.asInt());
                 }
                 // add locked rooms to temporary room object
                 temp.setLockedExits(tempLocked);
             }
 
-            // items
-
-
             // add the temporary room object to Map
             rooms.put(temp.getRoomID(), temp);
 
+            // todo: monsterJSON to item object(s)
         }
+
+
+        // todo: itemJSON to item object(s)
+        for (JsonNode itemJson : rootItems) {
+            Item item = new MiscItem();
+
+            // basic item attributes
+            item.setName(itemJson.get("name").toString());
+            item.setDescription(itemJson.get("description").toString());
+
+
+            // cast to proper item type
+            if (itemJson.get("type").toString().equals("weapon")) {
+                item = new WeaponItem();
+                ((WeaponItem) item).setDamage(itemJson.get("damage").asInt());
+            } else if (itemJson.get("type").toString().equals("equip")) {
+                item = new EquipItem();
+            } else if (itemJson.get("type").toString().equals("misc")) {
+                item = new MiscItem();
+            } else if (itemJson.get("type").toString().equals("puzzle")) {
+                item = new PuzzleItem();
+            }
+
+            if (itemJson.get("room") != null) {
+                rooms.get(itemJson.get("room").asInt()).addItems(item);
+            }
+
+
+        }
+
+
         // set the game room to the generated Map the method made from JSON values
         this.rooms = rooms;
         System.out.println(rooms.get(player.getCurrentRoom()));

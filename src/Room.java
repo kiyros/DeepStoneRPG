@@ -66,6 +66,10 @@ public class Room {
         this.items = items;
     }
 
+    public void addItems(Item items) {
+        this.items.add(items);
+    }
+
     public void getPuzzle() {
         throw new UnsupportedOperationException();
     }
@@ -98,8 +102,8 @@ public class Room {
 
 
         String visited = "you have not visited this room before \n";
-        StringBuilder monster = new StringBuilder("");
-        StringBuilder items = new StringBuilder("");
+        StringBuilder monster = new StringBuilder();
+        StringBuilder items = new StringBuilder();
         String puzzle = "";
 
         if (getVisited()) {
@@ -137,12 +141,7 @@ public class Room {
 
     // checks if it is a valid exit and room that a user can go to
     public boolean checkDirection(String direction){
-        if(exits.containsKey(direction)){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return exits.containsKey(direction);
     }
 
     // check if the room is locked
