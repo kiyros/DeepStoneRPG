@@ -143,7 +143,7 @@ public class Room {
             return items.toString();
         }
         else{
-            return "no [items] found";
+            return "no [items] found in the room";
         }
     }
 

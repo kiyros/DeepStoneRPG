@@ -1,0 +1,9 @@
+[
+  {
+    "name": "exampleMonster",
+    "desc": "",
+    "random" : true,
+    "locationRange" : "12-34",
+    "drops" : null
+  }
+]
