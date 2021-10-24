@@ -46,8 +46,8 @@ public class Room {
         this.exits = exits;
     }
 
-    public void addExits(HashMap<String, Integer> exits){
-        this.exits.putAll(exits);
+    public void addExits(String direction, Integer roomId){
+        this.exits.put(direction, roomId);
     }
 
     public void setPuzzle(Puzzle puzzle) {
@@ -134,8 +134,10 @@ public class Room {
     public String itemsToString(){
         if (!items.isEmpty()) {
             StringBuilder items = new StringBuilder("[item(s)]: \n");
+            int count = 1;
             for (Item i : this.items) {
-                items.append(i.getName()).append("\n");
+                items.append(count).append(". ").append(i.getName()).append("\n");
+                count += 1;
             }
 
             return items.toString();

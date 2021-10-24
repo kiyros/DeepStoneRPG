@@ -53,7 +53,7 @@ public class Player {
         this.currentRoom = aCurrentRoom;
     }
 
-    public Object getInventory() {
+    public ArrayList<Item> getInventory() {
         return this.inventory;
     }
 
@@ -112,33 +112,24 @@ public class Player {
 
     // picks up an item in the current room by item name or integer
     // author : Joseph Ongchangco
-    public String pickupItem(Room room, String item){
-        try {
-            for (Item i : room.getItems()){
-                // String
-                if(i.getName().equals(item)){
-                    inventory.add(i);
-                    room.getItems().remove(i);
-                }
-                // int
-                else if(room.getItems().size() >= Integer.parseInt(item)-1){
-                    inventory.add(i);
-                    room.getItems().remove(i);
-                }
-                else{
-                    return "[Item] does not exist in this room";
-                }
-                return "Added [item] : " + i.getName() +" to inventory";
+    public String pickupItem(Room room, String item) {
+
+        for (Item i : room.getItems()) {
+            // String
+            if (i.getName().equals(item)) {
+                inventory.add(i);
+                room.getItems().remove(i);
+                return "Added [item] : [" + i + "] to inventory";
             }
-        }catch(Exception ignored){
-            ;
+            // int
+            try {
+                if(i == room.getItems().get(Integer.parseInt(item)-1)){
+                    inventory.add(i);
+                    room.getItems().remove(i);
+                    return "Added [item] : [" + i + "] to inventory";
+                }
+            } catch (Exception ignored) {}
         }
-        return "[Item] does not exist in this room";
-    }
-
-
-    // sets to avoid chance which defaults at 75% chance of "avoiding" a monster
-    public void setAvoidChance(double aDouble_value) {
-        throw new UnsupportedOperationException();
+        return "That item does not exist in this room, try spelling it right or selecting the index of the item";
     }
 }

@@ -3,7 +3,7 @@
     "name": "Example",
     "type": "weapon",
     "description": "desc",
-    "room": "put an int here instead of a string",
+    "room": null,
     "monster": "monster name here"
   },
   {

@@ -35,7 +35,7 @@ abstract class Item {
 
     // return to string for view
     public String toString() {
-        return "";
+        return name;
     }
 }
 
@@ -85,5 +85,10 @@ class WeaponItem extends Item {
     // sets the damage for a weapon item
     public void setDamage(int aDamage) {
         this._damage = aDamage;
+    }
+
+    @Override
+    public String toString() {
+        return "";
     }
 }

@@ -1,10 +1,9 @@
-import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -75,6 +74,7 @@ public class GameController {
                     break;
                 case "lo":
                 case "load":
+                    loadGame();
                     // todo load command
                     break;
                 case "x":
@@ -192,7 +192,22 @@ public class GameController {
     // inspects item that is in the room or in the players inventory
     public void inspectItem() {
         view.showInventory(player);
-//        String itemName = userInput.nextLine();
+        view.notifier(rooms.get(player.getCurrentRoom()).itemsToString());
+
+        view.notifier("What [item] would you like to [inspect]: ");
+        String itemName = userInput.nextLine();
+
+        if (player.getInventory().toString().contains(itemName)) {
+            for (Item playerItem : player.getInventory()) {
+                if (playerItem.getName().equals(itemName)) {
+                    view.notifier(playerItem.toString());
+                    view.notifier(playerItem.getDescription());
+                }
+            }
+        } else {
+            System.out.println("nah");
+        }
+
 
     }
 
@@ -277,29 +292,26 @@ public class GameController {
         mapper.writeValue(Paths.get("saveFiles/userData.json").toFile(), player);
 
         // rooms
-        mapper.writeValue(Paths.get("saveFiles/roomData.json").toFile(), rooms);
+        List<Object> roomArray = List.of(rooms.values().toArray());
+
+        mapper.writeValue(Paths.get("saveFiles/roomData.json").toFile(), roomArray);
 
     }
 
     // todo: loads the game from a .txt file
-    public void loadGame() throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-
-        player = mapper.readValue((JsonParser) Paths.get("saveFiles/userData.json"), Player.class);
-        //rooms = mapper.readValue((JsonParser) Paths.get("saveFiles/userData.json"), HashMap.class);
-
-
+    public void loadGame() {
+        loadSave("saveFiles/userData.json", "saveFiles/roomData.json");
     }
 
     // todo: starts a new game
     // load the default room values into the room object
     public void newGame() throws IOException {
-        JsonToRoom("rooms.json", "items.json", "puzzles.json");
+        newJsonToRoom("rooms.json", "items.json", "puzzles.json");
     }
 
     // todo: items, puzzles, monsters
     // turns the JSON files and reads the information into game Objects and sets the gameController's room to this
-    public void JsonToRoom(String roomPathName, String itemPathName, String puzzlePathName) throws IOException {
+    public void newJsonToRoom(String roomPathName, String itemPathName, String puzzlePathName) throws IOException {
         HashMap<Integer, Room> rooms = new HashMap<>();
         ObjectMapper mapper = new ObjectMapper();
 
@@ -324,12 +336,14 @@ public class GameController {
             Room temp = new Room();
 
             // assign values to temp room object
-            temp.setRoomID(roomJson.get("id").asInt());
-            temp.setDescription(roomJson.get("description").toString().replace("\"",""));
+            temp.setRoomID(roomJson.get("roomID").asInt());
+            temp.setDescription(roomJson.get("description").toString().replace("\"", ""));
 
             // room exits
-            for (JsonNode exits : roomJson.get("exits")) {
-                temp.addExits(mapper.readValue(exits.toString(), HashMap.class));
+            Iterator<Map.Entry<String, JsonNode>> exitIter = roomJson.get("exits").fields();
+            while(exitIter.hasNext()){
+                Map.Entry<String, JsonNode> x = exitIter.next();
+                temp.addExits(x.getKey(), x.getValue().asInt());
             }
 
             // locked rooms
@@ -354,8 +368,9 @@ public class GameController {
             Item item = new MiscItem();
 
             // basic item attributes
-            item.setName(itemJson.get("name").toString().replace("\"",""));
-            item.setDescription(itemJson.get("description").toString().replace("\"",""));
+            item.setName(itemJson.get("name").toString().replace("\"", ""));
+            item.setDescription(itemJson.get("description").toString().replace("\"", ""));
+            item.setType(itemJson.get("type").toString());
 
 
             // cast to proper item type
@@ -383,6 +398,12 @@ public class GameController {
         System.out.println(rooms.get(player.getCurrentRoom()));
     }
 
+    // todo: loadSave
+    // loads save
+    public void loadSave(String playerPath, String roomPaths){
+        ObjectMapper mapper = new ObjectMapper();
+    }
+
     /*
      todo: solve puzzle, when user types in "solve puzzle", this method should automatically grab the item remove it and set puzzle in the room to solved
      */
@@ -397,6 +418,10 @@ public class GameController {
 
     public void pickupItem() {
         view.notifier(rooms.get(player.getCurrentRoom()).itemsToString());
+        if (rooms.get(player.getCurrentRoom()).getItems().isEmpty()) {
+            return;
+        }
+
         view.notifier("What [item] would you like to pick up in the room:");
 
         // get input from user
