@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Player {
     private String name;
     private String description;
-    private int currentRoom = 0;
+    private int currentRoom = 7;
     private ArrayList<Item> inventory;
     private final Item equipedItem;
 

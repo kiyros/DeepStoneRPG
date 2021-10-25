@@ -15,7 +15,7 @@ public class Room {
     private boolean visited;
 
     // instantiate
-    public Room(){
+    public Room() {
         this.exits = new HashMap<>();
         this.items = new ArrayList<>();
         this.monsters = new ArrayList<>();
@@ -46,7 +46,7 @@ public class Room {
         this.exits = exits;
     }
 
-    public void addExits(String direction, Integer roomId){
+    public void addExits(String direction, Integer roomId) {
         this.exits.put(direction, roomId);
     }
 
@@ -131,7 +131,7 @@ public class Room {
         return roomNumber + desc + visited + monster + puzzle + items + exits.toString();
     }
 
-    public String itemsToString(){
+    public String itemsToString() {
         if (!items.isEmpty()) {
             StringBuilder items = new StringBuilder("[item(s)]: \n");
             int count = 1;
@@ -141,8 +141,7 @@ public class Room {
             }
 
             return items.toString();
-        }
-        else{
+        } else {
             return "no [items] found in the room";
         }
     }
@@ -156,12 +155,12 @@ public class Room {
     }
 
     // checks if it is a valid exit and room that a user can go to
-    public boolean checkDirection(String direction){
+    public boolean checkDirection(String direction) {
         return exits.containsKey(direction);
     }
 
     // check if the room is locked
-    public boolean checkLocked(String direction){
-        return !lockedExits.contains(exits.get(direction));
+    public boolean checkLocked(String direction) {
+        return lockedExits.contains(exits.get(direction));
     }
 }
