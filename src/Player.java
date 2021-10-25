@@ -110,6 +110,16 @@ public class Player {
         return inventory.toString();
     }
 
+    public ArrayList<Item> getItems() {
+        return inventory;
+    }
+
+    public void setItems(ArrayList<Item> inventory) {
+        this.inventory = inventory;
+    }
+
+
+
     // picks up an item in the current room by item name or integer
     // author : Joseph Ongchangco
     public String pickupItem(Room room, String item) {
