@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Player {
     private String name;
     private String description;
-    private int currentRoom = 0;
+    private int currentRoom = 7;
     private ArrayList<Item> inventory;
     private final Item equipedItem;
 
@@ -131,5 +131,28 @@ public class Player {
             } catch (Exception ignored) {}
         }
         return "That item does not exist in this room, try spelling it right or selecting the index of the item";
+    }
+
+
+
+    public String drop(Room room, String item) {
+
+        for (Item i : getInventory()) {
+            // String
+            if (i.getName().equals(item)) {
+                room.getItems().add(i);
+                getInventory().remove(i);
+                return "Dropped [item] : [" + i + "] in Room";
+            }
+            // int
+            try {
+                if(i == getInventory().get(Integer.parseInt(item)-1)){
+                    room.getItems().add(i);
+                    getInventory().remove(i);
+                    return "Dropped [item] : [" + i + "] into room";
+                }
+            } catch (Exception ignored) {}
+        }
+        return "That item does not exist in your inventory, try spelling it right or selecting the index of the item";
     }
 }
