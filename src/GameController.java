@@ -234,7 +234,7 @@ public class GameController {
     // moves a player into a room
     public void moveToRoom(String direction) {
         // check if the room is locked
-        if (!rooms.get(player.getCurrentRoom()).checkLocked(direction)) {
+        if (rooms.get(player.getCurrentRoom()).checkLocked(direction)) {
             view.error("The room is locked, you cannot enter/ maybe solve a [puzzle] or defeat a [monster]");
             return;
         }
@@ -340,10 +340,20 @@ public class GameController {
             temp.setDescription(roomJson.get("description").toString().replace("\"", ""));
 
             // room exits
-            Iterator<Map.Entry<String, JsonNode>> exitIter = roomJson.get("exits").fields();
-            while(exitIter.hasNext()){
-                Map.Entry<String, JsonNode> x = exitIter.next();
-                temp.addExits(x.getKey(), x.getValue().asInt());
+            JsonNode exits = roomJson.get("exits");
+            for (JsonNode exitIter : exits) {
+                if (exitIter.has("west")) {
+                    temp.addExits("west", exitIter.get("west").asInt());
+                }
+                if (exitIter.has("north")) {
+                    temp.addExits("north", exitIter.get("north").asInt());
+                }
+                if (exitIter.has("east")) {
+                    temp.addExits("east", exitIter.get("east").asInt());
+                }
+                if (exitIter.has("south")) {
+                    temp.addExits("south", exitIter.get("south").asInt());
+                }
             }
 
             // locked rooms
@@ -400,7 +410,7 @@ public class GameController {
 
     // todo: loadSave
     // loads save
-    public void loadSave(String playerPath, String roomPaths){
+    public void loadSave(String playerPath, String roomPaths) {
         ObjectMapper mapper = new ObjectMapper();
     }
 
