@@ -2,7 +2,16 @@ abstract class Item {
     private String name;
     private String type;
     private String description;
+    private boolean puzzle;
 
+    public boolean isPuzzle() {
+        return puzzle;
+    }
+
+    public void setPuzzle(boolean puzzle) {
+        this.puzzle = puzzle;
+    }
+    
     // sets the name of an item
     public String getName() {
         return name;
@@ -46,12 +55,6 @@ class MiscItem extends Item {
 }
 
 // puzzle item
-// todo: puzzle item
-class PuzzleItem extends Item {
-
-}
-
-// puzzle item
 // todo: equip item
 class EquipItem extends Item {
     private String statType;
@@ -92,3 +95,5 @@ class WeaponItem extends Item {
         return "";
     }
 }
+
+class PuzzleItem extends Item {}
