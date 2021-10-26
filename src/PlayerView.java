@@ -49,6 +49,23 @@ public class PlayerView {
         System.out.println("The room is locked, you cannot enter/ maybe solve a [puzzle] or defeat a [monster]");
     }
 
+    // help command. prints to console only
+    public void getHelp() {
+        System.out.println("\n ----- HELP -----" +
+                "\n : n or new or new game to begin a new game" +
+                "\n : l or lo or load or load game to load a game" +
+                "\n : h or help to get help" +
+                "\n : save to save the game" +
+                "\n : x or exit to exit the game" +
+                "\n : ins or inspect to inspect an item in the room or inventory" +
+                "\n : exp or explore or look or look around to explore the room" +
+                "\n : w or west to travel west" +
+                "\n : e or east to travel east" +
+                "\n : n or north to travel north" +
+                "\n : s or south to travel south" +
+                "\n : p or pickup to pick up an item");
+    }
+
     // show players inventory
     public void showInventory(Player player){
         System.out.println(player.inventoryToString());
