@@ -61,7 +61,7 @@ public class GameController {
             switch (userInput.nextLine().toLowerCase()) {
                 case "h":
                 case "help":
-                    // todo: help command
+                    view.getHelp();
                     break;
                 case "new":
                 case "new game":
