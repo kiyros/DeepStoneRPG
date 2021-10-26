@@ -1,6 +1,8 @@
 public class Monster {
 	private String _name;
 	private int _health;
+	private int attack;
+	private int defense;
 	private String _description;
 	public Room _unnamed_Room_;
 
@@ -18,6 +20,22 @@ public class Monster {
 
 	public void setHealth(int aHealth) {
 		this._health = aHealth;
+	}
+
+	public int getAttack() {
+		return attack;
+	}
+
+	public void setAttack(int attack) {
+		this.attack = attack;
+	}
+
+	public int getDefense() {
+		return defense;
+	}
+
+	public void setDefense(int defense) {
+		this.defense = defense;
 	}
 
 	public String getDescription() {

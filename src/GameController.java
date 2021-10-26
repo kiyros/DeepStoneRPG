@@ -341,7 +341,7 @@ public class GameController {
 
             // room exits
             Iterator<Map.Entry<String, JsonNode>> exitIter = roomJson.get("exits").fields();
-            while(exitIter.hasNext()){
+            while (exitIter.hasNext()) {
                 Map.Entry<String, JsonNode> x = exitIter.next();
                 temp.addExits(x.getKey(), x.getValue().asInt());
             }
@@ -400,7 +400,7 @@ public class GameController {
 
     // todo: loadSave
     // loads save
-    public void loadSave(String playerPath, String roomPaths){
+    public void loadSave(String playerPath, String roomPaths) {
         ObjectMapper mapper = new ObjectMapper();
     }
 
@@ -426,5 +426,59 @@ public class GameController {
 
         // get input from user
         view.notifier(player.pickupItem(rooms.get(player.getCurrentRoom()), userInput.nextLine()));
+    }
+
+    public void randomPlayerStatGenerator(Player player) {
+        Random random = new Random();
+        int health = 0;
+        int attack = 0;
+        int defense = 0;
+
+        int randomStatGenerator = (int) ((Math.random()) * (100 - 50) + 50);
+
+        for (int i = 0; i <= randomStatGenerator; i++) {
+            int randomAllocation = (int) ((Math.random()) * (3 - 1) + 1);
+            switch (randomAllocation) {
+                case 1:
+                    health += 1;
+                    break;
+                case 2:
+                    attack += 1;
+                    break;
+                case 3:
+                    defense += 1;
+                    break;
+            }
+        }
+        player.setHealth(health);
+        player.setDamage(attack);
+        player.setDefense(defense);
+    }
+
+    public void randomMonsterStatGenerator(Monster monster) {
+        Random random = new Random();
+        int health = 0;
+        int attack = 0;
+        int defense = 0;
+
+        int randomStatGenerator = (int) ((Math.random()) * (100 - 50) + 50);
+
+        for (int i = 0; i <= randomStatGenerator; i++) {
+            int randomAllocation = (int) ((Math.random()) * (3 - 1) + 1);
+            switch (randomAllocation) {
+                case 1:
+                    health += 1;
+                    break;
+                case 2:
+                    attack += 1;
+                    break;
+                case 3:
+                    defense += 1;
+                    break;
+            }
+        }
+        monster.setHealth(health);
+        monster.setAttack(attack);
+        monster.setDefense(defense);
     }
 }
