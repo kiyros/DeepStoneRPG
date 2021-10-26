@@ -5,6 +5,7 @@ public class Player {
     private String description;
     private int currentRoom = 7;
     private ArrayList<Item> inventory;
+    private ArrayList<EquipItem> equippedItem;
     private final Item equipedItem;
 
     // player values
@@ -19,6 +20,14 @@ public class Player {
     public Player() {
         this.inventory = new ArrayList<>();
         this.equipedItem = null;
+    }
+
+    public ArrayList<EquipItem> getEquippedItem() {
+        return equippedItem;
+    }
+
+    public void setEquippedItem(ArrayList<EquipItem> equippedItem) {
+        this.equippedItem = equippedItem;
     }
 
     public int getHealth() {
@@ -119,7 +128,6 @@ public class Player {
     }
 
 
-
     // picks up an item in the current room by item name or integer
     // author : Joseph Ongchangco
     public String pickupItem(Room room, String item) {
@@ -133,16 +141,16 @@ public class Player {
             }
             // int
             try {
-                if(i == room.getItems().get(Integer.parseInt(item)-1)){
+                if (i == room.getItems().get(Integer.parseInt(item) - 1)) {
                     inventory.add(i);
                     room.getItems().remove(i);
                     return "Added [item] : [" + i + "] to inventory";
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         }
         return "That item does not exist in this room, try spelling it right or selecting the index of the item";
     }
-
 
 
     public String drop(Room room, String item) {
@@ -156,13 +164,44 @@ public class Player {
             }
             // int
             try {
-                if(i == getInventory().get(Integer.parseInt(item)-1)){
+                if (i == getInventory().get(Integer.parseInt(item) - 1)) {
                     room.getItems().add(i);
                     getInventory().remove(i);
                     return "Dropped [item] : [" + i + "] into room";
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         }
         return "That item does not exist in your inventory, try spelling it right or selecting the index of the item";
     }
+
+    public String consume(String item) {
+
+        for (Item i : getInventory()) {
+            // String.
+            if (i.getName().equals(item)) {
+                HealthConsumable itemThing = (HealthConsumable) i;
+                int health = itemThing.getHealthValue();
+                int newHealth = getHealth() + health;
+                setHealth(newHealth);
+                getInventory().remove(i);
+                return "Consumed [item] : [" + i + "] in Inventory";
+            }
+
+            try {
+                if (i == getInventory().get(Integer.parseInt(item) - 1)) {;
+                    getInventory().remove(i);
+                    return "Consumed Item [item] : [" + i + "] , yum yum!";
+                }
+            } catch (Exception ignored) {
+            }
+
+        }
+        return "That item does not exist in your inventory, try spelling it right or selecting the index of the item";
+
+    }
+
+
+
+
 }

@@ -117,6 +117,10 @@ public class GameController {
                 case "d":
                     dropItemAnotherOne();
                     break;
+                case "consume":
+                case "c":
+                    consumeItem();
+                    break;
 
                 default:
                     view.error("Invalid command try typing it correctly or type 'h' for help");
@@ -443,6 +447,18 @@ public class GameController {
 
         // get input from user
         view.notifier(player.drop(rooms.get(player.getCurrentRoom()), userInput.nextLine()));
+    }
+
+    public void consumeItem() {
+        view.notifier(player.inventoryToString());
+        if (player.getInventory().isEmpty()) {
+            return;
+        }
+
+        view.notifier("What [item] would you like to consume up in the room:");
+
+        // get input from user
+        view.notifier(player.consume( userInput.nextLine()));
     }
 
 
