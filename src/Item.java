@@ -2,7 +2,16 @@ abstract class Item {
     private String name;
     private String type;
     private String description;
+    private boolean puzzle;
 
+    public boolean isPuzzle() {
+        return puzzle;
+    }
+
+    public void setPuzzle(boolean puzzle) {
+        this.puzzle = puzzle;
+    }
+    
     // sets the name of an item
     public String getName() {
         return name;
@@ -46,16 +55,10 @@ class MiscItem extends Item {
 }
 
 // puzzle item
-// todo: puzzle item
-class PuzzleItem extends Item {
-
-}
-
-// puzzle item
 // todo: equip item
 class EquipItem extends Item {
     private String statType;
-    private int statBoostAmount;
+    private double statBoostAmount;
 
     public String getStatType() {
         return statType;
@@ -65,26 +68,26 @@ class EquipItem extends Item {
         this.statType = statType;
     }
 
-    public int getStatBoostAmount() {
+    public double getStatBoostAmount() {
         return statBoostAmount;
     }
 
-    public void setStatBoostAmount(int statBoostAmount) {
+    public void setStatBoostAmount(double statBoostAmount) {
         this.statBoostAmount = statBoostAmount;
     }
 }
 
 class WeaponItem extends Item {
-    private int _damage;
+    private int damage;
 
     // gets the damage from a weapon item
     public int getDamage() {
-        return this._damage;
+        return this.damage;
     }
 
     // sets the damage for a weapon item
     public void setDamage(int aDamage) {
-        this._damage = aDamage;
+        this.damage = aDamage;
     }
 
     @Override
@@ -92,3 +95,5 @@ class WeaponItem extends Item {
         return "";
     }
 }
+
+class PuzzleItem extends Item {}

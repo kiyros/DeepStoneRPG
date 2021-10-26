@@ -7,6 +7,7 @@ public class Player {
     private ArrayList<Item> inventory;
     private ArrayList<EquipItem> equippedItem;
     private final Item equipedItem;
+    private ArrayList<Item> equippedItems;
 
     // player values
     private int health;
@@ -19,7 +20,15 @@ public class Player {
 
     public Player() {
         this.inventory = new ArrayList<>();
-        this.equipedItem = null;
+        this.equippedItems = new ArrayList<>();
+    }
+
+    public ArrayList<Item> getEquippedItems() {
+        return equippedItems;
+    }
+
+    public void setEquippedItems(ArrayList<Item> equippedItems) {
+        this.equippedItems = equippedItems;
     }
 
     public ArrayList<EquipItem> getEquippedItem() {

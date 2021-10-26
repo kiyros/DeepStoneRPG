@@ -13,6 +13,11 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+
+/*
+put this in run configurations to work
+ --module-path "\path\to\javafx-sdk-15.0.1\lib" --add-modules javafx.controls,javafx.fxml
+*/
 public class JavaFxAssignment extends Application {
     public void start(Stage primaryStage) {
         //showgridpane_showgridpaneexample
