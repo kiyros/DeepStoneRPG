@@ -368,32 +368,34 @@ public class GameController {
 
             // add the temporary room object to Map
             rooms.put(temp.getRoomID(), temp);
-
-            // todo: monsterJSON to item object(s)
         }
+
+        // todo: monsterJSON to item object(s)
 
 
         // todo: itemJSON to item object(s)
         for (JsonNode itemJson : rootItems) {
             Item item = new MiscItem();
 
+            // cast to proper item type
+            // for testing --> System.out.println(itemJson.get("type").toString().replace("\"", ""));
+            if (itemJson.get("type").toString().replace("\"", "").equals("weapon")) {
+                item = new WeaponItem();
+                ((WeaponItem) item).setDamage(itemJson.get("damage").asInt());
+            } else if (itemJson.get("type").toString().replace("\"", "").equals("equip")) {
+                item = new EquipItem();
+                ((EquipItem) item).setStatType(itemJson.get("stat").toString());
+                ((EquipItem) item).setStatBoostAmount(itemJson.get("statBoost").asDouble());
+            } else if (itemJson.get("type").toString().replace("\"", "").equals("misc")) {
+                item = new MiscItem();
+            } else if (itemJson.get("type").toString().replace("\"", "").toString().equals("puzzle")) {
+                item = new PuzzleItem();
+            }
+
             // basic item attributes
             item.setName(itemJson.get("name").toString().replace("\"", ""));
             item.setDescription(itemJson.get("description").toString().replace("\"", ""));
-            item.setType(itemJson.get("type").toString());
-
-
-            // cast to proper item type
-            if (itemJson.get("type").toString().equals("weapon")) {
-                item = new WeaponItem();
-                ((WeaponItem) item).setDamage(itemJson.get("damage").asInt());
-            } else if (itemJson.get("type").toString().equals("equip")) {
-                item = new EquipItem();
-            } else if (itemJson.get("type").toString().equals("misc")) {
-                item = new MiscItem();
-            } else if (itemJson.get("type").toString().equals("puzzle")) {
-                item = new PuzzleItem();
-            }
+            item.setType(itemJson.get("type").toString().replace("\"", ""));
 
             if (itemJson.get("room") != null) {
                 rooms.get(itemJson.get("room").asInt()).addItems(item);

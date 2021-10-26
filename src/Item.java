@@ -55,7 +55,7 @@ class PuzzleItem extends Item {
 // todo: equip item
 class EquipItem extends Item {
     private String statType;
-    private int statBoostAmount;
+    private double statBoostAmount;
 
     public String getStatType() {
         return statType;
@@ -65,26 +65,26 @@ class EquipItem extends Item {
         this.statType = statType;
     }
 
-    public int getStatBoostAmount() {
+    public double getStatBoostAmount() {
         return statBoostAmount;
     }
 
-    public void setStatBoostAmount(int statBoostAmount) {
+    public void setStatBoostAmount(double statBoostAmount) {
         this.statBoostAmount = statBoostAmount;
     }
 }
 
 class WeaponItem extends Item {
-    private int _damage;
+    private int damage;
 
     // gets the damage from a weapon item
     public int getDamage() {
-        return this._damage;
+        return this.damage;
     }
 
     // sets the damage for a weapon item
     public void setDamage(int aDamage) {
-        this._damage = aDamage;
+        this.damage = aDamage;
     }
 
     @Override

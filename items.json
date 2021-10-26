@@ -1,7 +1,7 @@
 [
   {
     "name": "Example",
-    "type": "weapon",
+    "type": "misc",
     "description": "desc",
     "room": null,
     "monster": "monster name here"
@@ -36,7 +36,7 @@
     "monster": "Skeleton King",
     "description": "King Tut’s favorite vase. It is rumored that whoever possesses it is doomed for eternity. Lowers players defense by 10% if equipped",
     "stat": "defense",
-    "statDecrease": 0.1
+    "statBoost": -0.1
   },
   {
     "name": "Crystal skull",
