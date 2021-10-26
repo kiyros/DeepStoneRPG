@@ -5,7 +5,7 @@ public class Player {
     private String description;
     private int currentRoom = 7;
     private ArrayList<Item> inventory;
-    private final Item equipedItem;
+    private ArrayList<Item> equippedItems;
 
     // player values
     private int health;
@@ -18,7 +18,15 @@ public class Player {
 
     public Player() {
         this.inventory = new ArrayList<>();
-        this.equipedItem = null;
+        this.equippedItems = new ArrayList<>();
+    }
+
+    public ArrayList<Item> getEquippedItems() {
+        return equippedItems;
+    }
+
+    public void setEquippedItems(ArrayList<Item> equippedItems) {
+        this.equippedItems = equippedItems;
     }
 
     public int getHealth() {
@@ -123,12 +131,13 @@ public class Player {
             }
             // int
             try {
-                if(i == room.getItems().get(Integer.parseInt(item)-1)){
+                if (i == room.getItems().get(Integer.parseInt(item) - 1)) {
                     inventory.add(i);
                     room.getItems().remove(i);
                     return "Added [item] : [" + i + "] to inventory";
                 }
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         }
         return "That item does not exist in this room, try spelling it right or selecting the index of the item";
     }
