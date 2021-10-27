@@ -6,11 +6,8 @@ public class Player extends Entity{
     private int currentRoom = 7;
     private ArrayList<Item> inventory;
     private ArrayList<EquipItem> equippedItem;
-  //  private final Item equipedItem;
-    private ArrayList<Item> equippedItems;
 
     // player values
-
     private int defense;
     private int damage;
 
@@ -18,26 +15,9 @@ public class Player extends Entity{
         return defense;
     }
 
-    public Player(String name, int health, String description) {
-        super(name, health, description);
-    }
-
-    public Player(String name, int health, String description, int currentRoom, ArrayList<Item> inventory, ArrayList<EquipItem> equippedItem, ArrayList<Item> equippedItems, int defense, int damage) {
-        super(name, health, description);
-        this.currentRoom = currentRoom;
-        this.inventory = inventory;
-        this.equippedItem = equippedItem;
-        this.equippedItems = equippedItems;
-        this.defense = defense;
-        this.damage = damage;
-    }
-
-    public ArrayList<Item> getEquippedItems() {
-        return equippedItems;
-    }
-
-    public void setEquippedItems(ArrayList<Item> equippedItems) {
-        this.equippedItems = equippedItems;
+    public Player() {
+        this.inventory = new ArrayList<>();
+        this.equippedItem = new ArrayList<>();
     }
 
     public ArrayList<EquipItem> getEquippedItem() {
@@ -47,9 +27,6 @@ public class Player extends Entity{
     public void setEquippedItem(ArrayList<EquipItem> equippedItem) {
         this.equippedItem = equippedItem;
     }
-
-
-
 
     public int getCurrentRoom() {
         return this.currentRoom;

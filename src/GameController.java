@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class GameController {
-    private Player player = new Player("",0,"");
+    private Player player;
     private final PlayerView view;
     private HashMap<Integer, Room> rooms = new HashMap<>();
     private final Scanner userInput;

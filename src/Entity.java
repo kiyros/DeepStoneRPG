@@ -3,10 +3,7 @@ public class Entity {
     private int health;
     private String description;
 
-    public Entity(String name, int health, String description) {
-        this.name = name;
-        this.health = health;
-        this.description = description;
+    public Entity() {
     }
 
     public String getName() {
