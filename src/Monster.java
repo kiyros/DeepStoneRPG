@@ -1,31 +1,59 @@
+import java.util.ArrayList;
+
 public class Monster {
-	private String _name;
-	private int _health;
-	private String _description;
-	public Room _unnamed_Room_;
+    private String name;
+    private int health;
+	private int attack;
+	private int defense;
+	private String description;
+	private String itemDropName;
+
+	public String getItemDropName() {
+		return itemDropName;
+	}
+
+	public void setItemDropName(String itemDropName) {
+		this.itemDropName = itemDropName;
+	}
 
 	public String getName() {
-		return this._name;
+		return this.name;
 	}
 
 	public void setName(String aName) {
-		this._name = aName;
+		this.name = aName;
 	}
 
 	public int getHealth() {
-		return this._health;
+		return this.health;
 	}
 
 	public void setHealth(int aHealth) {
-		this._health = aHealth;
+		this.health = aHealth;
+	}
+
+	public int getAttack() {
+		return attack;
+	}
+
+	public void setAttack(int attack) {
+		this.attack = attack;
+	}
+
+	public int getDefense() {
+		return defense;
+	}
+
+	public void setDefense(int defense) {
+		this.defense = defense;
 	}
 
 	public String getDescription() {
-		return this._description;
+		return this.description;
 	}
 
 	public void setDescription(String aDescription) {
-		this._description = aDescription;
+		this.description = aDescription;
 	}
 
 	public String toString() {

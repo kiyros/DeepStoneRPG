@@ -61,7 +61,7 @@ public class GameController {
             switch (userInput.nextLine().toLowerCase()) {
                 case "h":
                 case "help":
-                    // todo: help command
+                    view.getHelp();
                     break;
                 case "new":
                 case "new game":
@@ -243,7 +243,7 @@ public class GameController {
     // moves a player into a room
     public void moveToRoom(String direction) {
         // check if the room is locked
-        if (!rooms.get(player.getCurrentRoom()).checkLocked(direction)) {
+        if (rooms.get(player.getCurrentRoom()).checkLocked(direction)) {
             view.error("The room is locked, you cannot enter/ maybe solve a [puzzle] or defeat a [monster]");
             return;
         }
@@ -315,12 +315,13 @@ public class GameController {
     // todo: starts a new game
     // load the default room values into the room object
     public void newGame() throws IOException {
-        newJsonToRoom("rooms.json", "items.json", "puzzles.json");
+        newJsonToRoom("rooms.json", "items.json", "puzzles.json", "monsters.json");
     }
 
     // todo: items, puzzles, monsters
     // turns the JSON files and reads the information into game Objects and sets the gameController's room to this
-    public void newJsonToRoom(String roomPathName, String itemPathName, String puzzlePathName) throws IOException {
+    // author: Joseph Ongchangco
+    public void newJsonToRoom(String roomPathName, String itemPathName, String puzzlePathName, String monsterPathName) throws IOException {
         HashMap<Integer, Room> rooms = new HashMap<>();
         ObjectMapper mapper = new ObjectMapper();
 
@@ -331,13 +332,15 @@ public class GameController {
         File itemJSON = new File(itemPathName);
 
         // puzzles
-        File puzzleJson = new File(puzzlePathName);
+        File puzzleJSON = new File(puzzlePathName);
 
         // monsters
+        File monsterJSON = new File(monsterPathName);
 
         JsonNode rootRooms = mapper.readTree(roomJSON);
         JsonNode rootItems = mapper.readTree(itemJSON);
-        JsonNode rootPuzzles = mapper.readTree(puzzleJson);
+        JsonNode rootPuzzles = mapper.readTree(puzzleJSON);
+        JsonNode rootMonster = mapper.readTree(monsterJSON);
 
         // iterator ; roomJSON to room object(s)
         for (JsonNode roomJson : rootRooms) {
@@ -349,10 +352,22 @@ public class GameController {
             temp.setDescription(roomJson.get("description").toString().replace("\"", ""));
 
             // room exits
-            Iterator<Map.Entry<String, JsonNode>> exitIter = roomJson.get("exits").fields();
-            while(exitIter.hasNext()){
-                Map.Entry<String, JsonNode> x = exitIter.next();
-                temp.addExits(x.getKey(), x.getValue().asInt());
+            JsonNode exits = roomJson.get("exits");
+            for (JsonNode exitIter : exits) {
+                if (exitIter.has("west")) {
+                    temp.addExits("west", exitIter.get("west").asInt());
+                }
+                if (exitIter.has("north")) {
+                    temp.addExits("north", exitIter.get("north").asInt());
+                }
+                if (exitIter.has("east")) {
+                    temp.addExits("east", exitIter.get("east").asInt());
+                }
+                if (exitIter.has("south")) {
+                    temp.addExits("south", exitIter.get("south").asInt());
+                }
+
+
             }
 
             // locked rooms
@@ -367,32 +382,59 @@ public class GameController {
 
             // add the temporary room object to Map
             rooms.put(temp.getRoomID(), temp);
-
-            // todo: monsterJSON to item object(s)
         }
 
+        // todo: monsterJSON to item object(s)
+        for (JsonNode monsterJson : rootMonster) {
+            Monster tempMonster = new Monster();
+
+//            tempMonster.setName(monsterJson.get("name").toString().replace("\"", ""));
+//            tempMonster.setDescription(monsterJson.get("desc").toString().replace("\"", ""));
+
+            if (!monsterJson.get("drops").asBoolean()) {
+                tempMonster.setItemDropName(monsterJson.get("drops").toString().replace("\"", ""));
+            }
+
+
+            // place monster into a room
+            Random r = new Random();
+            int startRoom = monsterJson.get("rangeStart").asInt();
+            int endRoom = monsterJson.get("rangeEnd").asInt();
+            int roomPlacement = r.nextInt(endRoom - startRoom);
+            rooms.get(roomPlacement).getMonsters().add(tempMonster);
+        }
 
         // todo: itemJSON to item object(s)
         for (JsonNode itemJson : rootItems) {
             Item item = new MiscItem();
 
+            // cast to proper item type
+            // for testing --> System.out.println(itemJson.get("type").toString().replace("\"", ""));
+
+            // weapon
+            if (itemJson.get("type").toString().replace("\"", "").equals("weapon")) {
+                item = new WeaponItem();
+                ((WeaponItem) item).setDamage(itemJson.get("damage").asInt());
+            }
+            // equip
+            else if (itemJson.get("type").toString().replace("\"", "").equals("equip")) {
+                item = new EquipItem();
+                ((EquipItem) item).setStatType(itemJson.get("stat").toString().replace("\"", ""));
+                ((EquipItem) item).setStatBoostAmount(itemJson.get("statBoost").asDouble());
+            }
+            // misc
+            else if (itemJson.get("type").toString().replace("\"", "").equals("misc")) {
+                item = new MiscItem();
+            }
+            // puzzle
+            else if (itemJson.get("type").toString().replace("\"", "").equals("puzzle")) {
+                item = new PuzzleItem();
+            }
+
             // basic item attributes
             item.setName(itemJson.get("name").toString().replace("\"", ""));
             item.setDescription(itemJson.get("description").toString().replace("\"", ""));
-            item.setType(itemJson.get("type").toString());
-
-
-            // cast to proper item type
-            if (itemJson.get("type").toString().equals("weapon")) {
-                item = new WeaponItem();
-                ((WeaponItem) item).setDamage(itemJson.get("damage").asInt());
-            } else if (itemJson.get("type").toString().equals("equip")) {
-                item = new EquipItem();
-            } else if (itemJson.get("type").toString().equals("misc")) {
-                item = new MiscItem();
-            } else if (itemJson.get("type").toString().equals("puzzle")) {
-                item = new PuzzleItem();
-            }
+            item.setType(itemJson.get("type").toString().replace("\"", ""));
 
             if (itemJson.get("room") != null) {
                 rooms.get(itemJson.get("room").asInt()).addItems(item);
@@ -409,7 +451,7 @@ public class GameController {
 
     // todo: loadSave
     // loads save
-    public void loadSave(String playerPath, String roomPaths){
+    public void loadSave(String playerPath, String roomPaths) {
         ObjectMapper mapper = new ObjectMapper();
     }
 
@@ -437,6 +479,7 @@ public class GameController {
         view.notifier(player.pickupItem(rooms.get(player.getCurrentRoom()), userInput.nextLine()));
     }
 
+
     public void dropItemAnotherOne() {
         view.notifier(player.inventoryToString());
         if (player.getInventory().isEmpty()) {
@@ -458,10 +501,60 @@ public class GameController {
         view.notifier("What [item] would you like to consume up in the room:");
 
         // get input from user
-        view.notifier(player.consume( userInput.nextLine()));
+        view.notifier(player.consume(userInput.nextLine()));
     }
 
+    public void randomPlayerStatGenerator(Player player) {
+        Random random = new Random();
+        int health = 0;
+        int attack = 0;
+        int defense = 0;
 
+        int randomStatGenerator = (int) ((Math.random()) * (100 - 50) + 50);
 
+        for (int i = 0; i <= randomStatGenerator; i++) {
+            int randomAllocation = (int) ((Math.random()) * (3 - 1) + 1);
+            switch (randomAllocation) {
+                case 1:
+                    health += 1;
+                    break;
+                case 2:
+                    attack += 1;
+                    break;
+                case 3:
+                    defense += 1;
+                    break;
+            }
+        }
+        player.setHealth(health);
+        player.setDamage(attack);
+        player.setDefense(defense);
+    }
 
+    public void randomMonsterStatGenerator(Monster monster) {
+        Random random = new Random();
+        int health = 0;
+        int attack = 0;
+        int defense = 0;
+
+        int randomStatGenerator = (int) ((Math.random()) * (100 - 50) + 50);
+
+        for (int i = 0; i <= randomStatGenerator; i++) {
+            int randomAllocation = (int) ((Math.random()) * (3 - 1) + 1);
+            switch (randomAllocation) {
+                case 1:
+                    health += 1;
+                    break;
+                case 2:
+                    attack += 1;
+                    break;
+                case 3:
+                    defense += 1;
+                    break;
+            }
+        }
+        monster.setHealth(health);
+        monster.setAttack(attack);
+        monster.setDefense(defense);
+    }
 }

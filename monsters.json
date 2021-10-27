@@ -2,57 +2,58 @@
   {
     "name" : "exampleMonster",
     "desc" : "",
-    "random" : true,
-    "locationRange" : "12-34",
-    "drops" : null
+    "rangeStart" : 12,
+    "rangeEnd" : 34,
+    "drops" : false
   },
   {
     "name" : "Slime",
     "desc" : "A gelatinous, amorphous creature that prey on other living organisms.",
-    "random" : true,
-    "locationRange" : "",
-    "drops" : null
+    "rangeStart" : 0,
+    "rangeEnd" : 29,
+    "drops" : false
   },
   {
     "name" : "Goblin",
     "desc" : "Small, black-hearted, selfish humanoid like creature that loathes humans and will stop at nothing to trap them inside its lair.",
-    "random" : true,
-    "locationRange" : "",
-    "drops" : null
+    "rangeStart" : 0,
+    "rangeEnd" : 29,
+    "drops" : false
   },
   {
     "name" : "Ghoul",
     "desc" : "An undead creature that had a curse placed on them when they were human. They feed on corpses or living flesh.",
-    "random" : true,
-    "locationRange" : "",
-    "drops" : null
+    "rangeStart" : 0,
+    "rangeEnd" : 29,
+    "drops" : false
   },
   {
     "name" : "Bone Colossus",
     "desc" : "Large and aggressive golem-like undead creatures made from bones of various origins.",
-    "random" : true,
-    "locationRange" : "7-14",
-    "drops" : null
+    "rangeStart" : 7,
+    "rangeEnd" : 15,
+    "drops" : false
   },
   {
     "name" : "Xenomorph Shark",
     "desc" : "A large carnivorous aquatic species that possess an inner jaw and body much like a Xenomorph alien.",
-    "random" : true,
     "locationRange" : "14-23",
+    "rangeStart" : 0,
+    "rangeEnd" : 30,
     "drops" : "Sharks tooth"
   },
   {
     "name" : "Skeleton King",
     "desc" : "",
-    "random" : true,
-    "locationRange" : "",
+    "rangeStart" : 0,
+    "rangeEnd" : 30,
     "drops" : "Ancient vase"
   },
   {
     "name" : "Garland",
     "desc" : "A once proud and arrogant knight that has been pushed with a curse bounding him to this labyrinth.",
-    "random" : true,
-    "locationRange" : "24-29",
+    "rangeStart" : 24,
+    "rangeEnd" : 30,
     "drops" : "Ragnarok"
   }
 ]
