@@ -8,12 +8,7 @@ public class Player extends Entity{
     private ArrayList<EquipItem> equippedItem;
 
     // player values
-    private int defense;
-    private int damage;
 
-    public int getDefense() {
-        return defense;
-    }
 
     public Player() {
         this.inventory = new ArrayList<>();
@@ -61,17 +56,7 @@ public class Player extends Entity{
         throw new UnsupportedOperationException();
     }
 
-    public void setDefense(int defense) {
-        this.defense = defense;
-    }
 
-    public int getDamage() {
-        return damage;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
-    }
 
     // toString for Easy printing
     // author: Joseph Ongchangco

@@ -2,8 +2,25 @@ public class Entity {
     private String name;
     private int health;
     private String description;
-
+     private int attack;
+     private int defense;
     public Entity() {
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public void setDefense(int defense) {
+        this.defense = defense;
     }
 
     public String getName() {
