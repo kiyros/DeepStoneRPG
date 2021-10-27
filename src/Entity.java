@@ -1,7 +1,11 @@
 public class Entity {
+    /*
+    todo: set defense and attack here, both Player And Monster have these attributes
+     */
     private String name;
     private int health;
     private String description;
+    // todo: add attack and defense attributes and their GETTERS() and SETTERS()
 
     public Entity() {
     }

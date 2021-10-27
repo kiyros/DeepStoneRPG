@@ -1,99 +1,108 @@
 import java.util.ArrayList;
 
 public class Puzzle {
-	private String name;
-	private String riddle;
-	private String type;
-	private String solution;
-	private boolean solved;
-	private String hint;
-	private Item itemReward;
-	private ArrayList<Integer> roomUnlock;
+    private String name;
+    private String riddle;
+    private String type;
+    private String solution;
+    private boolean solved;
+    private String hint;
+    private Item itemReward;
+    private ArrayList<Integer> roomUnlock;
+    private int roomNumber;
 
-	// puts the room in a condition, like everytime you pick up an item, you fight a random monster
-	private String Penalty;
+    // puts the room in a condition, like everytime you pick up an item, you fight a random monster
+    private String Penalty;
 
-	public String getRiddle() {
-		return this.riddle;
-	}
+    public int getRoomNumber() {
+        return roomNumber;
+    }
 
-	public void setRiddle(String aRiddle) {
-		this.riddle = aRiddle;
-	}
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
+    }
 
-	public String getType() {
-		return this.type;
-	}
+    public String getRiddle() {
+        return this.riddle;
+    }
 
-	public void setType(String aType) {
-		this.type = aType;
-	}
+    public void setRiddle(String aRiddle) {
+        this.riddle = aRiddle;
+    }
 
-	public String getSolution() {
-		return this.solution;
-	}
+    public String getType() {
+        return this.type;
+    }
 
-	public void setSolution(String aSolution) {
-		this.solution = aSolution;
-	}
+    public void setType(String aType) {
+        this.type = aType;
+    }
 
-	public void setSolved(boolean aSolved) {
-		this.solved = aSolved;
-	}
+    public String getSolution() {
+        return this.solution;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setSolution(String aSolution) {
+        this.solution = aSolution;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setSolved(boolean aSolved) {
+        this.solved = aSolved;
+    }
 
-	public boolean isSolved() {
-		return solved;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getHint() {
-		return this.hint;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setHint(String aHint) {
-		this.hint = aHint;
-	}
+    public boolean isSolved() {
+        return solved;
+    }
 
-	public Item getItemReward() {
-		return this.itemReward;
-	}
+    public String getHint() {
+        return this.hint;
+    }
 
-	public void setItemReward(Item aItemReward) {
-		this.itemReward = aItemReward;
-	}
+    public void setHint(String aHint) {
+        this.hint = aHint;
+    }
 
-	public ArrayList<Integer> getRoomUnlock() {
-		throw new UnsupportedOperationException();
-	}
+    public Item getItemReward() {
+        return this.itemReward;
+    }
 
-	public void setRoomUnlock(ArrayList<Integer> aRoomUnlock) {
-		throw new UnsupportedOperationException();
-	}
+    public void setItemReward(Item aItemReward) {
+        this.itemReward = aItemReward;
+    }
 
-	public String getPenalty() {
-		return this.Penalty;
-	}
+    public ArrayList<Integer> getRoomUnlock() {
+        throw new UnsupportedOperationException();
+    }
 
-	public void setPenalty(String aPuzzleModifier) {
-		this.Penalty = aPuzzleModifier;
-	}
+    public void setRoomUnlock(ArrayList<Integer> aRoomUnlock) {
+        throw new UnsupportedOperationException();
+    }
 
-	public String toString() {
-		String title = "Puzzle: " + this.name + "\n";
-		String riddle = "riddle: "+ this.riddle + "\n";
-		String modifier = "";
+    public String getPenalty() {
+        return this.Penalty;
+    }
 
-		if(this.Penalty != null){
-			modifier = this.Penalty + "\n";
-		}
+    public void setPenalty(String aPuzzleModifier) {
+        this.Penalty = aPuzzleModifier;
+    }
 
-		return title + riddle + modifier;
-	}
+    public String toString() {
+        String title = "Puzzle: " + this.name + "\n";
+        String riddle = "riddle: " + this.riddle + "\n";
+        String modifier = "";
+
+        if (this.Penalty != null) {
+            modifier = this.Penalty + "\n";
+        }
+
+        return title + riddle + modifier;
+    }
 }
