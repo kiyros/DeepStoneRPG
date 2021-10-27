@@ -5,6 +5,7 @@ public class Entity {
     private int attack;
     private int defense;
 
+
     public Entity() {
     }
 

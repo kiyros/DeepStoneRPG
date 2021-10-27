@@ -61,7 +61,7 @@ public class GameController {
             switch (userInput.nextLine().toLowerCase()) {
                 case "h":
                 case "help":
-                    // todo: help command
+                    view.getHelp();
                     break;
                 case "new":
                 case "new game":
@@ -115,7 +115,7 @@ public class GameController {
                     break;
                 case "drop":
                 case "d":
-                    dropItemAnotherOne();
+                    dropItem();
                     break;
                 case "consume":
                 case "c":
@@ -187,11 +187,6 @@ public class GameController {
         throw new UnsupportedOperationException();
     }
 
-    // todo: drops an item from the players inventory
-    public void dropItem() {
-        throw new UnsupportedOperationException();
-    }
-
     // todo: leaves the monster encounter
     public void flee() {
         throw new UnsupportedOperationException();
@@ -214,7 +209,7 @@ public class GameController {
                 }
             }
         } else {
-            System.out.println("nah");
+            view.notifier("That item does not seem to exist in your inventory or in the room! \n try again!");
         }
 
 
@@ -302,7 +297,6 @@ public class GameController {
 
         // rooms
         List<Object> roomArray = List.of(rooms.values().toArray());
-
         mapper.writeValue(Paths.get("saveFiles/roomData.json").toFile(), roomArray);
 
     }
@@ -366,6 +360,8 @@ public class GameController {
                 if (exitIter.has("south")) {
                     temp.addExits("south", exitIter.get("south").asInt());
                 }
+
+
             }
 
             // locked rooms
@@ -383,13 +379,15 @@ public class GameController {
         }
 
         // todo: monsterJSON to item object(s)
-        for (JsonNode monsterJson : rootMonster){
+        for (JsonNode monsterJson : rootMonster) {
             Monster tempMonster = new Monster();
 
+            // basic monster attributes
             tempMonster.setName(monsterJson.get("name").toString().replace("\"", ""));
             tempMonster.setDescription(monsterJson.get("desc").toString().replace("\"", ""));
 
-            if(!monsterJson.get("drops").asBoolean()){
+
+            if (!monsterJson.get("drops").asBoolean()) {
                 tempMonster.setItemDropName(monsterJson.get("drops").toString().replace("\"", ""));
             }
 
@@ -398,7 +396,7 @@ public class GameController {
             Random r = new Random();
             int startRoom = monsterJson.get("rangeStart").asInt();
             int endRoom = monsterJson.get("rangeEnd").asInt();
-            int roomPlacement = r.nextInt(endRoom-startRoom);
+            int roomPlacement = r.nextInt(endRoom - startRoom);
             rooms.get(roomPlacement).getMonsters().add(tempMonster);
         }
 
@@ -441,6 +439,23 @@ public class GameController {
 
         }
 
+        // todo: puzzleJSON to puzzle object(s)
+        for(JsonNode puzzleJson : rootPuzzles){
+            Puzzle tempPuzzle = new Puzzle();
+
+            // basic puzzle attributes
+            tempPuzzle.setName(puzzleJson.get("name").toString().replace("\"", ""));
+            tempPuzzle.setSolution(puzzleJson.get("solution").toString().replace("\"", ""));
+            tempPuzzle.setHint(puzzleJson.get("hint").toString().replace("\"", ""));
+            tempPuzzle.setRoomNumber(puzzleJson.get("room").asInt());
+
+
+
+
+            // place puzzle into room
+            rooms.get(tempPuzzle.getRoomNumber()).setPuzzle(tempPuzzle);
+        }
+
 
         // set the game room to the generated Map the method made from JSON values
         this.rooms = rooms;
@@ -477,7 +492,8 @@ public class GameController {
         view.notifier(player.pickupItem(rooms.get(player.getCurrentRoom()), userInput.nextLine()));
     }
 
-    public void dropItemAnotherOne() {
+
+    public void dropItem() {
         view.notifier(player.inventoryToString());
         if (player.getInventory().isEmpty()) {
             return;
@@ -498,10 +514,62 @@ public class GameController {
         view.notifier("What [item] would you like to consume up in the room:");
 
         // get input from user
-        view.notifier(player.consume( userInput.nextLine()));
+        view.notifier(player.consume(userInput.nextLine()));
     }
 
+    // todo: reduce redundancy of randomPlayerStatGenerator and randomMonsterStatGenerator into one method
+    // should be randomStatGenerator(Entity entityObject){}
+    public void randomPlayerStatGenerator(Player player) {
+        Random random = new Random();
+        int health = 0;
+        int attack = 0;
+        int defense = 0;
 
+        int randomStatGenerator = (int) ((Math.random()) * (100 - 50) + 50);
 
+        for (int i = 0; i <= randomStatGenerator; i++) {
+            int randomAllocation = (int) ((Math.random()) * (3 - 1) + 1);
+            switch (randomAllocation) {
+                case 1:
+                    health += 1;
+                    break;
+                case 2:
+                    attack += 1;
+                    break;
+                case 3:
+                    defense += 1;
+                    break;
+            }
+        }
+        player.setHealth(health);
+        player.setDamage(attack);
+        player.setDefense(defense);
+    }
 
+    public void randomMonsterStatGenerator(Monster monster) {
+        Random random = new Random();
+        int health = 0;
+        int attack = 0;
+        int defense = 0;
+
+        int randomStatGenerator = (int) ((Math.random()) * (100 - 50) + 50);
+
+        for (int i = 0; i <= randomStatGenerator; i++) {
+            int randomAllocation = (int) ((Math.random()) * (3 - 1) + 1);
+            switch (randomAllocation) {
+                case 1:
+                    health += 1;
+                    break;
+                case 2:
+                    attack += 1;
+                    break;
+                case 3:
+                    defense += 1;
+                    break;
+            }
+        }
+        monster.setHealth(health);
+        monster.setAttack(attack);
+        monster.setDefense(defense);
+    }
 }
