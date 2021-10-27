@@ -1,4 +1,3 @@
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.parser.ParseException;
@@ -12,7 +11,7 @@ public class GameController {
     private final PlayerView view;
     private HashMap<Integer, Room> rooms = new HashMap<>();
     private final Scanner userInput;
-
+    private Puzzle puzzle;
 	/*
 	author: Joseph Ongchangco
 
@@ -23,6 +22,14 @@ public class GameController {
         this.player = player;
         this.view = view;
         userInput = new Scanner(System.in);
+    }
+
+    public void setPuzzle(Puzzle puzzle) {
+        this.puzzle = puzzle;
+    }
+
+    public void setRooms(HashMap<Integer, Room> rooms) {
+        this.rooms = rooms;
     }
 
     // todo: commands
@@ -458,13 +465,38 @@ public class GameController {
     /*
      todo: solve puzzle, when user types in "solve puzzle", this method should automatically grab the item remove it and set puzzle in the room to solved
      */
+/
     public void solvePuzzle() {
-        throw new UnsupportedOperationException();
+        int currentRoom = player.getCurrentRoom();
+        rooms.get(currentRoom).getPuzzle().setSolved(true);
     }
+//    public void solvePuzzle() {
+//       int currentRoom = player.getCurrentRoom();
+//       rooms.get(currentRoom).getPuzzle().setSolved(true);
+//       String solution = rooms.get(currentRoom).getPuzzle().getSolution();
+//       for(Item items: player.getInventory()){
+//           if(items.getName().equalsIgnoreCase(solution)){
+//               player.getInventory().remove(items);
+//           }
+//        }
+//    }
 
     // todo: gets puzzle object from where a player current is
-    public void getPuzzle() {
-        throw new UnsupportedOperationException();
+//    public Puzzle getPuzzle()  {
+//       //Puzzle p;
+//        int currentRoom = player.getCurrentRoom();
+//        for (Room key : rooms.values()) {
+//            if (key.getRoomID() == currentRoom) {
+//                return key.getPuzzle();
+//
+//        }
+//    }
+//            return null;
+//    }
+
+    public Puzzle getPuzzle() {
+        int currentRoom = player.getCurrentRoom();
+        return (rooms.get(currentRoom).getPuzzle());
     }
 
     public void pickupItem() {
