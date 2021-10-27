@@ -6,7 +6,6 @@
     "hint": "The statue looks like it is missing a few pieces.",
     "reward": "The Queen’s Jewel",
     "unlock": [
-      "west",
       6
     ],
     "room": 7
@@ -24,7 +23,6 @@
     "solution": "Key",
     "hint": "I need to exit this room, I wonder if I can use an item.",
     "unlock": [
-      "south",
       27
     ],
     "room": 21
@@ -36,7 +34,6 @@
     "hint": "The pedestal is looking for something. Time is running out it seems, wonder what I can use to solve this in a timely manner.",
     "reward": "Crystal skull",
     "unlock": [
-      "west",
       19
     ],
     "room": 20
@@ -47,7 +44,6 @@
     "solution": "Dynamite",
     "hint": "The wall looks like it needs to be taken down.",
     "unlock": [
-      "south",
       29
     ],
     "room": 23
@@ -57,8 +53,7 @@
     "riddle": "You approach three items, a sword, a shield, and a bow. Upon closer inspection it is obvious that a trap is set to activate when someone picks up any of the items. However, they appear quite powerful. Perhaps there is a way to avoid a direct hit from the trap.",
     "solution": "Aegis Shield",
     "hint": "I need to grab an item without taking damage. Which could assist in that?",
-    "penalty": -10,
-    "room": 9,
-    "type": "riddle"
+    "penalty": {"damage": -10},
+    "room": 9
   }
 ]

@@ -1,4 +1,3 @@
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.parser.ParseException;
@@ -309,6 +308,9 @@ public class GameController {
     // todo: starts a new game
     // load the default room values into the room object
     public void newGame() throws IOException {
+        // generate random stats values for player
+        randomStatGenerator(player);
+
         newJsonToRoom("rooms.json", "items.json", "puzzles.json", "monsters.json");
     }
 
@@ -382,6 +384,8 @@ public class GameController {
         for (JsonNode monsterJson : rootMonster) {
             Monster tempMonster = new Monster();
 
+
+
             // basic monster attributes
             tempMonster.setName(monsterJson.get("name").toString().replace("\"", ""));
             tempMonster.setDescription(monsterJson.get("desc").toString().replace("\"", ""));
@@ -390,6 +394,9 @@ public class GameController {
             if (!monsterJson.get("drops").asBoolean()) {
                 tempMonster.setItemDropName(monsterJson.get("drops").toString().replace("\"", ""));
             }
+
+            // generate random stats values for monster
+            randomStatGenerator(tempMonster);
 
 
             // place monster into a room
@@ -402,7 +409,7 @@ public class GameController {
 
         // todo: itemJSON to item object(s)
         for (JsonNode itemJson : rootItems) {
-            Item item = new MiscItem();
+            Item item = new baseItem();
 
             // cast to proper item type
             // for testing --> System.out.println(itemJson.get("type").toString().replace("\"", ""));
@@ -420,7 +427,7 @@ public class GameController {
             }
             // misc
             else if (itemJson.get("type").toString().replace("\"", "").equals("misc")) {
-                item = new MiscItem();
+                item = new baseItem();
             }
             // puzzle
             else if (itemJson.get("type").toString().replace("\"", "").equals("puzzle")) {
@@ -517,9 +524,8 @@ public class GameController {
         view.notifier(player.consume(userInput.nextLine()));
     }
 
-    // todo: reduce redundancy of randomPlayerStatGenerator and randomMonsterStatGenerator into one method
-    // should be randomStatGenerator(Entity entityObject){}
-    public void randomPlayerStatGenerator(Player player) {
+    // player and monster get random stats
+    public void randomStatGenerator(Entity entity) {
         Random random = new Random();
         int health = 0;
         int attack = 0;
@@ -528,7 +534,9 @@ public class GameController {
         int randomStatGenerator = (int) ((Math.random()) * (100 - 50) + 50);
 
         for (int i = 0; i <= randomStatGenerator; i++) {
-            int randomAllocation = (int) ((Math.random()) * (3 - 1) + 1);
+            // generates a value from 1-3, the stats should be around even
+            int randomAllocation = (int) ((Math.random()) * (4 - 1) + 1);
+
             switch (randomAllocation) {
                 case 1:
                     health += 1;
@@ -541,35 +549,8 @@ public class GameController {
                     break;
             }
         }
-        player.setHealth(health);
-        player.setDamage(attack);
-        player.setDefense(defense);
-    }
-
-    public void randomMonsterStatGenerator(Monster monster) {
-        Random random = new Random();
-        int health = 0;
-        int attack = 0;
-        int defense = 0;
-
-        int randomStatGenerator = (int) ((Math.random()) * (100 - 50) + 50);
-
-        for (int i = 0; i <= randomStatGenerator; i++) {
-            int randomAllocation = (int) ((Math.random()) * (3 - 1) + 1);
-            switch (randomAllocation) {
-                case 1:
-                    health += 1;
-                    break;
-                case 2:
-                    attack += 1;
-                    break;
-                case 3:
-                    defense += 1;
-                    break;
-            }
-        }
-        monster.setHealth(health);
-        monster.setAttack(attack);
-        monster.setDefense(defense);
+        entity.setHealth(health);
+        entity.setAttack(attack);
+        entity.setDefense(defense);
     }
 }

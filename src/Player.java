@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 public class Player extends Entity{
     // player values
+    private int currentRoom = 7;
     private ArrayList<Item> inventory;
     private ArrayList<EquipItem> equippedItem;
     private ArrayList<Item> equippedItems;
@@ -11,10 +12,6 @@ public class Player extends Entity{
     public Player() {
         this.inventory = new ArrayList<>();
         this.equippedItem = new ArrayList<>();
-    }
-
-    public int getDefense() {
-        return defense;
     }
 
     public ArrayList<EquipItem> getEquippedItem() {

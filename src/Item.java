@@ -48,9 +48,8 @@ abstract class Item {
     }
 }
 
-// misc item
-// todo: misc item
-class MiscItem extends Item {
+// baseItem, the generic item holder
+class baseItem extends Item {
     // collectable????
 }
 
@@ -97,3 +96,15 @@ class WeaponItem extends Item {
 }
 
 class PuzzleItem extends Item {}
+
+class HealthConsumable extends Item {
+    private int _healthValue;
+
+    public int getHealthValue() {
+        return this._healthValue;
+    }
+
+    public void setHealthValue(int aHealthValue) {
+        this._healthValue = aHealthValue;
+    }
+}

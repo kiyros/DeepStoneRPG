@@ -3,7 +3,6 @@ import java.util.ArrayList;
 public class Puzzle {
     private String name;
     private String riddle;
-    private String type;
     private String solution;
     private boolean solved;
     private String hint;
@@ -28,14 +27,6 @@ public class Puzzle {
 
     public void setRiddle(String aRiddle) {
         this.riddle = aRiddle;
-    }
-
-    public String getType() {
-        return this.type;
-    }
-
-    public void setType(String aType) {
-        this.type = aType;
     }
 
     public String getSolution() {
