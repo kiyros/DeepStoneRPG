@@ -6,7 +6,7 @@ public class Player {
     private int currentRoom = 7;
     private ArrayList<Item> inventory;
     private ArrayList<EquipItem> equippedItem;
-    private final Item equipedItem;
+  //  private final Item equipedItem;
     private ArrayList<Item> equippedItems;
 
     // player values
