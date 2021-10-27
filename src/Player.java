@@ -1,8 +1,8 @@
 import java.util.ArrayList;
 
-public class Player {
-    private String name;
-    private String description;
+public class Player extends Entity{
+
+
     private int currentRoom = 7;
     private ArrayList<Item> inventory;
     private ArrayList<EquipItem> equippedItem;
@@ -10,7 +10,7 @@ public class Player {
     private ArrayList<Item> equippedItems;
 
     // player values
-    private int health;
+
     private int defense;
     private int damage;
 
@@ -18,9 +18,18 @@ public class Player {
         return defense;
     }
 
-    public Player() {
-        this.inventory = new ArrayList<>();
-        this.equippedItems = new ArrayList<>();
+    public Player(String name, int health, String description) {
+        super(name, health, description);
+    }
+
+    public Player(String name, int health, String description, int currentRoom, ArrayList<Item> inventory, ArrayList<EquipItem> equippedItem, ArrayList<Item> equippedItems, int defense, int damage) {
+        super(name, health, description);
+        this.currentRoom = currentRoom;
+        this.inventory = inventory;
+        this.equippedItem = equippedItem;
+        this.equippedItems = equippedItems;
+        this.defense = defense;
+        this.damage = damage;
     }
 
     public ArrayList<Item> getEquippedItems() {
@@ -39,29 +48,8 @@ public class Player {
         this.equippedItem = equippedItem;
     }
 
-    public int getHealth() {
-        return this.health;
-    }
 
-    public void setHealth(int aHealth) {
-        this.health = aHealth;
-    }
 
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String aName) {
-        this.name = aName;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String aDescription) {
-        this.description = aDescription;
-    }
 
     public int getCurrentRoom() {
         return this.currentRoom;
@@ -111,8 +99,8 @@ public class Player {
     // toString for Easy printing
     // author: Joseph Ongchangco
     public String toString() {
-        String player = "player name: " + this.name + "\n";
-        String health = "Health: " + this.name + "\n";
+        String player = "player name: " + super.getName() + "\n";
+        String health = "Health: " + super.getHealth() + "\n";
         String currentRoom = "Current room number: " + this.currentRoom + "\n";
 
         return player + health + currentRoom;

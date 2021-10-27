@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class GameController {
-    private Player player = new Player();
+    private Player player = new Player("",0,"");
     private final PlayerView view;
     private HashMap<Integer, Room> rooms = new HashMap<>();
     private final Scanner userInput;
@@ -384,7 +384,7 @@ public class GameController {
 
         // todo: monsterJSON to item object(s)
         for (JsonNode monsterJson : rootMonster){
-            Monster tempMonster = new Monster();
+            Monster tempMonster = new Monster("",0,"");
 
             tempMonster.setName(monsterJson.get("name").toString().replace("\"", ""));
             tempMonster.setDescription(monsterJson.get("desc").toString().replace("\"", ""));
