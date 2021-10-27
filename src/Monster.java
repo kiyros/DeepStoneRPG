@@ -3,43 +3,60 @@ import java.util.ArrayList;
 public class Monster {
     private String name;
     private int health;
-    private String description;
-    private String itemDropName;
-    public Room _unnamed_Room_;
+	private int attack;
+	private int defense;
+	private String description;
+	private String itemDropName;
 
-    public String getItemDropName() {
-        return itemDropName;
-    }
+	public String getItemDropName() {
+		return itemDropName;
+	}
 
-    public void setItemDropName(String itemDropName) {
-        this.itemDropName = itemDropName;
-    }
+	public void setItemDropName(String itemDropName) {
+		this.itemDropName = itemDropName;
+	}
 
-    public String getName() {
-        return this.name;
-    }
+	public String getName() {
+		return this.name;
+	}
 
-    public void setName(String aName) {
-        this.name = aName;
-    }
+	public void setName(String aName) {
+		this.name = aName;
+	}
 
-    public int getHealth() {
-        return this.health;
-    }
+	public int getHealth() {
+		return this.health;
+	}
 
-    public void setHealth(int aHealth) {
-        this.health = aHealth;
-    }
+	public void setHealth(int aHealth) {
+		this.health = aHealth;
+	}
 
-    public String getDescription() {
-        return this.description;
-    }
+	public int getAttack() {
+		return attack;
+	}
 
-    public void setDescription(String aDescription) {
-        this.description = aDescription;
-    }
+	public void setAttack(int attack) {
+		this.attack = attack;
+	}
 
-    public String toString() {
-        return "";
-    }
+	public int getDefense() {
+		return defense;
+	}
+
+	public void setDefense(int defense) {
+		this.defense = defense;
+	}
+
+	public String getDescription() {
+		return this.description;
+	}
+
+	public void setDescription(String aDescription) {
+		this.description = aDescription;
+	}
+
+	public String toString() {
+		return "";
+	}
 }
