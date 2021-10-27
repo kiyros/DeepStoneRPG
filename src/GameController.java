@@ -113,6 +113,15 @@ public class GameController {
                 case "p":
                     pickupItem();
                     break;
+                case "drop":
+                case "d":
+                    dropItemAnotherOne();
+                    break;
+                case "consume":
+                case "c":
+                    consumeItem();
+                    break;
+
                 default:
                     view.error("Invalid command try typing it correctly or type 'h' for help");
                     break;
@@ -376,13 +385,13 @@ public class GameController {
         }
 
         // todo: monsterJSON to item object(s)
-        for (JsonNode monsterJson : rootMonster){
+        for (JsonNode monsterJson : rootMonster) {
             Monster tempMonster = new Monster();
 
 //            tempMonster.setName(monsterJson.get("name").toString().replace("\"", ""));
 //            tempMonster.setDescription(monsterJson.get("desc").toString().replace("\"", ""));
 
-            if(!monsterJson.get("drops").asBoolean()){
+            if (!monsterJson.get("drops").asBoolean()) {
                 tempMonster.setItemDropName(monsterJson.get("drops").toString().replace("\"", ""));
             }
 
@@ -391,7 +400,7 @@ public class GameController {
             Random r = new Random();
             int startRoom = monsterJson.get("rangeStart").asInt();
             int endRoom = monsterJson.get("rangeEnd").asInt();
-            int roomPlacement = r.nextInt(endRoom-startRoom);
+            int roomPlacement = r.nextInt(endRoom - startRoom);
             rooms.get(roomPlacement).getMonsters().add(tempMonster);
         }
 
@@ -468,6 +477,31 @@ public class GameController {
 
         // get input from user
         view.notifier(player.pickupItem(rooms.get(player.getCurrentRoom()), userInput.nextLine()));
+    }
+
+
+    public void dropItemAnotherOne() {
+        view.notifier(player.inventoryToString());
+        if (player.getInventory().isEmpty()) {
+            return;
+        }
+
+        view.notifier("What [item] would you like to pick up in the room:");
+
+        // get input from user
+        view.notifier(player.drop(rooms.get(player.getCurrentRoom()), userInput.nextLine()));
+    }
+
+    public void consumeItem() {
+        view.notifier(player.inventoryToString());
+        if (player.getInventory().isEmpty()) {
+            return;
+        }
+
+        view.notifier("What [item] would you like to consume up in the room:");
+
+        // get input from user
+        view.notifier(player.consume(userInput.nextLine()));
     }
 
     public void randomPlayerStatGenerator(Player player) {
