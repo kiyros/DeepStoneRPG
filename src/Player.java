@@ -1,19 +1,13 @@
 import java.util.ArrayList;
-
 public class Player extends Entity{
-
-
-    private int currentRoom = 7;
+    // player values
     private ArrayList<Item> inventory;
-
     private ArrayList<EquipItem> equippedItem;
     private ArrayList<Item> equippedItems;
 
-    // player values
-    private int defense;
-    private int damage;
-
+  
     //constructor
+
     public Player() {
         this.inventory = new ArrayList<>();
         this.equippedItem = new ArrayList<>();
@@ -52,18 +46,6 @@ public class Player extends Entity{
 
     public void unEquip(Object aItem_itemName) {
         throw new UnsupportedOperationException();
-    }
-
-    public void setDefense(int defense) {
-        this.defense = defense;
-    }
-
-    public int getDamage() {
-        return damage;
-    }
-
-    public void setDamage(int damage) {
-        this.damage = damage;
     }
 
     // toString for Easy printing
