@@ -2,8 +2,9 @@ public class Entity {
     private String name;
     private int health;
     private String description;
-     private int attack;
-     private int defense;
+    private int attack;
+    private int defense;
+
     public Entity() {
     }
 
