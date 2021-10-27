@@ -465,10 +465,16 @@ public class GameController {
     /*
      todo: solve puzzle, when user types in "solve puzzle", this method should automatically grab the item remove it and set puzzle in the room to solved
      */
-/
+//
     public void solvePuzzle() {
         int currentRoom = player.getCurrentRoom();
         rooms.get(currentRoom).getPuzzle().setSolved(true);
+        if(!rooms.get(currentRoom).getPuzzle().getRoomUnlock().isEmpty() ){
+            rooms.get(currentRoom).getLockedExits().remove(0);
+            rooms.get(currentRoom).getPuzzle().getRoomUnlock().remove(0);
+        }else{
+            System.out.println("");
+        }
     }
 //    public void solvePuzzle() {
 //       int currentRoom = player.getCurrentRoom();
