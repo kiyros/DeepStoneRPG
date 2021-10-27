@@ -384,7 +384,7 @@ public class GameController {
 
         // todo: monsterJSON to item object(s)
         for (JsonNode monsterJson : rootMonster){
-            Monster tempMonster = new Monster("",0,"");
+            Monster tempMonster = new Monster();
 
             tempMonster.setName(monsterJson.get("name").toString().replace("\"", ""));
             tempMonster.setDescription(monsterJson.get("desc").toString().replace("\"", ""));

@@ -7,8 +7,7 @@ public class Monster extends Entity{
     private String itemDropName;
     public Room _unnamed_Room_;
 
-    public Monster(String name, int health, String description) {
-        super(name, health, description);
+    public Monster() {
     }
 
     public String getItemDropName() {
