@@ -5,19 +5,22 @@ public class Player extends Entity{
 
     private int currentRoom = 7;
     private ArrayList<Item> inventory;
+
     private ArrayList<EquipItem> equippedItem;
+    private ArrayList<Item> equippedItems;
 
     // player values
     private int defense;
     private int damage;
 
-    public int getDefense() {
-        return defense;
-    }
-
+    //constructor
     public Player() {
         this.inventory = new ArrayList<>();
         this.equippedItem = new ArrayList<>();
+    }
+
+    public int getDefense() {
+        return defense;
     }
 
     public ArrayList<EquipItem> getEquippedItem() {
@@ -25,8 +28,7 @@ public class Player extends Entity{
     }
 
     public void setEquippedItem(ArrayList<EquipItem> equippedItem) {
-        this.equippedItem = equippedItem;
-    }
+        this.equippedItem = equippedItem;}
 
     public int getCurrentRoom() {
         return this.currentRoom;
@@ -49,15 +51,6 @@ public class Player extends Entity{
     }
 
     public void unEquip(Object aItem_itemName) {
-        throw new UnsupportedOperationException();
-    }
-
-    public void useItem(Object aItem_itemName) {
-        throw new UnsupportedOperationException();
-    }
-
-    // 100 present chance to escape
-    public void flee(Object aMonster_monster) {
         throw new UnsupportedOperationException();
     }
 
@@ -101,7 +94,6 @@ public class Player extends Entity{
         this.inventory = inventory;
     }
 
-
     // picks up an item in the current room by item name or integer
     // author : Joseph Ongchangco
     public String pickupItem(Room room, String item) {
@@ -125,7 +117,6 @@ public class Player extends Entity{
         }
         return "That item does not exist in this room, try spelling it right or selecting the index of the item";
     }
-
 
     public String drop(Room room, String item) {
 
