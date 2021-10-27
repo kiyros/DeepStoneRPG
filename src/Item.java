@@ -89,9 +89,8 @@ class WeaponItem extends Item {
         this.damage = aDamage;
     }
 
-    @Override
-    public String toString() {
-        return "";
+    public String inspect() {
+        return getName() + "\nDamage : " + getDamage();
     }
 }
 

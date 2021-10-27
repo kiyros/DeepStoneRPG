@@ -200,18 +200,26 @@ public class GameController {
         view.notifier("What [item] would you like to [inspect]: ");
         String itemName = userInput.nextLine();
 
-        if (player.getInventory().toString().contains(itemName)) {
-            for (Item playerItem : player.getInventory()) {
-                if (playerItem.getName().equals(itemName)) {
-                    view.notifier(playerItem.toString());
-                    view.notifier(playerItem.getDescription());
-                }
+        // inventory
+        for (Item playerItem : player.getInventory()) {
+            if (playerItem.getName().equals(itemName)) {
+                view.notifier(playerItem.toString());
+                view.notifier(playerItem.getDescription());
+                return;
             }
-        } else {
-            view.notifier("That item does not seem to exist in your inventory or in the room! \n try again!");
         }
 
+        // current room
+        for(Item roomItem : rooms.get(player.getCurrentRoom()).getItems()){
+            if (roomItem.getName().equals(itemName)) {
+                view.notifier(roomItem.toString());
+                view.notifier(roomItem.getDescription());
+                return;
+            }
+        }
 
+        // if item is not found return not found
+        view.notifier("That item does not seem to exist in your inventory or in the room! \n try again!");
     }
 
     // todo: sets Rooms when loading a game
@@ -385,7 +393,6 @@ public class GameController {
             Monster tempMonster = new Monster();
 
 
-
             // basic monster attributes
             tempMonster.setName(monsterJson.get("name").toString().replace("\"", ""));
             tempMonster.setDescription(monsterJson.get("desc").toString().replace("\"", ""));
@@ -447,7 +454,7 @@ public class GameController {
         }
 
         // todo: puzzleJSON to puzzle object(s)
-        for(JsonNode puzzleJson : rootPuzzles){
+        for (JsonNode puzzleJson : rootPuzzles) {
             Puzzle tempPuzzle = new Puzzle();
 
             // basic puzzle attributes
@@ -455,8 +462,6 @@ public class GameController {
             tempPuzzle.setSolution(puzzleJson.get("solution").toString().replace("\"", ""));
             tempPuzzle.setHint(puzzleJson.get("hint").toString().replace("\"", ""));
             tempPuzzle.setRoomNumber(puzzleJson.get("room").asInt());
-
-
 
 
             // place puzzle into room
