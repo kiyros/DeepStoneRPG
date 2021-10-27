@@ -1,57 +1,34 @@
 import java.util.ArrayList;
 
-public class Player {
-    private String name;
-    private String description;
+public class Player extends Entity{
+
+
     private int currentRoom = 7;
     private ArrayList<Item> inventory;
+
+    private ArrayList<EquipItem> equippedItem;
     private ArrayList<Item> equippedItems;
 
     // player values
-    private int health;
     private int defense;
     private int damage;
+
+    //constructor
+    public Player() {
+        this.inventory = new ArrayList<>();
+        this.equippedItem = new ArrayList<>();
+    }
 
     public int getDefense() {
         return defense;
     }
 
-    public Player() {
-        this.inventory = new ArrayList<>();
-        this.equippedItems = new ArrayList<>();
+    public ArrayList<EquipItem> getEquippedItem() {
+        return equippedItem;
     }
 
-    public ArrayList<Item> getEquippedItems() {
-        return equippedItems;
-    }
-
-    public void setEquippedItems(ArrayList<Item> equippedItems) {
-        this.equippedItems = equippedItems;
-    }
-
-    public int getHealth() {
-        return this.health;
-    }
-
-    public void setHealth(int aHealth) {
-        this.health = aHealth;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String aName) {
-        this.name = aName;
-    }
-
-    public String getDescription() {
-        return this.description;
-    }
-
-    public void setDescription(String aDescription) {
-        this.description = aDescription;
-    }
+    public void setEquippedItem(ArrayList<EquipItem> equippedItem) {
+        this.equippedItem = equippedItem;}
 
     public int getCurrentRoom() {
         return this.currentRoom;
@@ -77,15 +54,6 @@ public class Player {
         throw new UnsupportedOperationException();
     }
 
-    public void useItem(Object aItem_itemName) {
-        throw new UnsupportedOperationException();
-    }
-
-    // 100 present chance to escape
-    public void flee(Object aMonster_monster) {
-        throw new UnsupportedOperationException();
-    }
-
     public void setDefense(int defense) {
         this.defense = defense;
     }
@@ -101,8 +69,8 @@ public class Player {
     // toString for Easy printing
     // author: Joseph Ongchangco
     public String toString() {
-        String player = "player name: " + this.name + "\n";
-        String health = "Health: " + this.name + "\n";
+        String player = "player name: " + super.getName() + "\n";
+        String health = "Health: " + super.getHealth() + "\n";
         String currentRoom = "Current room number: " + this.currentRoom + "\n";
 
         return player + health + currentRoom;
@@ -125,7 +93,6 @@ public class Player {
     public void setItems(ArrayList<Item> inventory) {
         this.inventory = inventory;
     }
-
 
     // picks up an item in the current room by item name or integer
     // author : Joseph Ongchangco
@@ -150,7 +117,6 @@ public class Player {
         }
         return "That item does not exist in this room, try spelling it right or selecting the index of the item";
     }
-
 
     public String drop(Room room, String item) {
 

@@ -1,6 +1,5 @@
 import java.util.ArrayList;
-
-public class Monster {
+public class Monster extends Entity{
     private String name;
     private int health;
 	private int attack;
