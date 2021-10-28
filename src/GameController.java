@@ -457,19 +457,19 @@ public class GameController {
      */
 
     public void solvePuzzle() {
-        System.out.println("What item would you like to use to solve this puzzle? ");
+        view.notifier("What item would you like to use to solve this puzzle? ");
 
         int currentRoom = player.getCurrentRoom();
         if (rooms.get(currentRoom).getPuzzle().getSolution().equalsIgnoreCase(userInput.nextLine())){
             player.use(userInput.nextLine());
             rooms.get(currentRoom).getPuzzle().setSolved(true);
             if(!rooms.get(currentRoom).getPuzzle().getRoomUnlock().isEmpty()){
-                rooms.get(currentRoom).getLockedExits().remove(0);
+                rooms.get(currentRoom).getLockedExits().clear();
                 rooms.get(currentRoom).getPuzzle().getRoomUnlock().remove(0);
             }
         }
         else{
-            System.out.println("This item is not the correct answer.");
+            view.notifier("This item is not the correct answer.");
         }
     }
 
