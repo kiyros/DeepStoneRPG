@@ -124,15 +124,14 @@ public class GameController {
                 case "d":
                     dropItemAnotherOne();
                     break;
-                case "consume":
-                case "c":
-                    consumeItem();
+                case "solve puzzle":
+                case "solve":
+                    solvePuzzle();
                     break;
 
                 default:
                     view.error("Invalid command try typing it correctly or type 'h' for help");
                     break;
-
             }
         }
     }
@@ -190,9 +189,9 @@ public class GameController {
     }
 
     // todo: uses an item, most likely a consumable
-    public void useItem() {
-        throw new UnsupportedOperationException();
-    }
+//    public void useItem() {
+//        throw new UnsupportedOperationException();
+//    }
 
     // todo: drops an item from the players inventory
     public void dropItem() {
@@ -465,17 +464,26 @@ public class GameController {
     /*
      todo: solve puzzle, when user types in "solve puzzle", this method should automatically grab the item remove it and set puzzle in the room to solved
      */
-//
+
     public void solvePuzzle() {
+        System.out.println("What item would you like to use to solve this puzzle? ");
+        Scanner input = new Scanner(System.in);
+        String inp = input.nextLine();
+
         int currentRoom = player.getCurrentRoom();
-        rooms.get(currentRoom).getPuzzle().setSolved(true);
-        if(!rooms.get(currentRoom).getPuzzle().getRoomUnlock().isEmpty() ){
-            rooms.get(currentRoom).getLockedExits().remove(0);
-            rooms.get(currentRoom).getPuzzle().getRoomUnlock().remove(0);
-        }else{
-            System.out.println("");
+        if (rooms.get(currentRoom).getPuzzle().getSolution().equalsIgnoreCase(inp)){
+            player.use(inp);
+            rooms.get(currentRoom).getPuzzle().setSolved(true);
+            if(!rooms.get(currentRoom).getPuzzle().getRoomUnlock().isEmpty()){
+                rooms.get(currentRoom).getLockedExits().remove(0);
+                rooms.get(currentRoom).getPuzzle().getRoomUnlock().remove(0);
+            }
+        }
+        else{
+            System.out.println("This item is not the correct answer.");
         }
     }
+
 //    public void solvePuzzle() {
 //       int currentRoom = player.getCurrentRoom();
 //       rooms.get(currentRoom).getPuzzle().setSolved(true);
@@ -530,7 +538,7 @@ public class GameController {
         view.notifier(player.drop(rooms.get(player.getCurrentRoom()), userInput.nextLine()));
     }
 
-    public void consumeItem() {
+    public void useItem() {
         view.notifier(player.inventoryToString());
         if (player.getInventory().isEmpty()) {
             return;
@@ -539,7 +547,7 @@ public class GameController {
         view.notifier("What [item] would you like to consume up in the room:");
 
         // get input from user
-        view.notifier(player.consume(userInput.nextLine()));
+        view.notifier(player.use(userInput.nextLine()));
     }
 
     public void randomPlayerStatGenerator(Player player) {
