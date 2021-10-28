@@ -258,26 +258,17 @@ public class GameController {
             view.error("You can't go that way!!");
             return;
         }
+        // change player current room
+        player.setCurrentRoom(rooms.get(player.getCurrentRoom()).getExits().get(direction));
 
         // set room to visited as the player is leaving the room
         rooms.get(player.getCurrentRoom()).setVisited(true);
 
-        switch (direction) {
-            case "west":
-                player.setCurrentRoom(rooms.get(player.getCurrentRoom()).getExits().get("west"));
-                break;
-            case "east":
-                player.setCurrentRoom(rooms.get(player.getCurrentRoom()).getExits().get("east"));
-                break;
-            case "south":
-                player.setCurrentRoom(rooms.get(player.getCurrentRoom()).getExits().get("south"));
-                break;
-            case "north":
-                player.setCurrentRoom(rooms.get(player.getCurrentRoom()).getExits().get("north"));
-                break;
-        }
+        // display to user
         view.showRoom(rooms.get(player.getCurrentRoom()));
     }
+
+
 
     // shows ALL the information from the room: items, puzzle, title, monsters, room number.
     public void exploreRoom() {
@@ -467,12 +458,10 @@ public class GameController {
 
     public void solvePuzzle() {
         System.out.println("What item would you like to use to solve this puzzle? ");
-        Scanner input = new Scanner(System.in);
-        String inp = input.nextLine();
 
         int currentRoom = player.getCurrentRoom();
-        if (rooms.get(currentRoom).getPuzzle().getSolution().equalsIgnoreCase(inp)){
-            player.use(inp);
+        if (rooms.get(currentRoom).getPuzzle().getSolution().equalsIgnoreCase(userInput.nextLine())){
+            player.use(userInput.nextLine());
             rooms.get(currentRoom).getPuzzle().setSolved(true);
             if(!rooms.get(currentRoom).getPuzzle().getRoomUnlock().isEmpty()){
                 rooms.get(currentRoom).getLockedExits().remove(0);
@@ -602,5 +591,9 @@ public class GameController {
         monster.setHealth(health);
         monster.setAttack(attack);
         monster.setDefense(defense);
+    }
+
+    interface lambda{
+        int getRoomNum(String dir);
     }
 }
