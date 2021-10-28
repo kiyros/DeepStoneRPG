@@ -70,7 +70,7 @@ public class Room {
         this.items.add(items);
     }
 
-    public void getPuzzle() {
+    public Puzzle getPuzzle() {
         throw new UnsupportedOperationException();
     }
 

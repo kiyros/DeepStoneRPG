@@ -11,7 +11,7 @@ public class GameController {
     private final PlayerView view;
     private HashMap<Integer, Room> rooms = new HashMap<>();
     private final Scanner userInput;
-
+    private Puzzle puzzle;
 	/*
 	author: Joseph Ongchangco
 
@@ -22,6 +22,14 @@ public class GameController {
         this.player = player;
         this.view = view;
         userInput = new Scanner(System.in);
+    }
+
+    public void setPuzzle(Puzzle puzzle) {
+        this.puzzle = puzzle;
+    }
+
+    public void setRooms(HashMap<Integer, Room> rooms) {
+        this.rooms = rooms;
     }
 
     // todo: commands
@@ -116,15 +124,14 @@ public class GameController {
                 case "d":
                     dropItem();
                     break;
-                case "consume":
-                case "c":
-                    consumeItem();
+                case "solve puzzle":
+                case "solve":
+                    solvePuzzle();
                     break;
 
                 default:
                     view.error("Invalid command try typing it correctly or type 'h' for help");
                     break;
-
             }
         }
     }
@@ -182,9 +189,9 @@ public class GameController {
     }
 
     // todo: uses an item, most likely a consumable
-    public void useItem() {
-        throw new UnsupportedOperationException();
-    }
+//    public void useItem() {
+//        throw new UnsupportedOperationException();
+//    }
 
     // todo: leaves the monster encounter
     public void flee() {
@@ -254,26 +261,17 @@ public class GameController {
             view.error("You can't go that way!!");
             return;
         }
+        // change player current room
+        player.setCurrentRoom(rooms.get(player.getCurrentRoom()).getExits().get(direction));
 
         // set room to visited as the player is leaving the room
         rooms.get(player.getCurrentRoom()).setVisited(true);
 
-        switch (direction) {
-            case "west":
-                player.setCurrentRoom(rooms.get(player.getCurrentRoom()).getExits().get("west"));
-                break;
-            case "east":
-                player.setCurrentRoom(rooms.get(player.getCurrentRoom()).getExits().get("east"));
-                break;
-            case "south":
-                player.setCurrentRoom(rooms.get(player.getCurrentRoom()).getExits().get("south"));
-                break;
-            case "north":
-                player.setCurrentRoom(rooms.get(player.getCurrentRoom()).getExits().get("north"));
-                break;
-        }
+        // display to user
         view.showRoom(rooms.get(player.getCurrentRoom()));
     }
+
+
 
     // shows ALL the information from the room: items, puzzle, title, monsters, room number.
     public void exploreRoom() {
@@ -483,13 +481,51 @@ public class GameController {
     /*
      todo: solve puzzle, when user types in "solve puzzle", this method should automatically grab the item remove it and set puzzle in the room to solved
      */
+
     public void solvePuzzle() {
-        throw new UnsupportedOperationException();
+        view.notifier("What item would you like to use to solve this puzzle? ");
+
+        int currentRoom = player.getCurrentRoom();
+        if (rooms.get(currentRoom).getPuzzle().getSolution().equalsIgnoreCase(userInput.nextLine())){
+            player.use(userInput.nextLine());
+            rooms.get(currentRoom).getPuzzle().setSolved(true);
+            if(!rooms.get(currentRoom).getPuzzle().getRoomUnlock().isEmpty()){
+                rooms.get(currentRoom).getLockedExits().clear();
+                rooms.get(currentRoom).getPuzzle().getRoomUnlock().remove(0);
+            }
+        }
+        else{
+            view.notifier("This item is not the correct answer.");
+        }
     }
 
+//    public void solvePuzzle() {
+//       int currentRoom = player.getCurrentRoom();
+//       rooms.get(currentRoom).getPuzzle().setSolved(true);
+//       String solution = rooms.get(currentRoom).getPuzzle().getSolution();
+//       for(Item items: player.getInventory()){
+//           if(items.getName().equalsIgnoreCase(solution)){
+//               player.getInventory().remove(items);
+//           }
+//        }
+//    }
+
     // todo: gets puzzle object from where a player current is
-    public void getPuzzle() {
-        throw new UnsupportedOperationException();
+//    public Puzzle getPuzzle()  {
+//       //Puzzle p;
+//        int currentRoom = player.getCurrentRoom();
+//        for (Room key : rooms.values()) {
+//            if (key.getRoomID() == currentRoom) {
+//                return key.getPuzzle();
+//
+//        }
+//    }
+//            return null;
+//    }
+
+    public Puzzle getPuzzle() {
+        int currentRoom = player.getCurrentRoom();
+        return (rooms.get(currentRoom).getPuzzle());
     }
 
     public void pickupItem() {
@@ -517,7 +553,7 @@ public class GameController {
         view.notifier(player.drop(rooms.get(player.getCurrentRoom()), userInput.nextLine()));
     }
 
-    public void consumeItem() {
+    public void useItem() {
         view.notifier(player.inventoryToString());
         if (player.getInventory().isEmpty()) {
             return;
@@ -526,7 +562,7 @@ public class GameController {
         view.notifier("What [item] would you like to consume up in the room:");
 
         // get input from user
-        view.notifier(player.consume(userInput.nextLine()));
+        view.notifier(player.use(userInput.nextLine()));
     }
 
     // player and monster get random stats
@@ -557,5 +593,9 @@ public class GameController {
         entity.setHealth(health);
         entity.setAttack(attack);
         entity.setDefense(defense);
+    }
+
+    interface lambda{
+        int getRoomNum(String dir);
     }
 }
