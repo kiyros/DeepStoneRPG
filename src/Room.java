@@ -1,18 +1,22 @@
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Room {
     // main attributes
-    private int roomID;
+    private Integer roomID;
     private String description;
     private HashMap<String, Integer> exits;
     private ArrayList<Integer> lockedExits;
+    private boolean visited = false;
 
     // Object attributes addon
+    //@JsonIgnoreProperties
     private ArrayList<Item> items;
     private Puzzle puzzle;
     private ArrayList<Monster> monsters;
-    private boolean visited;
+
 
     // instantiate
     public Room() {
@@ -22,11 +26,11 @@ public class Room {
         this.lockedExits = new ArrayList<>();
     }
 
-    public int getRoomID() {
+    public Integer getRoomID() {
         return roomID;
     }
 
-    public void setRoomID(int roomID) {
+    public void setRoomID(Integer roomID) {
         this.roomID = roomID;
     }
 
@@ -44,10 +48,6 @@ public class Room {
 
     public void setExits(HashMap<String, Integer> exits) {
         this.exits = exits;
-    }
-
-    public void addExits(String direction, Integer roomId) {
-        this.exits.put(direction, roomId);
     }
 
     public void setPuzzle(Puzzle puzzle) {
@@ -74,10 +74,6 @@ public class Room {
         throw new UnsupportedOperationException();
     }
 
-    public void setPuzzle(Object aPuzzle) {
-        throw new UnsupportedOperationException();
-    }
-
     public ArrayList<Monster> getMonsters() {
         return monsters;
     }
@@ -101,30 +97,30 @@ public class Room {
         String desc = "Description: " + this.description + "\n";
 
 
-        String visited = "[New Room] \n";
+        String visited = "[New Room] \n\n";
         StringBuilder monster = new StringBuilder();
         StringBuilder items = new StringBuilder();
         String puzzle = "";
 
         if (getVisited()) {
-            visited = "[[You have visited this room before]] \n";
+            visited = "[[You have visited this room before]] \n\n";
         }
 
         if (!this.monsters.isEmpty()) {
             monster = new StringBuilder("[monster(s)]: \n");
             for (Monster m : this.monsters) {
-                monster.append(m.getName()).append("\n");
+                monster.append(m.getName()).append("\n\n");
             }
         }
 
         if (this.puzzle != null) {
-            puzzle = "[puzzle]: \n" + this.puzzle;
+            puzzle = "[puzzle]: \n" + this.puzzle + "\n";
         }
 
         if (!this.items.isEmpty()) {
             items = new StringBuilder("[item(s)]: \n");
             for (Item i : this.items) {
-                items.append(i.getName()).append("\n");
+                items.append(i.getName()).append("\n\n");
             }
         }
 
@@ -136,7 +132,7 @@ public class Room {
             StringBuilder items = new StringBuilder("[item(s)]: \n");
             int count = 1;
             for (Item i : this.items) {
-                items.append(count).append(". ").append(i.getName()).append("\n");
+                items.append(count).append(". ").append(i.getName()).append("\n\n");
                 count += 1;
             }
 

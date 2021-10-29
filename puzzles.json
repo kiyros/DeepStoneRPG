@@ -4,49 +4,49 @@
     "riddle": "It’s a statue of a knight. The hands of the statue are empty and an en-graving at its base reads “This statue is incomplete.” Perhaps there is something you can place here.",
     "solution": "Broken Sword and Shield",
     "hint": "The statue looks like it is missing a few pieces.",
-    "reward": "The Queen’s Jewel",
-    "unlock": [
+    "itemReward": "The Queen’s Jewel",
+    "roomUnlock": [
       6
     ],
-    "room": 7
+    "roomNumber": 7
   },
   {
     "name": "Metal Riddle",
     "riddle": "As you approach the pedestal, you are able to read an engraving that reads “Strong but pure.” Near the pedestal are pieces of iron, gold, and steel.",
     "solution": "Iron",
     "hint": "It has a slot for an ingot",
-    "room": 2
+    "roomNumber": 2
   },
   {
     "name": "The Key",
     "riddle": "This key seems like it opens something in the room, but there are a variety of locked items such as chests, lockboxes, and even a door that leads to another room.",
     "solution": "Key",
     "hint": "I need to exit this room, I wonder if I can use an item.",
-    "unlock": [
+    "roomUnlock": [
       27
     ],
-    "room": 21
+    "roomNumber": 21
   },
   {
     "name": "Tick Tock",
     "riddle": "You approach the pedestal. It is engraved with the words “Unstoppable force.” Nearby is the skull of a powerful monster, an hourglass, and a strange rock.",
     "solution": "Hourglass",
     "hint": "The pedestal is looking for something. Time is running out it seems, wonder what I can use to solve this in a timely manner.",
-    "reward": "Crystal skull",
-    "unlock": [
+    "itemReward": "Crystal skull",
+    "roomUnlock": [
       19
     ],
-    "room": 20
+    "roomNumber": 20
   },
   {
     "name": "Breakthrough",
     "riddle": "Upon inspecting the wall, you realize that it seems severely damaged. You are able to tell that there is something on the other side. Perhaps there is a way to get to the other side.",
     "solution": "Dynamite",
     "hint": "The wall looks like it needs to be taken down.",
-    "unlock": [
+    "roomUnlock": [
       29
     ],
-    "room": 23
+    "roomNumber": 23
   },
   {
     "name": "The Best Defense",
@@ -54,6 +54,6 @@
     "solution": "Aegis Shield",
     "hint": "I need to grab an item without taking damage. Which could assist in that?",
     "penalty": {"damage": -10},
-    "room": 9
+    "roomNumber": 9
   }
 ]

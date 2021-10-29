@@ -1,5 +1,7 @@
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.*;
@@ -34,7 +36,7 @@ public class GameController {
 
     // todo: commands
     // author: Joseph Ongchangco
-    public void commands() throws IOException, ParseException {
+    public void commands() throws IOException {
         // show main menu
         view.showMenu();
 
@@ -74,6 +76,7 @@ public class GameController {
                 case "new game":
                     newGame();
                     // todo new game()
+                    System.out.println(rooms);
                     break;
                 case "save":
                     saveGame();
@@ -128,6 +131,10 @@ public class GameController {
                 case "solve":
                     solvePuzzle();
                     break;
+                // todo: for testing functions [ put any function you want to test here to test in-game ]
+                case "test":
+                    fetchJsonToItem("Dynamite");
+                    break;
 
                 default:
                     view.error("Invalid command try typing it correctly or type 'h' for help");
@@ -161,11 +168,6 @@ public class GameController {
         throw new UnsupportedOperationException();
     }
 
-    // todo: returns the player's inventory
-    public void getPlayerInventory() {
-        throw new UnsupportedOperationException();
-    }
-
     // todo: sets the player Inventory
     public void setPlayerInventory() {
         throw new UnsupportedOperationException();
@@ -187,11 +189,6 @@ public class GameController {
     public void unEquipItem() {
         throw new UnsupportedOperationException();
     }
-
-    // todo: uses an item, most likely a consumable
-//    public void useItem() {
-//        throw new UnsupportedOperationException();
-//    }
 
     // todo: leaves the monster encounter
     public void flee() {
@@ -217,7 +214,7 @@ public class GameController {
         }
 
         // current room
-        for(Item roomItem : rooms.get(player.getCurrentRoom()).getItems()){
+        for (Item roomItem : rooms.get(player.getCurrentRoom()).getItems()) {
             if (roomItem.getName().equals(itemName)) {
                 view.notifier(roomItem.toString());
                 view.notifier(roomItem.getDescription());
@@ -272,7 +269,6 @@ public class GameController {
     }
 
 
-
     // shows ALL the information from the room: items, puzzle, title, monsters, room number.
     public void exploreRoom() {
         view.showRoom(rooms.get(player.getCurrentRoom()));
@@ -301,14 +297,13 @@ public class GameController {
         mapper.writeValue(Paths.get("saveFiles/userData.json").toFile(), player);
 
         // rooms
-        List<Object> roomArray = List.of(rooms.values().toArray());
-        mapper.writeValue(Paths.get("saveFiles/roomData.json").toFile(), roomArray);
+        mapper.writeValue(Paths.get("saveFiles/roomData.json").toFile(), rooms);
 
     }
 
     // todo: loads the game from a .txt file
     public void loadGame() {
-        loadSave("saveFiles/userData.json", "saveFiles/roomData.json");
+        loadJsonToRoom("saveFiles/userData.json", "saveFiles/roomData.json");
     }
 
     // todo: starts a new game
@@ -320,11 +315,11 @@ public class GameController {
         newJsonToRoom("rooms.json", "items.json", "puzzles.json", "monsters.json");
     }
 
-    // todo: items, puzzles, monsters
+    // todo: puzzles, monsters
     // turns the JSON files and reads the information into game Objects and sets the gameController's room to this
     // author: Joseph Ongchangco
     public void newJsonToRoom(String roomPathName, String itemPathName, String puzzlePathName, String monsterPathName) throws IOException {
-        HashMap<Integer, Room> rooms = new HashMap<>();
+        HashMap<Integer, Room> tempRoomsHashMap = new HashMap<>();
         ObjectMapper mapper = new ObjectMapper();
 
         // rooms
@@ -347,46 +342,49 @@ public class GameController {
         // iterator ; roomJSON to room object(s)
         for (JsonNode roomJson : rootRooms) {
             // temporary room
-            Room temp = new Room();
+            try {
+                Room temp = mapper.treeToValue(roomJson, Room.class);
+                tempRoomsHashMap.put(temp.getRoomID(), temp);
+            } catch (Exception Ignored) {
+            }
+
 
             // assign values to temp room object
-            temp.setRoomID(roomJson.get("roomID").asInt());
-            temp.setDescription(roomJson.get("description").toString().replace("\"", ""));
-
-            // room exits
-            JsonNode exits = roomJson.get("exits");
-            for (JsonNode exitIter : exits) {
-                if (exitIter.has("west")) {
-                    temp.addExits("west", exitIter.get("west").asInt());
-                }
-                if (exitIter.has("north")) {
-                    temp.addExits("north", exitIter.get("north").asInt());
-                }
-                if (exitIter.has("east")) {
-                    temp.addExits("east", exitIter.get("east").asInt());
-                }
-                if (exitIter.has("south")) {
-                    temp.addExits("south", exitIter.get("south").asInt());
-                }
-
-
-            }
-
-            // locked rooms
-            if (roomJson.get("locked") != null) {
-                ArrayList<Integer> tempLocked = new ArrayList<>();
-                for (JsonNode locked : roomJson.get("locked")) {
-                    tempLocked.add(locked.asInt());
-                }
-                // add locked rooms to temporary room object
-                temp.setLockedExits(tempLocked);
-            }
+//            temp.setRoomID(roomJson.get("roomID").asInt());
+//            temp.setDescription(roomJson.get("description").toString().replace("\"", ""));
+//
+//            // room exits
+//            JsonNode exits = roomJson.get("exits");
+//            for (JsonNode exitIter : exits) {
+//                if (exitIter.has("west")) {
+//                    temp.addExits("west", exitIter.get("west").asInt());
+//                }
+//                if (exitIter.has("north")) {
+//                    temp.addExits("north", exitIter.get("north").asInt());
+//                }
+//                if (exitIter.has("east")) {
+//                    temp.addExits("east", exitIter.get("east").asInt());
+//                }
+//                if (exitIter.has("south")) {
+//                    temp.addExits("south", exitIter.get("south").asInt());
+//                }
+//            }
+//
+//            // locked rooms
+//            if (roomJson.get("locked") != null) {
+//                ArrayList<Integer> tempLocked = new ArrayList<>();
+//                for (JsonNode locked : roomJson.get("locked")) {
+//                    tempLocked.add(locked.asInt());
+//                }
+//                // add locked rooms to temporary room object
+//                temp.setLockedExits(tempLocked);
+//            }
 
             // add the temporary room object to Map
-            rooms.put(temp.getRoomID(), temp);
-        }
 
+        }
         // todo: monsterJSON to item object(s)
+
         for (JsonNode monsterJson : rootMonster) {
             Monster tempMonster = new Monster();
 
@@ -409,120 +407,101 @@ public class GameController {
             int startRoom = monsterJson.get("rangeStart").asInt();
             int endRoom = monsterJson.get("rangeEnd").asInt();
             int roomPlacement = r.nextInt(endRoom - startRoom);
-            rooms.get(roomPlacement).getMonsters().add(tempMonster);
+
+            try{
+                tempRoomsHashMap.get(roomPlacement).getMonsters().add(tempMonster);
+            }
+            catch (Exception ignored){}
         }
 
-        // todo: itemJSON to item object(s)
+        // items
         for (JsonNode itemJson : rootItems) {
             Item item = new baseItem();
 
             // cast to proper item type
             // for testing --> System.out.println(itemJson.get("type").toString().replace("\"", ""));
 
-            // weapon
             if (itemJson.get("type").toString().replace("\"", "").equals("weapon")) {
-                item = new WeaponItem();
-                ((WeaponItem) item).setDamage(itemJson.get("damage").asInt());
+                item = mapper.treeToValue(itemJson, WeaponItem.class);
+            } else if (itemJson.get("type").toString().replace("\"", "").equals("equip")) {
+                item = mapper.treeToValue(itemJson, EquipItem.class);
+            } else if (itemJson.get("type").toString().replace("\"", "").equals("puzzle")) {
+                item = mapper.treeToValue(itemJson, PuzzleItem.class);
             }
-            // equip
-            else if (itemJson.get("type").toString().replace("\"", "").equals("equip")) {
-                item = new EquipItem();
-                ((EquipItem) item).setStatType(itemJson.get("stat").toString().replace("\"", ""));
-                ((EquipItem) item).setStatBoostAmount(itemJson.get("statBoost").asDouble());
+            try {
+                rooms.get(item.getRoomNumber()).addItems(item);
+            } catch (Exception ignored) {
             }
-            // misc
-            else if (itemJson.get("type").toString().replace("\"", "").equals("misc")) {
-                item = new baseItem();
-            }
-            // puzzle
-            else if (itemJson.get("type").toString().replace("\"", "").equals("puzzle")) {
-                item = new PuzzleItem();
-            }
-
-            // basic item attributes
-            item.setName(itemJson.get("name").toString().replace("\"", ""));
-            item.setDescription(itemJson.get("description").toString().replace("\"", ""));
-            item.setType(itemJson.get("type").toString().replace("\"", ""));
-
-            if (itemJson.get("room") != null) {
-                rooms.get(itemJson.get("room").asInt()).addItems(item);
-            }
-
 
         }
 
-        // todo: puzzleJSON to puzzle object(s)
+        // puzzle json to puzzle Object
         for (JsonNode puzzleJson : rootPuzzles) {
-            Puzzle tempPuzzle = new Puzzle();
-
-            // basic puzzle attributes
-            tempPuzzle.setName(puzzleJson.get("name").toString().replace("\"", ""));
-            tempPuzzle.setSolution(puzzleJson.get("solution").toString().replace("\"", ""));
-            tempPuzzle.setHint(puzzleJson.get("hint").toString().replace("\"", ""));
-            tempPuzzle.setRoomNumber(puzzleJson.get("room").asInt());
-
+            Puzzle tempPuzzle = mapper.treeToValue(puzzleJson, Puzzle.class);
 
             // place puzzle into room
-            rooms.get(tempPuzzle.getRoomNumber()).setPuzzle(tempPuzzle);
+            try {
+                tempRoomsHashMap.get(tempPuzzle.getRoomNumber()).setPuzzle(tempPuzzle);
+            } catch (Exception ignored) {
+            }
+
         }
 
-
         // set the game room to the generated Map the method made from JSON values
-        this.rooms = rooms;
-        System.out.println(rooms.get(player.getCurrentRoom()));
+        rooms = tempRoomsHashMap;
     }
 
-    // todo: loadSave
+    // todo: loadJsonToRoom
     // loads save
-    public void loadSave(String playerPath, String roomPaths) {
+    public void loadJsonToRoom(String playerPath, String roomPaths) {
         ObjectMapper mapper = new ObjectMapper();
     }
 
-    /*
-     todo: solve puzzle, when user types in "solve puzzle", this method should automatically grab the item remove it and set puzzle in the room to solved
-     */
+    // returns an item from items.json based on the item name
+    public Item fetchJsonToItem(String itemName) throws IOException {
+        Item tempItem = new baseItem();
+        ObjectMapper itemMap = new ObjectMapper();
 
+        // items
+        File itemJSON = new File("items.json");
+        JsonNode rootItems = itemMap.readTree(itemJSON);
+
+        if (!rootItems.has(itemName)) {
+            view.notifier("Item does not Exist");
+            return null;
+        }
+
+        // read values into item
+        JsonNode item = rootItems.get(itemName);
+        if (item.get("type").toString().replace("\"", "").equals("weapon")) {
+            tempItem = itemMap.treeToValue(item, WeaponItem.class);
+        } else if (item.get("type").toString().replace("\"", "").equals("equip")) {
+            tempItem = itemMap.treeToValue(item, EquipItem.class);
+        } else if (item.get("type").toString().replace("\"", "").equals("puzzle")) {
+            tempItem = itemMap.treeToValue(item, PuzzleItem.class);
+        }
+
+        return tempItem;
+    }
+
+    //todo: solve puzzle, when user types in "solve puzzle", this method should automatically grab the item remove it and set puzzle in the room to solved
     public void solvePuzzle() {
         view.notifier("What item would you like to use to solve this puzzle? ");
 
         int currentRoom = player.getCurrentRoom();
-        if (rooms.get(currentRoom).getPuzzle().getSolution().equalsIgnoreCase(userInput.nextLine())){
+        if (rooms.get(currentRoom).getPuzzle().getSolution().equalsIgnoreCase(userInput.nextLine())) {
             player.use(userInput.nextLine());
             rooms.get(currentRoom).getPuzzle().setSolved(true);
-            if(!rooms.get(currentRoom).getPuzzle().getRoomUnlock().isEmpty()){
+            if (!rooms.get(currentRoom).getPuzzle().getRoomUnlock().isEmpty()) {
                 rooms.get(currentRoom).getLockedExits().clear();
                 rooms.get(currentRoom).getPuzzle().getRoomUnlock().remove(0);
             }
-        }
-        else{
+        } else {
             view.notifier("This item is not the correct answer.");
         }
     }
 
-//    public void solvePuzzle() {
-//       int currentRoom = player.getCurrentRoom();
-//       rooms.get(currentRoom).getPuzzle().setSolved(true);
-//       String solution = rooms.get(currentRoom).getPuzzle().getSolution();
-//       for(Item items: player.getInventory()){
-//           if(items.getName().equalsIgnoreCase(solution)){
-//               player.getInventory().remove(items);
-//           }
-//        }
-//    }
-
-    // todo: gets puzzle object from where a player current is
-//    public Puzzle getPuzzle()  {
-//       //Puzzle p;
-//        int currentRoom = player.getCurrentRoom();
-//        for (Room key : rooms.values()) {
-//            if (key.getRoomID() == currentRoom) {
-//                return key.getPuzzle();
-//
-//        }
-//    }
-//            return null;
-//    }
-
+    // get puzzle, returns a puzzle object
     public Puzzle getPuzzle() {
         int currentRoom = player.getCurrentRoom();
         return (rooms.get(currentRoom).getPuzzle());
@@ -595,7 +574,7 @@ public class GameController {
         entity.setDefense(defense);
     }
 
-    interface lambda{
+    interface lambda {
         int getRoomNum(String dir);
     }
 }

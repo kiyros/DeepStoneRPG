@@ -9,7 +9,4 @@ public class Monster extends Entity{
 	public void setItemDropName(String itemDropName) {
 		this.itemDropName = itemDropName;
 	}
-	public String toString() {
-		return "";
-	}
 }

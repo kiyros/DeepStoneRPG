@@ -3,6 +3,7 @@ abstract class Item {
     private String type;
     private String description;
     private boolean puzzle;
+    private Integer roomNumber;
 
     public boolean isPuzzle() {
         return puzzle;
@@ -10,6 +11,14 @@ abstract class Item {
 
     public void setPuzzle(boolean puzzle) {
         this.puzzle = puzzle;
+    }
+
+    public Integer getRoomNumber() {
+        return roomNumber;
+    }
+
+    public void setRoomNumber(Integer roomNumber) {
+        this.roomNumber = roomNumber;
     }
     
     // sets the name of an item
@@ -57,7 +66,7 @@ class baseItem extends Item {
 // todo: equip item
 class EquipItem extends Item {
     private String statType;
-    private double statBoostAmount;
+    private double statBoost;
 
     public String getStatType() {
         return statType;
@@ -67,12 +76,12 @@ class EquipItem extends Item {
         this.statType = statType;
     }
 
-    public double getStatBoostAmount() {
-        return statBoostAmount;
+    public double getStatBoost() {
+        return statBoost;
     }
 
-    public void setStatBoostAmount(double statBoostAmount) {
-        this.statBoostAmount = statBoostAmount;
+    public void setStatBoost(double statBoost) {
+        this.statBoost = statBoost;
     }
 }
 

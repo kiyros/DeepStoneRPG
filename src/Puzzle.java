@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 
 public class Puzzle {
     private String name;
@@ -6,12 +8,28 @@ public class Puzzle {
     private String solution;
     private boolean solved;
     private String hint;
-    private Item itemReward;
+    private String itemReward;
     private ArrayList<Integer> roomUnlock;
     private int roomNumber;
 
     // puts the room in a condition, like everytime you pick up an item, you fight a random monster
-    private String Penalty;
+    private HashMap<String, Integer> Penalty;
+
+    public HashMap<String, Integer> getPenalty() {
+        return Penalty;
+    }
+
+    public void setPenalty(HashMap<String, Integer> penalty) {
+        Penalty = penalty;
+    }
+
+    public ArrayList<Integer> getRoomUnlock() {
+        return roomUnlock;
+    }
+
+    public void setRoomUnlock(ArrayList<Integer> roomUnlock) {
+        this.roomUnlock = roomUnlock;
+    }
 
     public int getRoomNumber() {
         return roomNumber;
@@ -61,28 +79,12 @@ public class Puzzle {
         this.hint = aHint;
     }
 
-    public Item getItemReward() {
+    public String getItemReward() {
         return this.itemReward;
     }
 
-    public void setItemReward(Item aItemReward) {
+    public void setItemReward(String aItemReward) {
         this.itemReward = aItemReward;
-    }
-
-    public ArrayList<Integer> getRoomUnlock() {
-        throw new UnsupportedOperationException();
-    }
-
-    public void setRoomUnlock(ArrayList<Integer> aRoomUnlock) {
-        throw new UnsupportedOperationException();
-    }
-
-    public String getPenalty() {
-        return this.Penalty;
-    }
-
-    public void setPenalty(String aPuzzleModifier) {
-        this.Penalty = aPuzzleModifier;
     }
 
     public String toString() {

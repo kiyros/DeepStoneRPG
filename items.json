@@ -1,103 +1,93 @@
-[
-  {
-    "name": "Example",
-    "type": "misc",
-    "description": "desc",
-    "room": null,
-    "monster": "monster name here"
-  },
-  {
+{
+  "The Philosophers sword": {
     "name": "The Philosophers sword",
     "type": "weapon",
     "damage": 15,
     "description": "A powerful sword that was wielded by a great king from the kingdom of Rohan. This sword will deal damage of -15hp to any monster that comes across it.",
-    "room": 0
+    "roomNumber": 0
   },
-  {
+  "The Queen’s Jewel": {
     "name": "The Queen’s Jewel",
     "type": "equip",
     "description": "A rare gemstone from a dynasty of royalty. Putting this ring on will regenerate a player’s HP% Faster.",
-    "room": 7,
+    "roomNumber": 7,
     "puzzle": true,
-    "stat": "health",
+    "statType": "health",
     "statBoost": 0.1
   },
-  {
+  "Sharks tooth": {
     "name": "Sharks tooth",
     "type": "equip",
-    "monster": "Xenomorph Shark",
     "description": "A tooth from the notorious megalodon. Equipping this gives a 10% boost to players damage",
-    "stat": "damage",
+    "statType": "damage",
     "statBoost": 0.1
   },
-  {
+  "Ancient vase": {
     "name": "Ancient vase",
     "type": "equip",
-    "monster": "Skeleton King",
     "description": "King Tut’s favorite vase. It is rumored that whoever possesses it is doomed for eternity. Lowers players defense by 10% if equipped",
-    "stat": "defense",
+    "statType": "defense",
     "statBoost": -0.1
   },
-  {
+  "Crystal skull": {
     "name": "Crystal skull",
     "type": "misc",
     "description": "A crystal skull that was taken by Indiana Jones himself.",
-    "room": 20,
+    "roomNumber": 20,
     "puzzle": true
   },
-  {
+  "Aegis Shield": {
     "name": "Aegis Shield",
     "type": "misc",
     "description": "A magical shield that was once carried by the Greek god Zeus.",
     "room": 9,
     "puzzle": true
   },
-  {
+  "Ragnarok": {
     "name": "Ragnarok",
     "type": "weapon",
     "damage": 30,
-    "monster": "Garland",
     "description": "A God-Slaying Divine sword fused from rage of the gods, capable of mass destruction. Equipping this sword allows the player to do -30 damage to an enemy."
   },
-  {
+  "Broken Sword and Shield": {
     "name": "Broken Sword and Shield",
     "type": "puzzle",
     "description": "A broken and rusted pair of armory, it looks like it belongs to the statue nearby."
   },
-  {
+  "Iron": {
     "name": "Iron",
     "type": "puzzle",
     "description": "An iron ingot."
   },
-  {
+  "Gold": {
     "name": "Gold",
     "type": "puzzle",
     "description": "A gold ingot."
   },
-  {
+  "Steel": {
     "name": "Steel",
     "type": "puzzle",
     "description": "A steel ingot."
   },
-  {
+  "Key": {
     "name": "Key",
     "type": "puzzle",
     "description": "A key that fits many keyholes, but only unlocks one."
   },
-  {
+  "Rock": {
     "name": "Rock",
     "type": "puzzle",
     "description": "A large, heavy, rock."
   },
-  {
+  "Hourglass": {
     "name": "Hourglass",
     "type": "puzzle",
     "description": "A large hourglass with time slowly ticking."
   },
-  {
+  "Dynamite": {
     "name": "Dynamite",
     "type": "puzzle",
     "description": "A large explosive that can be used to tear down large walls."
   }
-]
+}
 
