@@ -4,7 +4,7 @@
     "type": "weapon",
     "damage": 15,
     "description": "A powerful sword that was wielded by a great king from the kingdom of Rohan. This sword will deal damage of -15hp to any monster that comes across it.",
-    "roomNumber": 0
+    "roomNumber": 7
   },
   "The Queen’s Jewel": {
     "name": "The Queen’s Jewel",
@@ -40,7 +40,7 @@
     "name": "Aegis Shield",
     "type": "misc",
     "description": "A magical shield that was once carried by the Greek god Zeus.",
-    "room": 9,
+    "roomNumber": 9,
     "puzzle": true
   },
   "Ragnarok": {

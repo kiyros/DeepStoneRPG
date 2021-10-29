@@ -297,10 +297,7 @@ public class GameController {
         mapper.writeValue(Paths.get("saveFiles/userData.json").toFile(), player);
 
         // rooms
-
         mapper.writeValue(Paths.get("saveFiles/roomData.json").toFile(), rooms);
-
-
 
     }
 
@@ -342,7 +339,7 @@ public class GameController {
         JsonNode rootPuzzles = mapper.readTree(puzzleJSON);
         JsonNode rootMonster = mapper.readTree(monsterJSON);
 
-        // iterator ; roomJSON to room object(s)
+        // rooms
         for (JsonNode roomJson : rootRooms) {
             // temporary room
             try {
@@ -350,44 +347,9 @@ public class GameController {
                 tempRoomsHashMap.put(temp.getRoomID(), temp);
             } catch (Exception Ignored) {
             }
-
-
-            // assign values to temp room object
-//            temp.setRoomID(roomJson.get("roomID").asInt());
-//            temp.setDescription(roomJson.get("description").toString().replace("\"", ""));
-//
-//            // room exits
-//            JsonNode exits = roomJson.get("exits");
-//            for (JsonNode exitIter : exits) {
-//                if (exitIter.has("west")) {
-//                    temp.addExits("west", exitIter.get("west").asInt());
-//                }
-//                if (exitIter.has("north")) {
-//                    temp.addExits("north", exitIter.get("north").asInt());
-//                }
-//                if (exitIter.has("east")) {
-//                    temp.addExits("east", exitIter.get("east").asInt());
-//                }
-//                if (exitIter.has("south")) {
-//                    temp.addExits("south", exitIter.get("south").asInt());
-//                }
-//            }
-//
-//            // locked rooms
-//            if (roomJson.get("locked") != null) {
-//                ArrayList<Integer> tempLocked = new ArrayList<>();
-//                for (JsonNode locked : roomJson.get("locked")) {
-//                    tempLocked.add(locked.asInt());
-//                }
-//                // add locked rooms to temporary room object
-//                temp.setLockedExits(tempLocked);
-//            }
-
-            // add the temporary room object to Map
-
         }
-        // todo: monsterJSON to item object(s)
 
+        // todo: monsterJSON to item object(s)
         for (JsonNode monsterJson : rootMonster) {
             Monster tempMonster = new Monster();
 
@@ -431,11 +393,13 @@ public class GameController {
             } else if (itemJson.get("type").toString().replace("\"", "").equals("puzzle")) {
                 item = mapper.treeToValue(itemJson, PuzzleItem.class);
             }
-            try {
-                rooms.get(item.getRoomNumber()).addItems(item);
-            } catch (Exception ignored) {
+            else if (itemJson.get("type").toString().replace("\"", "").equals("misc")) {
+                item = mapper.treeToValue(itemJson, PuzzleItem.class);
             }
 
+            if(item.getRoomNumber() != null){
+                tempRoomsHashMap.get(item.getRoomNumber()).addItems(item);
+            }
         }
 
         // puzzle json to puzzle Object
