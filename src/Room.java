@@ -12,7 +12,6 @@ public class Room {
     private boolean visited = false;
 
     // Object attributes addon
-    //@JsonIgnoreProperties
     private ArrayList<Item> items;
     private Puzzle puzzle;
     private ArrayList<Monster> monsters;
@@ -53,6 +52,9 @@ public class Room {
     public void setPuzzle(Puzzle puzzle) {
         this.puzzle = puzzle;
     }
+    public Puzzle getPuzzle() {
+        return puzzle;
+    }
 
     public boolean isVisited() {
         return visited;
@@ -70,9 +72,6 @@ public class Room {
         this.items.add(items);
     }
 
-    public Puzzle getPuzzle() {
-        throw new UnsupportedOperationException();
-    }
 
     public ArrayList<Monster> getMonsters() {
         return monsters;
