@@ -131,6 +131,10 @@ public class GameController {
                 case "solve":
                     solvePuzzle();
                     break;
+                case "health":
+                case "hp":
+                    getPlayerHealth();
+                    break;
                 // todo: for testing functions [ put any function you want to test here to test in-game ]
                 case "test":
                     fetchJsonToItem("Dynamite");
@@ -165,7 +169,7 @@ public class GameController {
 
     // todo: gets the health of the player
     public void getPlayerHealth() {
-        throw new UnsupportedOperationException();
+        view.notifier(player.getHealth() + " health points");
     }
 
     // todo: sets the player Inventory
@@ -276,7 +280,7 @@ public class GameController {
 
     // todo: gets the player name
     public String getPlayerName() {
-        throw new UnsupportedOperationException();
+       return "My name is " + player.getName();
     }
 
     // todo: sets the player name
