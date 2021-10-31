@@ -99,7 +99,6 @@ public class Room {
         String puzzle = "";
 
         if (getVisited()) {
-            System.out.println("value: " + getVisited());
             visited = "[[You have visited this room before]] \n\n";
         }
 

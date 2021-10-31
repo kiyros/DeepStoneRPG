@@ -497,10 +497,6 @@ public class GameController {
 
         // set the game room to the generated Map the method made from JSON values
         rooms = tempRoomsHashMap;
-        for (Room x : rooms.values()){
-            System.out.println(x.getVisited());
-        }
-
     }
 
     // todo: loadJsonToRoom
