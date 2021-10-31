@@ -339,11 +339,11 @@ public class GameController {
         // change player current room
         player.setCurrentRoom(rooms.get(player.getCurrentRoom()).getExits().get(direction));
 
-        // set room to visited as the player is leaving the room
-        rooms.get(player.getCurrentRoom()).setVisited(true);
-
         // display to user
         view.showRoom(rooms.get(player.getCurrentRoom()));
+
+        // set room to visited as the player is leaving the room
+        rooms.get(player.getCurrentRoom()).setVisited(true);
     }
 
 
@@ -367,7 +367,7 @@ public class GameController {
         throw new UnsupportedOperationException();
     }
 
-    // todo: saves game into an .txt file
+    // saves game
     public void saveGame() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
 
@@ -389,8 +389,11 @@ public class GameController {
     public void newGame() throws IOException {
         // generate random stats values for player
         randomStatGenerator(player);
-
+        player.setCurrentRoom(7);
         newJsonToRoom("rooms.json", "items.json", "puzzles.json", "monsters.json");
+
+        // show the room that the player spawns in
+        exploreRoom();
     }
 
     // todo: puzzles, monsters
@@ -494,6 +497,10 @@ public class GameController {
 
         // set the game room to the generated Map the method made from JSON values
         rooms = tempRoomsHashMap;
+        for (Room x : rooms.values()){
+            System.out.println(x.getVisited());
+        }
+
     }
 
     // todo: loadJsonToRoom
