@@ -14,10 +14,15 @@ public class GameController {
     private HashMap<Integer, Room> rooms = new HashMap<>();
     private final Scanner userInput;
     private Puzzle puzzle;
+    private ArrayList<Item>generalItem = new ArrayList<Item>();
 	/*
 	author: Joseph Ongchangco
 
 	 */
+
+    public ArrayList<Item> getGeneralItem() {
+        return generalItem;
+    }
 
     // sets up constructor, default constructor for main class
     public GameController(Player player, PlayerView view) {
@@ -447,7 +452,7 @@ public class GameController {
         } else if (item.get("type").toString().replace("\"", "").equals("puzzle")) {
             tempItem = itemMap.treeToValue(item, PuzzleItem.class);
         }
-
+        generalItem.add(tempItem);
         return tempItem;
     }
 
@@ -550,5 +555,14 @@ public class GameController {
 
     interface lambda {
         int getRoomNum(String dir);
+    }
+    public Item parseStringIoItem(String itemName) {
+        for (Item i : getGeneralItem()) {
+            if (i.getName().equalsIgnoreCase(getPuzzle().getItemReward())) {
+                return i;
+            }// closes it statement
+        }//closes for loop
+
+        return null;
     }
 }
