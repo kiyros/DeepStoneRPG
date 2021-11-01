@@ -14,7 +14,7 @@ public class GameController {
     private HashMap<Integer, Room> rooms = new HashMap<>();
     private final Scanner userInput;
     private Puzzle puzzle;
-    private ArrayList<Item>generalItem = new ArrayList<Item>();
+    private ArrayList<Item> generalItem = new ArrayList<Item>();
 	/*
 	author: Joseph Ongchangco
 
@@ -378,10 +378,10 @@ public class GameController {
             int endRoom = monsterJson.get("rangeEnd").asInt();
             int roomPlacement = r.nextInt(endRoom - startRoom);
 
-            try{
+            try {
                 tempRoomsHashMap.get(roomPlacement).getMonsters().add(tempMonster);
+            } catch (Exception ignored) {
             }
-            catch (Exception ignored){}
         }
 
         // items
@@ -397,12 +397,11 @@ public class GameController {
                 item = mapper.treeToValue(itemJson, EquipItem.class);
             } else if (itemJson.get("type").toString().replace("\"", "").equals("puzzle")) {
                 item = mapper.treeToValue(itemJson, PuzzleItem.class);
-            }
-            else if (itemJson.get("type").toString().replace("\"", "").equals("misc")) {
+            } else if (itemJson.get("type").toString().replace("\"", "").equals("misc")) {
                 item = mapper.treeToValue(itemJson, PuzzleItem.class);
             }
 
-            if(item.getRoomNumber() != null){
+            if (item.getRoomNumber() != null) {
                 tempRoomsHashMap.get(item.getRoomNumber()).addItems(item);
             }
         }
@@ -457,23 +456,24 @@ public class GameController {
     }
 
     //todo: solve puzzle, when user types in "solve puzzle", this method should automatically grab the item remove it and set puzzle in the room to solved
-    public void solvePuzzle() {
+    public void solvePuzzle() throws IOException {
         view.notifier("What item would you like to use to solve this puzzle? ");
         view.showInventory(player);
         String returnStatement = player.use(userInput.nextLine());
         int currentRoom = player.getCurrentRoom();
         if (!returnStatement.equals("none") && getPuzzle().getSolution().equals(returnStatement)) {
             getPuzzle().setSolved(true);
-            Item thing = parseStringIoItem(getPuzzle().getItemReward());
-            rooms.get(currentRoom).getItems().add(thing);
-            view.notifier("Items dropped in room");
+            Item thing = fetchJsonToItem(getPuzzle().getItemReward());
+            // rooms.get(currentRoom).getItems().add(thing);
 
             if (getPuzzle().getItemReward() != null) {
                 rooms.get(currentRoom).getItems().add(thing);
+                view.notifier("Reward Items dropped in dropped in room");
+
             }
             if (!rooms.get(currentRoom).getLockedExits().isEmpty()) {
                 rooms.get(currentRoom).getLockedExits().clear();
-                //  rooms.get(currentRoom).getPuzzle().getRoomUnlock().remove(0);
+                getPuzzle().getRoomUnlock().remove(0);
             }
         } else {
             view.notifier("This item is not the correct answer. Or is not in your inventory ");
@@ -556,13 +556,44 @@ public class GameController {
     interface lambda {
         int getRoomNum(String dir);
     }
+
     public Item parseStringIoItem(String itemName) {
+        Item testItem = new baseItem();
+
         for (Item i : getGeneralItem()) {
             if (i.getName().equalsIgnoreCase(getPuzzle().getItemReward())) {
                 return i;
             }// closes it statement
         }//closes for loop
 
-        return null;
+        return testItem;
     }
+
 }
+//    public Item parseStringToItemNew(String item) {
+//
+//        int check = getGeneralItem().size();
+//        int i = 0;
+//        boolean done = false;
+//        // checks through the maximum amount of items that could exist within the
+//        // ArrayList or until done is true
+//
+//        while (!done && i < check) {
+//            // if Item ArrayList(inventory) has any Items that has the same name the user
+//            // put in
+//            if (getGeneralItem().get(i).getName().equalsIgnoreCase(item)) {
+//                // set that index as an item and add that item to the room ArrayList and remove
+//                // from your inventory
+//                Item thing = getGeneralItem().get(i);
+//                done= true;
+//                return thing;
+//
+//            } else {
+//                // add + 1 to check next index
+//                i++;
+//
+//            }
+//
+//
+//
+//
