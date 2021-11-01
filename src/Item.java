@@ -1,9 +1,26 @@
+import com.fasterxml.jackson.annotation.*;
+
+@JsonTypeInfo(use=JsonTypeInfo.Id.NAME, property="type", visible = true)
+@JsonSubTypes(
+        {
+                @JsonSubTypes.Type(value = EquipItem.class, name = "equip"),
+                @JsonSubTypes.Type(value = baseItem.class, name = "baseItem"),
+                @JsonSubTypes.Type(value = WeaponItem.class, name = "weapon"),
+                @JsonSubTypes.Type(value = PuzzleItem.class, name = "PuzzleItem"),
+        })
+
 abstract class Item {
     private String name;
     private String type;
     private String description;
     private boolean puzzle;
     private Integer roomNumber;
+
+
+    // dummy constructor
+    public Item() {
+
+    }
 
     public boolean isPuzzle() {
         return puzzle;
@@ -20,7 +37,7 @@ abstract class Item {
     public void setRoomNumber(Integer roomNumber) {
         this.roomNumber = roomNumber;
     }
-    
+
     // sets the name of an item
     public String getName() {
         return name;
@@ -36,7 +53,8 @@ abstract class Item {
         return type;
     }
 
-    // sets the type of an item, [puzzle][HealthConsumable][weaponItem]
+    // sets the type of item, [puzzle][HealthConsumable][weaponItem]
+    //@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
     public void setType(String type) {
         this.type = type;
     }
@@ -58,12 +76,14 @@ abstract class Item {
 }
 
 // baseItem, the generic item holder
+@JsonTypeName("baseItem")
 class baseItem extends Item {
     // collectable????
 }
 
-// puzzle item
+
 // todo: equip item
+@JsonTypeName("equip")
 class EquipItem extends Item {
     private String statType;
     private double statBoost;
@@ -85,6 +105,7 @@ class EquipItem extends Item {
     }
 }
 
+@JsonTypeName("weapon")
 class WeaponItem extends Item {
     private int damage;
 
@@ -103,7 +124,11 @@ class WeaponItem extends Item {
     }
 }
 
-class PuzzleItem extends Item {}
+// puzzle item
+@JsonTypeName("PuzzleItem")
+class PuzzleItem extends Item {
+
+}
 
 class HealthConsumable extends Item {
     private int _healthValue;
