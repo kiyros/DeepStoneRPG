@@ -14,7 +14,7 @@ public class GameController {
     private HashMap<Integer, Room> rooms = new HashMap<>();
     private final Scanner userInput;
     private Puzzle puzzle;
-    private ArrayList<Item> generalItem = new ArrayList<Item>();
+
 	/*
 	author: Joseph Ongchangco
 
@@ -459,7 +459,8 @@ public class GameController {
     public void solvePuzzle() throws IOException {
         view.notifier("What item would you like to use to solve this puzzle? ");
         view.showInventory(player);
-        String returnStatement = player.use(userInput.nextLine());
+        String command = userInput.nextLine();
+        String returnStatement = player.use(command);
         int currentRoom = player.getCurrentRoom();
         if (!returnStatement.equals("none") && getPuzzle().getSolution().equals(returnStatement)) {
             getPuzzle().setSolved(true);
@@ -475,6 +476,8 @@ public class GameController {
                 rooms.get(currentRoom).getLockedExits().clear();
                 getPuzzle().getRoomUnlock().remove(0);
             }
+        } else if (command.equals("leave")) {
+            view.notifier("You have left the puzzle");
         } else {
             view.notifier("This item is not the correct answer. Or is not in your inventory ");
         }
@@ -557,43 +560,4 @@ public class GameController {
         int getRoomNum(String dir);
     }
 
-    public Item parseStringIoItem(String itemName) {
-        Item testItem = new baseItem();
-
-        for (Item i : getGeneralItem()) {
-            if (i.getName().equalsIgnoreCase(getPuzzle().getItemReward())) {
-                return i;
-            }// closes it statement
-        }//closes for loop
-
-        return testItem;
-    }
-
 }
-//    public Item parseStringToItemNew(String item) {
-//
-//        int check = getGeneralItem().size();
-//        int i = 0;
-//        boolean done = false;
-//        // checks through the maximum amount of items that could exist within the
-//        // ArrayList or until done is true
-//
-//        while (!done && i < check) {
-//            // if Item ArrayList(inventory) has any Items that has the same name the user
-//            // put in
-//            if (getGeneralItem().get(i).getName().equalsIgnoreCase(item)) {
-//                // set that index as an item and add that item to the room ArrayList and remove
-//                // from your inventory
-//                Item thing = getGeneralItem().get(i);
-//                done= true;
-//                return thing;
-//
-//            } else {
-//                // add + 1 to check next index
-//                i++;
-//
-//            }
-//
-//
-//
-//
