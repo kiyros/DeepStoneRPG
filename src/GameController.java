@@ -462,20 +462,20 @@ public class GameController {
         view.showInventory(player);
         String returnStatement = player.use(userInput.nextLine());
         int currentRoom = player.getCurrentRoom();
-        if (!returnStatement.equals("none") && getPuzzle().getSolution().equals(returnStatement)){
+        if (!returnStatement.equals("none") && getPuzzle().getSolution().equals(returnStatement)) {
             getPuzzle().setSolved(true);
-            rooms.get(currentRoom).getItems().add(getPuzzle().getItemReward());
+            Item thing = parseStringIoItem(getPuzzle().getItemReward());
+            rooms.get(currentRoom).getItems().add(thing);
             view.notifier("Items dropped in room");
 
-            if(getPuzzle().getItemReward()!=null){
-                rooms.get(currentRoom).getItems().add(getPuzzle().getItemReward());
+            if (getPuzzle().getItemReward() != null) {
+                rooms.get(currentRoom).getItems().add(thing);
             }
-            if(!rooms.get(currentRoom).getLockedExits().isEmpty()){
+            if (!rooms.get(currentRoom).getLockedExits().isEmpty()) {
                 rooms.get(currentRoom).getLockedExits().clear();
                 //  rooms.get(currentRoom).getPuzzle().getRoomUnlock().remove(0);
             }
-        }
-        else{
+        } else {
             view.notifier("This item is not the correct answer. Or is not in your inventory ");
         }
     }
