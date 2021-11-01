@@ -63,7 +63,14 @@ public class PlayerView {
                 "\n : e or east to travel east" +
                 "\n : n or north to travel north" +
                 "\n : s or south to travel south" +
-                "\n : p or pickup to pick up an item");
+                "\n : p or pickup to pick up an item" +
+                "\n : health or hp to see current health" +
+                "\n : stats to see all player stats" +
+                "\n : engage to begin fight with a monster in the room" +
+                "\n " +
+                "\n ONLY DURING FIGHT SEQUENCE" +
+                "\n : fight to do an attack on the monster" +
+                "\n : back to leave the fight and disengage\n");
     }
 
     // show players inventory

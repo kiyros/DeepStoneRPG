@@ -85,8 +85,8 @@
     "roomID": 10,
     "description": "The room is circular and about twenty feet across. A deep moat of water with a bridge. The smell of mold is omnipresent.",
     "exits": {
-      "east": 9,
-      "west": 11
+      "east": 11,
+      "west": 9
     }
   },
   "11": {
@@ -126,7 +126,7 @@
     "description": "The room is a large cave area, stalactites hang from the ceiling, there is a large crack in the ground.",
     "exits": {
       "north": 9,
-      "east": 14
+      "west": 14
     }
   },
   "16": {
