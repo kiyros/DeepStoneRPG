@@ -1,12 +1,5 @@
 [
   {
-    "name" : "exampleMonster",
-    "desc" : "",
-    "rangeStart" : 12,
-    "rangeEnd" : 34,
-    "drops" : false
-  },
-  {
     "name" : "Slime",
     "desc" : "A gelatinous, amorphous creature that prey on other living organisms.",
     "rangeStart" : 0,

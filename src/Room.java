@@ -9,7 +9,7 @@ public class Room {
     private String description;
     private HashMap<String, Integer> exits;
     private ArrayList<Integer> lockedExits;
-    private boolean visited = false;
+    private boolean visited;
 
     // Object attributes addon
     private ArrayList<Item> items;
@@ -52,12 +52,9 @@ public class Room {
     public void setPuzzle(Puzzle puzzle) {
         this.puzzle = puzzle;
     }
+
     public Puzzle getPuzzle() {
         return puzzle;
-    }
-
-    public boolean isVisited() {
-        return visited;
     }
 
     public ArrayList<Item> getItems() {
