@@ -449,7 +449,7 @@ public class GameController {
         } else if (item.get("type").toString().replace("\"", "").equals("puzzle")) {
             tempItem = itemMap.treeToValue(item, PuzzleItem.class);
         }
-        generalItem.add(tempItem);
+        
         return tempItem;
     }
 
