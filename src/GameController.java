@@ -454,17 +454,24 @@ public class GameController {
     //todo: solve puzzle, when user types in "solve puzzle", this method should automatically grab the item remove it and set puzzle in the room to solved
     public void solvePuzzle() {
         view.notifier("What item would you like to use to solve this puzzle? ");
-
+        view.showInventory(player);
+        String returnStatement = player.use(userInput.nextLine());
         int currentRoom = player.getCurrentRoom();
-        if (rooms.get(currentRoom).getPuzzle().getSolution().equalsIgnoreCase(userInput.nextLine())) {
-            player.use(userInput.nextLine());
-            rooms.get(currentRoom).getPuzzle().setSolved(true);
-            if (!rooms.get(currentRoom).getPuzzle().getRoomUnlock().isEmpty()) {
-                rooms.get(currentRoom).getLockedExits().clear();
-                rooms.get(currentRoom).getPuzzle().getRoomUnlock().remove(0);
+        if (!returnStatement.equals("none") && getPuzzle().getSolution().equals(returnStatement)){
+            getPuzzle().setSolved(true);
+            rooms.get(currentRoom).getItems().add(getPuzzle().getItemReward());
+            view.notifier("Items dropped in room");
+
+            if(getPuzzle().getItemReward()!=null){
+                rooms.get(currentRoom).getItems().add(getPuzzle().getItemReward());
             }
-        } else {
-            view.notifier("This item is not the correct answer.");
+            if(!rooms.get(currentRoom).getLockedExits().isEmpty()){
+                rooms.get(currentRoom).getLockedExits().clear();
+                //  rooms.get(currentRoom).getPuzzle().getRoomUnlock().remove(0);
+            }
+        }
+        else{
+            view.notifier("This item is not the correct answer. Or is not in your inventory ");
         }
     }
 
