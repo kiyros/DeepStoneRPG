@@ -20,9 +20,7 @@ public class GameController {
 
 	 */
 
-    public ArrayList<Item> getGeneralItem() {
-        return generalItem;
-    }
+   
 
     // sets up constructor, default constructor for main class
     public GameController(Player player, PlayerView view) {
