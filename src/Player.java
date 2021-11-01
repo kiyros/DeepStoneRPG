@@ -122,26 +122,22 @@ public class Player extends Entity{
     public String use(String item) {
 
         for (Item i : getInventory()) {
-            // String.
+
             if (i.getName().equals(item)) {
-                //HealthConsumable itemThing = (HealthConsumable) i;
-                //int health = itemThing.getHealthValue();
-                //int newHealth = getHealth() + health;
-                //setHealth(newHealth);
                 getInventory().remove(i);
-                return "Used [item] : [" + i + "] in Inventory";
+                return i.getName();
             }
 
             try {
                 if (i == getInventory().get(Integer.parseInt(item) - 1)) {;
                     getInventory().remove(i);
-                    return "Used Item [item] : [" + i + "]";
+                    return i.getName();
                 }
             } catch (Exception ignored) {
             }
 
         }
-        return "That item does not exist in your inventory, try spelling it right or selecting the index of the item";
+        return "none";
 
     }
 

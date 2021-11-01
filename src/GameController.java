@@ -14,10 +14,13 @@ public class GameController {
     private HashMap<Integer, Room> rooms = new HashMap<>();
     private final Scanner userInput;
     private Puzzle puzzle;
+
 	/*
 	author: Joseph Ongchangco
 
 	 */
+
+   
 
     // sets up constructor, default constructor for main class
     public GameController(Player player, PlayerView view) {
@@ -454,10 +457,10 @@ public class GameController {
             int endRoom = monsterJson.get("rangeEnd").asInt();
             int roomPlacement = r.nextInt(endRoom - startRoom);
 
-            try{
+            try {
                 tempRoomsHashMap.get(roomPlacement).getMonsters().add(tempMonster);
+            } catch (Exception ignored) {
             }
-            catch (Exception ignored){}
         }
 
         // items
@@ -473,12 +476,11 @@ public class GameController {
                 item = mapper.treeToValue(itemJson, EquipItem.class);
             } else if (itemJson.get("type").toString().replace("\"", "").equals("puzzle")) {
                 item = mapper.treeToValue(itemJson, PuzzleItem.class);
-            }
-            else if (itemJson.get("type").toString().replace("\"", "").equals("misc")) {
+            } else if (itemJson.get("type").toString().replace("\"", "").equals("misc")) {
                 item = mapper.treeToValue(itemJson, PuzzleItem.class);
             }
 
-            if(item.getRoomNumber() != null){
+            if (item.getRoomNumber() != null) {
                 tempRoomsHashMap.get(item.getRoomNumber()).addItems(item);
             }
         }
@@ -528,24 +530,35 @@ public class GameController {
         } else if (item.get("type").toString().replace("\"", "").equals("puzzle")) {
             tempItem = itemMap.treeToValue(item, PuzzleItem.class);
         }
-
+        
         return tempItem;
     }
 
     //todo: solve puzzle, when user types in "solve puzzle", this method should automatically grab the item remove it and set puzzle in the room to solved
-    public void solvePuzzle() {
+    public void solvePuzzle() throws IOException {
         view.notifier("What item would you like to use to solve this puzzle? ");
-
+        view.showInventory(player);
+        String command = userInput.nextLine();
+        String returnStatement = player.use(command);
         int currentRoom = player.getCurrentRoom();
-        if (rooms.get(currentRoom).getPuzzle().getSolution().equalsIgnoreCase(userInput.nextLine())) {
-            player.use(userInput.nextLine());
-            rooms.get(currentRoom).getPuzzle().setSolved(true);
-            if (!rooms.get(currentRoom).getPuzzle().getRoomUnlock().isEmpty()) {
-                rooms.get(currentRoom).getLockedExits().clear();
-                rooms.get(currentRoom).getPuzzle().getRoomUnlock().remove(0);
+        if (!returnStatement.equals("none") && getPuzzle().getSolution().equals(returnStatement)) {
+            getPuzzle().setSolved(true);
+            Item thing = fetchJsonToItem(getPuzzle().getItemReward());
+            // rooms.get(currentRoom).getItems().add(thing);
+
+            if (getPuzzle().getItemReward() != null) {
+                rooms.get(currentRoom).getItems().add(thing);
+                view.notifier("Reward Items dropped in dropped in room");
+
             }
+            if (!rooms.get(currentRoom).getLockedExits().isEmpty()) {
+                rooms.get(currentRoom).getLockedExits().clear();
+                getPuzzle().getRoomUnlock().remove(0);
+            }
+        } else if (command.equals("leave")) {
+            view.notifier("You have left the puzzle");
         } else {
-            view.notifier("This item is not the correct answer.");
+            view.notifier("This item is not the correct answer. Or is not in your inventory ");
         }
     }
 
@@ -625,4 +638,5 @@ public class GameController {
     interface lambda {
         int getRoomNum(String dir);
     }
+
 }
