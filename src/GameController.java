@@ -437,9 +437,14 @@ public class GameController {
             // for testing --> System.out.println(itemJson.get("type").toString().replace("\"", ""));
             Item item = mapper.readValue(itemJson.toPrettyString(), Item.class);
 
-            if (item.getRoomNumber() != null) {
-                tempRoomsHashMap.get(item.getRoomNumber()).addItems(item);
+            try{
+                if (item.getRoomNumber() != null) {
+                    tempRoomsHashMap.get(item.getRoomNumber()).addItems(item);
+                }
+            }catch (Exception ignored){
+
             }
+
         }
 
         // puzzle json to puzzle Object
