@@ -5,6 +5,7 @@ abstract class Item {
     private boolean puzzle;
     private Integer roomNumber;
 
+
     public boolean isPuzzle() {
         return puzzle;
     }
