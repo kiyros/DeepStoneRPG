@@ -57,17 +57,20 @@
   "Iron": {
     "name": "Iron",
     "type": "puzzle",
-    "description": "An iron ingot."
+    "description": "An iron ingot.",
+    "roomNumber": 2
   },
   "Gold": {
     "name": "Gold",
     "type": "puzzle",
-    "description": "A gold ingot."
+    "description": "A gold ingot.",
+    "roomNumber": 2
   },
   "Steel": {
     "name": "Steel",
     "type": "puzzle",
-    "description": "A steel ingot."
+    "description": "A steel ingot.",
+    "roomNumber": 2
   },
   "Key": {
     "name": "Key",
