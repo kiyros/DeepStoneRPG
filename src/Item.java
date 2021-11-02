@@ -22,6 +22,7 @@ abstract class Item {
 
     }
 
+
     public boolean isPuzzle() {
         return puzzle;
     }

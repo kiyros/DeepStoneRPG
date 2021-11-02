@@ -18,10 +18,13 @@ public class GameController {
     private HashMap<Integer, Room> rooms = new HashMap<>();
     private final Scanner userInput;
     private Puzzle puzzle;
+
 	/*
 	author: Joseph Ongchangco
 
 	 */
+
+   
 
     // sets up constructor, default constructor for main class
     public GameController(Player player, PlayerView view) {
@@ -135,6 +138,16 @@ public class GameController {
                 case "solve":
                     solvePuzzle();
                     break;
+                case "health":
+                case "hp":
+                    getPlayerHealth();
+                    break;
+                case "stats":
+                    getStats();
+                    break;
+                case "engage":
+                    fight();
+                    break;
                 // todo: for testing functions [ put any function you want to test here to test in-game ]
                 case "test":
                     view.notifier(player.getHealth() + " health");
@@ -146,6 +159,68 @@ public class GameController {
             }
         }
     }
+
+    public void fight(){
+        view.notifier("\nEntering fight with monster:\n");
+        if (rooms.get(player.getCurrentRoom()).getMonsters().size() < 1) {
+            view.notifier("No monsters found in the room \n\nExiting fight\n");
+            return;
+        }
+        else {
+            view.notifier("You've encountered " + rooms.get(player.getCurrentRoom()).getMonsters().get(0).getName());
+            view.notifier("\nWhat do you do?");
+            String fightCommand = userInput.nextLine().toLowerCase();
+            while (player.getHealth() >= 0 && !(fightCommand.equalsIgnoreCase("back")) &&
+                     rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() >= 0) {
+                switch (fightCommand) {
+                    case "fight":
+                        view.notifier("You attack the monster!");
+                        rooms.get(player.getCurrentRoom()).getMonsters().get(0).setHealth(rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() - player.getAttack());
+                        view.notifier("Monsters health after the attack: " + rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth());
+                        if (rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() <= 0) {
+                            break;
+                        }
+                        view.notifier("The monster retaliates!");
+                        player.setHealth(player.getHealth() - rooms.get(player.getCurrentRoom()).getMonsters().get(0).getAttack());
+                        view.notifier("Your current health: " + player.getHealth());
+                        break;
+                    case "back":
+                        break;
+                    case "health":
+                    case "hp":
+                        getPlayerHealth();
+                        break;
+                    case "stats":
+                        getStats();
+                        break;
+                    case "h":
+                    case "help":
+                        view.getHelp();
+                        break;
+
+                }
+                if (player.getHealth() <= 0) {
+                    break;
+                }
+
+                if (rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() <= 0) {
+                    break;
+                }
+
+                view.notifier("What do you do?");
+                fightCommand = userInput.nextLine().toLowerCase();
+            }
+            if (player.getHealth() <= 0) {
+                view.notifier("You cannot go on any further! Your health has dropped below 0.");
+            }
+            else if (rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() <= 0) {
+                view.notifier("The monster has been defeated!\n");
+                rooms.get(player.getCurrentRoom()).getMonsters().remove(0);
+            }
+        }
+        view.notifier("\nExiting fight with monster:\n");
+    }
+
 
     // loadCheck
     public boolean gameCheck() {
@@ -169,7 +244,13 @@ public class GameController {
 
     // todo: gets the health of the player
     public void getPlayerHealth() {
-        throw new UnsupportedOperationException();
+        view.notifier(player.getHealth() + " health points");
+    }
+
+    // displays current health, inventory, equipped items, attack damage, and defense stats
+    public void getStats(){
+        view.notifier("Current Stats: \n" + "- " + player.getHealth() + " health points \n- " + player.getInventory() + " in my inventory \n- " +
+                player.getEquippedItem() + " weapon equipped \n- " + player.getAttack() + " attack damage \n- " + player.getDefense() + " defense");
     }
 
     // todo: sets the player Inventory
@@ -265,11 +346,11 @@ public class GameController {
         // change player current room
         player.setCurrentRoom(rooms.get(player.getCurrentRoom()).getExits().get(direction));
 
-        // set room to visited as the player is leaving the room
-        rooms.get(player.getCurrentRoom()).setVisited(true);
-
         // display to user
         view.showRoom(rooms.get(player.getCurrentRoom()));
+
+        // set room to visited as the player is leaving the room
+        rooms.get(player.getCurrentRoom()).setVisited(true);
     }
 
 
@@ -280,7 +361,7 @@ public class GameController {
 
     // todo: gets the player name
     public String getPlayerName() {
-        throw new UnsupportedOperationException();
+       return "My name is " + player.getName();
     }
 
     // todo: sets the player name
@@ -293,7 +374,7 @@ public class GameController {
         throw new UnsupportedOperationException();
     }
 
-    // todo: saves game into an .txt file
+    // saves game
     public void saveGame() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
 
@@ -315,8 +396,11 @@ public class GameController {
     public void newGame() throws IOException {
         // generate random stats values for player
         randomStatGenerator(player);
-
+        player.setCurrentRoom(7);
         newJsonToRoom("rooms.json", "items.json", "puzzles.json", "monsters.json");
+
+        // show the room that the player spawns in
+        exploreRoom();
     }
 
     // todo: puzzles, monsters
@@ -326,22 +410,11 @@ public class GameController {
         HashMap<Integer, Room> tempRoomsHashMap = new HashMap<>();
         ObjectMapper mapper = new ObjectMapper();
 
-        // rooms
-        File roomJSON = new File(roomPathName);
-
-        // items
-        File itemJSON = new File(itemPathName);
-
-        // puzzles
-        File puzzleJSON = new File(puzzlePathName);
-
-        // monsters
-        File monsterJSON = new File(monsterPathName);
-
-        JsonNode rootRooms = mapper.readTree(roomJSON);
-        JsonNode rootItems = mapper.readTree(itemJSON);
-        JsonNode rootPuzzles = mapper.readTree(puzzleJSON);
-        JsonNode rootMonster = mapper.readTree(monsterJSON);
+        // read files in
+        JsonNode rootRooms = mapper.readTree(new File(roomPathName));
+        JsonNode rootItems = mapper.readTree(new File(itemPathName));
+        JsonNode rootPuzzles = mapper.readTree(new File(puzzlePathName));
+        JsonNode rootMonster = mapper.readTree(new File(monsterPathName));
 
         // rooms
         for (JsonNode roomJson : rootRooms) {
@@ -349,7 +422,7 @@ public class GameController {
             try {
                 Room temp = mapper.treeToValue(roomJson, Room.class);
                 tempRoomsHashMap.put(temp.getRoomID(), temp);
-            } catch (Exception Ignored) {
+            } catch (Exception ignored) {
             }
         }
 
@@ -400,6 +473,7 @@ public class GameController {
             System.out.println(item.getDescription());
             System.out.println(item.getType());
             System.out.println("-----");
+
 
             if (item.getRoomNumber() != null) {
                 tempRoomsHashMap.get(item.getRoomNumber()).addItems(item);
@@ -472,24 +546,34 @@ public class GameController {
             tempItem = null;
         }
 
-
         return tempItem;
     }
 
     //todo: solve puzzle, when user types in "solve puzzle", this method should automatically grab the item remove it and set puzzle in the room to solved
-    public void solvePuzzle() {
+    public void solvePuzzle() throws IOException {
         view.notifier("What item would you like to use to solve this puzzle? ");
-
+        view.showInventory(player);
+        String command = userInput.nextLine();
+        String returnStatement = player.use(command);
         int currentRoom = player.getCurrentRoom();
-        if (rooms.get(currentRoom).getPuzzle().getSolution().equalsIgnoreCase(userInput.nextLine())) {
-            player.use(userInput.nextLine());
-            rooms.get(currentRoom).getPuzzle().setSolved(true);
-            if (!rooms.get(currentRoom).getPuzzle().getRoomUnlock().isEmpty()) {
-                rooms.get(currentRoom).getLockedExits().clear();
-                rooms.get(currentRoom).getPuzzle().getRoomUnlock().remove(0);
+        if (!returnStatement.equals("none") && getPuzzle().getSolution().equals(returnStatement)) {
+            getPuzzle().setSolved(true);
+            Item thing = fetchJsonToItem(getPuzzle().getItemReward());
+            // rooms.get(currentRoom).getItems().add(thing);
+
+            if (getPuzzle().getItemReward() != null) {
+                rooms.get(currentRoom).getItems().add(thing);
+                view.notifier("Reward Items dropped in dropped in room");
+
             }
+            if (!rooms.get(currentRoom).getLockedExits().isEmpty()) {
+                rooms.get(currentRoom).getLockedExits().clear();
+                getPuzzle().getRoomUnlock().remove(0);
+            }
+        } else if (command.equals("leave")) {
+            view.notifier("You have left the puzzle");
         } else {
-            view.notifier("This item is not the correct answer.");
+            view.notifier("This item is not the correct answer. Or is not in your inventory ");
         }
     }
 
@@ -569,4 +653,5 @@ public class GameController {
     interface lambda {
         int getRoomNum(String dir);
     }
+
 }

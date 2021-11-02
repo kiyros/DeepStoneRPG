@@ -116,13 +116,13 @@ public class Player extends Entity {
         for (Item i : getInventory()) {
             if (i.getName().equals(item)) {
                 getInventory().remove(i);
-                return "Used [item] : [" + i + "] in Inventory";
+                return i.getName();
             }
 
             try {
                 if (i == getInventory().get(Integer.parseInt(item) - 1)) {
                     getInventory().remove(i);
-                    return "Used Item [item] : [" + i + "]";
+                    return i.getName();
                 }
             } catch (Exception ignored) {
             }

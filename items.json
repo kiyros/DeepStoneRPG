@@ -10,7 +10,6 @@
     "name": "The Queen’s Jewel",
     "type": "equip",
     "description": "A rare gemstone from a dynasty of royalty. Putting this ring on will regenerate a player’s HP% Faster.",
-    "roomNumber": 7,
     "puzzle": true,
     "statType": "health",
     "statBoost": 0.1
@@ -53,6 +52,7 @@
     "name": "Broken Sword and Shield",
     "type": "PuzzleItem",
     "description": "A broken and rusted pair of armory, it looks like it belongs to the statue nearby."
+
   },
   "Iron": {
     "name": "Iron",
