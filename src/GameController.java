@@ -148,7 +148,9 @@ public class GameController {
                 case "test":
                     fetchJsonToItem("Dynamite");
                     break;
-
+                case "examine":
+                    examine();
+                    break;
                 default:
                     view.error("Invalid command try typing it correctly or type 'h' for help");
                     break;
@@ -537,7 +539,7 @@ public class GameController {
 
             if (getPuzzle().getItemReward() != null) {
                 rooms.get(currentRoom).getItems().add(thing);
-                view.notifier("Reward Items dropped in dropped in room");
+                view.notifier("Reward Items dropped in room");
 
             }
             if (!rooms.get(currentRoom).getLockedExits().isEmpty()) {
@@ -549,6 +551,13 @@ public class GameController {
         } else {
             view.notifier("This item is not the correct answer. Or is not in your inventory ");
         }
+    }
+    public void examine(){
+       if (getPuzzle() != null){
+           view.notifier(getPuzzle().getRiddle());
+       }else{
+           view.notifier("There is no puzzle to examine");
+       }
     }
 
     // get puzzle, returns a puzzle object
