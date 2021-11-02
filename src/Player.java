@@ -1,25 +1,25 @@
 import java.util.ArrayList;
-public class Player extends Entity{
+
+public class Player extends Entity {
     // player values
     private int currentRoom = 7;
     private ArrayList<Item> inventory;
-    private ArrayList<EquipItem> equippedItem;
-    private ArrayList<Item> equippedItems;
+    private ArrayList<EquipItem> equipItems;
 
-  
     //constructor
 
     public Player() {
         this.inventory = new ArrayList<>();
-        this.equippedItem = new ArrayList<>();
+        this.equipItems = new ArrayList<>();
     }
 
-    public ArrayList<EquipItem> getEquippedItem() {
-        return equippedItem;
+    public ArrayList<EquipItem> getEquipItems() {
+        return equipItems;
     }
 
-    public void setEquippedItem(ArrayList<EquipItem> equippedItem) {
-        this.equippedItem = equippedItem;}
+    public void setEquipItems(ArrayList<EquipItem> equipItems) {
+        this.equipItems = equipItems;
+    }
 
     public int getCurrentRoom() {
         return this.currentRoom;
@@ -63,14 +63,6 @@ public class Player extends Entity{
         }
 
         return inventory.toString();
-    }
-
-    public ArrayList<Item> getItems() {
-        return inventory;
-    }
-
-    public void setItems(ArrayList<Item> inventory) {
-        this.inventory = inventory;
     }
 
     // picks up an item in the current room by item name or integer
@@ -122,14 +114,13 @@ public class Player extends Entity{
     public String use(String item) {
 
         for (Item i : getInventory()) {
-
             if (i.getName().equals(item)) {
                 getInventory().remove(i);
                 return i.getName();
             }
 
             try {
-                if (i == getInventory().get(Integer.parseInt(item) - 1)) {;
+                if (i == getInventory().get(Integer.parseInt(item) - 1)) {
                     getInventory().remove(i);
                     return i.getName();
                 }
@@ -137,11 +128,6 @@ public class Player extends Entity{
             }
 
         }
-        return "none";
-
+        return "That item does not exist in your inventory, try spelling it right or selecting the index of the item";
     }
-
-
-
-
 }

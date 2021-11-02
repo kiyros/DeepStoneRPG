@@ -1,5 +1,9 @@
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.NamedType;
+import com.fasterxml.jackson.databind.type.MapType;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -146,7 +150,7 @@ public class GameController {
                     break;
                 // todo: for testing functions [ put any function you want to test here to test in-game ]
                 case "test":
-                    fetchJsonToItem("Dynamite");
+                    view.notifier(player.getHealth() + " health");
                     break;
 
                 default:
@@ -383,7 +387,7 @@ public class GameController {
     }
 
     // todo: loads the game from a .txt file
-    public void loadGame() {
+    public void loadGame() throws IOException {
         loadJsonToRoom("saveFiles/userData.json", "saveFiles/roomData.json");
     }
 
@@ -454,20 +458,22 @@ public class GameController {
 
         // items
         for (JsonNode itemJson : rootItems) {
-            Item item = new baseItem();
-
             // cast to proper item type
             // for testing --> System.out.println(itemJson.get("type").toString().replace("\"", ""));
 
-            if (itemJson.get("type").toString().replace("\"", "").equals("weapon")) {
-                item = mapper.treeToValue(itemJson, WeaponItem.class);
-            } else if (itemJson.get("type").toString().replace("\"", "").equals("equip")) {
-                item = mapper.treeToValue(itemJson, EquipItem.class);
-            } else if (itemJson.get("type").toString().replace("\"", "").equals("puzzle")) {
-                item = mapper.treeToValue(itemJson, PuzzleItem.class);
-            } else if (itemJson.get("type").toString().replace("\"", "").equals("misc")) {
-                item = mapper.treeToValue(itemJson, PuzzleItem.class);
-            }
+            Item item = mapper.readValue(itemJson.toPrettyString(), Item.class);
+            //System.out.println(itemJson.toPrettyString());
+
+
+            /*
+            i do have a couple complaints about this class, He would tell us something is wrong in our assignment but MOST of the time just tells us it's wrong but doesn't suggest
+             */
+
+            System.out.println(item);
+            System.out.println(item.getDescription());
+            System.out.println(item.getType());
+            System.out.println("-----");
+
 
             if (item.getRoomNumber() != null) {
                 tempRoomsHashMap.get(item.getRoomNumber()).addItems(item);
@@ -492,13 +498,30 @@ public class GameController {
 
     // todo: loadJsonToRoom
     // loads save
-    public void loadJsonToRoom(String playerPath, String roomPaths) {
+    public void loadJsonToRoom(String playerPath, String roomPaths) throws IOException {
+        HashMap<Integer, Room> tempRoomsHashMap = new HashMap<>();
         ObjectMapper mapper = new ObjectMapper();
+
+        // rooms
+        JsonNode rootRooms = mapper.readTree(new File(roomPaths));
+
+        // player
+        JsonNode rootPlayer = mapper.readTree(new File(playerPath));
+
+        player = mapper.readValue(rootPlayer.toPrettyString(), Player.class);
+        System.out.println("player load success");
+
+        Map<String, Room> result = mapper.readValue(rootRooms.toPrettyString(), new TypeReference<>() {
+        });
+        for (Map.Entry<String, Room> tempRooms : result.entrySet()) {
+            rooms.put(tempRooms.getValue().getRoomID(), tempRooms.getValue());
+        }
+
     }
 
     // returns an item from items.json based on the item name
     public Item fetchJsonToItem(String itemName) throws IOException {
-        Item tempItem = new baseItem();
+        Item tempItem;
         ObjectMapper itemMap = new ObjectMapper();
 
         // items
@@ -519,7 +542,10 @@ public class GameController {
         } else if (item.get("type").toString().replace("\"", "").equals("puzzle")) {
             tempItem = itemMap.treeToValue(item, PuzzleItem.class);
         }
-        
+        else{
+            tempItem = null;
+        }
+
         return tempItem;
     }
 
@@ -569,7 +595,6 @@ public class GameController {
         view.notifier(player.pickupItem(rooms.get(player.getCurrentRoom()), userInput.nextLine()));
     }
 
-
     public void dropItem() {
         view.notifier(player.inventoryToString());
         if (player.getInventory().isEmpty()) {
@@ -595,6 +620,7 @@ public class GameController {
     }
 
     // player and monster get random stats
+    // by Joseph and Brian
     public void randomStatGenerator(Entity entity) {
         Random random = new Random();
         int health = 0;
