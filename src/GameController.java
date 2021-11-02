@@ -406,22 +406,11 @@ public class GameController {
         HashMap<Integer, Room> tempRoomsHashMap = new HashMap<>();
         ObjectMapper mapper = new ObjectMapper();
 
-        // rooms
-        File roomJSON = new File(roomPathName);
-
-        // items
-        File itemJSON = new File(itemPathName);
-
-        // puzzles
-        File puzzleJSON = new File(puzzlePathName);
-
-        // monsters
-        File monsterJSON = new File(monsterPathName);
-
-        JsonNode rootRooms = mapper.readTree(roomJSON);
-        JsonNode rootItems = mapper.readTree(itemJSON);
-        JsonNode rootPuzzles = mapper.readTree(puzzleJSON);
-        JsonNode rootMonster = mapper.readTree(monsterJSON);
+        // read files in
+        JsonNode rootRooms = mapper.readTree(new File(roomPathName));
+        JsonNode rootItems = mapper.readTree(new File(itemPathName));
+        JsonNode rootPuzzles = mapper.readTree(new File(puzzlePathName));
+        JsonNode rootMonster = mapper.readTree(new File(monsterPathName));
 
         // rooms
         for (JsonNode roomJson : rootRooms) {
@@ -429,7 +418,7 @@ public class GameController {
             try {
                 Room temp = mapper.treeToValue(roomJson, Room.class);
                 tempRoomsHashMap.put(temp.getRoomID(), temp);
-            } catch (Exception Ignored) {
+            } catch (Exception ignored) {
             }
         }
 
