@@ -10,6 +10,7 @@
     "name": "The Queen’s Jewel",
     "type": "equip",
     "description": "A rare gemstone from a dynasty of royalty. Putting this ring on will regenerate a player’s HP% Faster.",
+    "roomNumber" : 7,
     "puzzle": true,
     "statType": "health",
     "statBoost": 0.1
@@ -53,42 +54,49 @@
     "type": "PuzzleItem",
     "roomNumber": 7,
     "description": "A broken and rusted pair of armory, it looks like it belongs to the statue nearby."
-
+    "roomNumber" : 7
   },
   "Iron": {
     "name": "Iron",
     "type": "PuzzleItem",
-    "description": "An iron ingot."
+    "description": "An iron ingot.",
+    "roomNumber" : 2
   },
   "Gold": {
     "name": "Gold",
     "type": "PuzzleItem",
-    "description": "A gold ingot."
+    "description": "A gold ingot.",
+    "roomNumber" : 2
   },
   "Steel": {
     "name": "Steel",
     "type": "PuzzleItem",
-    "description": "A steel ingot."
+    "description": "A steel ingot.",
+    "roomNumber" : 2
   },
   "Key": {
     "name": "Key",
     "type": "PuzzleItem",
-    "description": "A key that fits many keyholes, but only unlocks one."
+    "description": "A key that fits many keyholes, but only unlocks one.",
+    "roomNumber" : 21
   },
   "Rock": {
     "name": "Rock",
     "type": "PuzzleItem",
-    "description": "A large, heavy, rock."
+    "description": "A large, heavy, rock.",
+    "roomNumber" : 20
   },
   "Hourglass": {
     "name": "Hourglass",
     "type": "PuzzleItem",
-    "description": "A large hourglass with time slowly ticking."
+    "description": "A large hourglass with time slowly ticking.",
+    "roomNumber" : 20
   },
   "Dynamite": {
     "name": "Dynamite",
     "type": "PuzzleItem",
-    "description": "A large explosive that can be used to tear down large walls."
+    "description": "A large explosive that can be used to tear down large walls.",
+    "roomNumber" : 23
   }
 }
 
