@@ -1,36 +1,31 @@
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.Scanner;
 
 public class GameController {
     private Player player;
     private final PlayerView view;
     private HashMap<Integer, Room> rooms = new HashMap<>();
     private final Scanner userInput;
-    private Puzzle puzzle;
 
 	/*
-	author: Joseph Ongchangco
-
+	author: Joseph Ongchangco, Brian, Yaris, Jawwad
 	 */
 
-   
 
     // sets up constructor, default constructor for main class
-    public GameController(Player player, PlayerView view) {
-        this.player = player;
-        this.view = view;
+    public GameController() {
+        this.player = new Player();
+        this.view = new PlayerView();
         userInput = new Scanner(System.in);
-    }
-
-    public void setPuzzle(Puzzle puzzle) {
-        this.puzzle = puzzle;
     }
 
     public void setRooms(HashMap<Integer, Room> rooms) {
@@ -40,32 +35,6 @@ public class GameController {
     // todo: commands
     // author: Joseph Ongchangco
     public void commands() throws IOException {
-        // show main menu
-        view.showMenu();
-
-        //prompt user to load game or start a new one
-        boolean gameLoaded = gameCheck();
-        while (!gameLoaded) {
-            switch (userInput.nextLine().toLowerCase()) {
-                case "n":
-                case "new":
-                case "new game":
-                    newGame();
-                    gameLoaded = gameCheck();
-                    break;
-                case "l":
-                case "load":
-                case "lo":
-                case "load game":
-                    loadGame();
-                    gameLoaded = gameCheck();
-                    break;
-                default:
-                    view.error("Command error:  \n try typing in [n]ew or [l]oad to play a game!");
-                    break;
-            }
-        }
-
         // throws to lowercase to easily verify user commands
         while (true) {
             // informs the user that the program is ready to receive the next command
@@ -78,12 +47,10 @@ public class GameController {
                 case "new":
                 case "new game":
                     newGame();
-                    // todo new game()
                     System.out.println(rooms);
                     break;
                 case "save":
                     saveGame();
-                    // todo save command
                     break;
                 case "lo":
                 case "load":
@@ -132,6 +99,7 @@ public class GameController {
                     break;
                 case "solve puzzle":
                 case "solve":
+                case "sol":
                     solvePuzzle();
                     break;
                 case "health":
@@ -142,11 +110,12 @@ public class GameController {
                     getStats();
                     break;
                 case "engage":
+                case "eng":
                     fight();
                     break;
                 // todo: for testing functions [ put any function you want to test here to test in-game ]
                 case "test":
-                    fetchJsonToItem("Dynamite");
+                    view.notifier(player.getHealth() + " health");
                     break;
                 case "examine":
                     examine();
@@ -158,18 +127,53 @@ public class GameController {
         }
     }
 
-    public void fight(){
+    // author: Joseph Ongchangco
+    public void mainMenu() throws IOException {
+        // show main menu
+        view.showMenu();
+
+        //prompt user to load game or start a new one
+        boolean gameLoaded = gameCheck();
+        while (!gameLoaded) {
+            switch (userInput.nextLine().toLowerCase()) {
+                case "n":
+                case "new":
+                case "new game":
+                    newGame();
+                    gameLoaded = gameCheck();
+                    break;
+                case "l":
+                case "load":
+                case "lo":
+                case "load game":
+                    loadGame();
+                    gameLoaded = gameCheck();
+                    break;
+                case "quit":
+                case "q":
+                    view.exitView(player.getName());
+                    userInput.close();
+                    return;
+                default:
+                    view.error("Command error:  \n try typing in [n]ew or [l]oad to play a game!");
+                    break;
+            }
+        }
+        // start game here
+        commands();
+    }
+
+    public void fight() {
         view.notifier("\nEntering fight with monster:\n");
         if (rooms.get(player.getCurrentRoom()).getMonsters().size() < 1) {
             view.notifier("No monsters found in the room \n\nExiting fight\n");
             return;
-        }
-        else {
+        } else {
             view.notifier("You've encountered " + rooms.get(player.getCurrentRoom()).getMonsters().get(0).getName());
             view.notifier("\nWhat do you do?");
             String fightCommand = userInput.nextLine().toLowerCase();
             while (player.getHealth() >= 0 && !(fightCommand.equalsIgnoreCase("back")) &&
-                     rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() >= 0) {
+                    rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() >= 0) {
                 switch (fightCommand) {
                     case "fight":
                         view.notifier("You attack the monster!");
@@ -210,8 +214,7 @@ public class GameController {
             }
             if (player.getHealth() <= 0) {
                 view.notifier("You cannot go on any further! Your health has dropped below 0.");
-            }
-            else if (rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() <= 0) {
+            } else if (rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() <= 0) {
                 view.notifier("The monster has been defeated!\n");
                 rooms.get(player.getCurrentRoom()).getMonsters().remove(0);
             }
@@ -225,42 +228,24 @@ public class GameController {
         return !rooms.isEmpty();
     }
 
-    // todo: puzzle commands
-
-    // todo: monster encounter commands
-
     // shows main menu from view
     public void showMainMenu() {
         view.showMenu();
     }
-
 
     // todo: sets the health of the player
     public void setPlayerHealth() {
         throw new UnsupportedOperationException();
     }
 
-    // todo: gets the health of the player
     public void getPlayerHealth() {
         view.notifier(player.getHealth() + " health points");
     }
 
     // displays current health, inventory, equipped items, attack damage, and defense stats
-    public void getStats(){
+    public void getStats() {
         view.notifier("Current Stats: \n" + "- " + player.getHealth() + " health points \n- " + player.getInventory() + " in my inventory \n- " +
-                player.getEquippedItem() + " weapon equipped \n- " + player.getAttack() + " attack damage \n- " + player.getDefense() + " defense");
-    }
-
-    // todo: sets the player Inventory
-    public void setPlayerInventory() {
-        throw new UnsupportedOperationException();
-    }
-
-    // todo: addToPlayerInventory(), adds an item from a room to user inventory
-
-    // todo: picks up an item from the room
-    public void pickUpItem() {
-        throw new UnsupportedOperationException();
+                player.getEquipItems() + " weapon equipped \n- " + player.getAttack() + " attack damage \n- " + player.getDefense() + " defense");
     }
 
     // todo: equips an item from the players inventory
@@ -270,11 +255,6 @@ public class GameController {
 
     // todo: unequips an item from the player
     public void unEquipItem() {
-        throw new UnsupportedOperationException();
-    }
-
-    // todo: leaves the monster encounter
-    public void flee() {
         throw new UnsupportedOperationException();
     }
 
@@ -319,7 +299,6 @@ public class GameController {
         return this.rooms;
     }
 
-    // todo: get room number from player
     public int getCurrentRoomNumber() {
         return player.getCurrentRoom();
     }
@@ -359,7 +338,7 @@ public class GameController {
 
     // todo: gets the player name
     public String getPlayerName() {
-       return "My name is " + player.getName();
+        return "My name is " + player.getName();
     }
 
     // todo: sets the player name
@@ -385,7 +364,7 @@ public class GameController {
     }
 
     // todo: loads the game from a .txt file
-    public void loadGame() {
+    public void loadGame() throws IOException {
         loadJsonToRoom("saveFiles/userData.json", "saveFiles/roomData.json");
     }
 
@@ -456,20 +435,8 @@ public class GameController {
 
         // items
         for (JsonNode itemJson : rootItems) {
-            Item item = new baseItem();
-
-            // cast to proper item type
             // for testing --> System.out.println(itemJson.get("type").toString().replace("\"", ""));
-
-            if (itemJson.get("type").toString().replace("\"", "").equals("weapon")) {
-                item = mapper.treeToValue(itemJson, WeaponItem.class);
-            } else if (itemJson.get("type").toString().replace("\"", "").equals("equip")) {
-                item = mapper.treeToValue(itemJson, EquipItem.class);
-            } else if (itemJson.get("type").toString().replace("\"", "").equals("puzzle")) {
-                item = mapper.treeToValue(itemJson, PuzzleItem.class);
-            } else if (itemJson.get("type").toString().replace("\"", "").equals("misc")) {
-                item = mapper.treeToValue(itemJson, PuzzleItem.class);
-            }
+            Item item = mapper.readValue(itemJson.toPrettyString(), Item.class);
 
             if (item.getRoomNumber() != null) {
                 tempRoomsHashMap.get(item.getRoomNumber()).addItems(item);
@@ -494,13 +461,30 @@ public class GameController {
 
     // todo: loadJsonToRoom
     // loads save
-    public void loadJsonToRoom(String playerPath, String roomPaths) {
+    public void loadJsonToRoom(String playerPath, String roomPaths) throws IOException {
+        HashMap<Integer, Room> tempRoomsHashMap = new HashMap<>();
         ObjectMapper mapper = new ObjectMapper();
+
+        // rooms
+        JsonNode rootRooms = mapper.readTree(new File(roomPaths));
+
+        // player
+        JsonNode rootPlayer = mapper.readTree(new File(playerPath));
+
+        player = mapper.readValue(rootPlayer.toPrettyString(), Player.class);
+        System.out.println("player load success");
+
+        Map<String, Room> result = mapper.readValue(rootRooms.toPrettyString(), new TypeReference<>() {
+        });
+        for (Map.Entry<String, Room> tempRooms : result.entrySet()) {
+            rooms.put(tempRooms.getValue().getRoomID(), tempRooms.getValue());
+        }
+
     }
 
     // returns an item from items.json based on the item name
     public Item fetchJsonToItem(String itemName) throws IOException {
-        Item tempItem = new baseItem();
+        Item tempItem;
         ObjectMapper itemMap = new ObjectMapper();
 
         // items
@@ -520,8 +504,10 @@ public class GameController {
             tempItem = itemMap.treeToValue(item, EquipItem.class);
         } else if (item.get("type").toString().replace("\"", "").equals("puzzle")) {
             tempItem = itemMap.treeToValue(item, PuzzleItem.class);
+        } else {
+            tempItem = null;
         }
-        
+
         return tempItem;
     }
 
@@ -578,7 +564,6 @@ public class GameController {
         view.notifier(player.pickupItem(rooms.get(player.getCurrentRoom()), userInput.nextLine()));
     }
 
-
     public void dropItem() {
         view.notifier(player.inventoryToString());
         if (player.getInventory().isEmpty()) {
@@ -604,6 +589,7 @@ public class GameController {
     }
 
     // player and monster get random stats
+    // by Joseph and Brian
     public void randomStatGenerator(Entity entity) {
         Random random = new Random();
         int health = 0;

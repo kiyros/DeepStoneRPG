@@ -30,14 +30,14 @@
   },
   "Crystal skull": {
     "name": "Crystal skull",
-    "type": "misc",
+    "type": "PuzzleItem",
     "description": "A crystal skull that was taken by Indiana Jones himself.",
     "roomNumber": 20,
     "puzzle": true
   },
   "Aegis Shield": {
     "name": "Aegis Shield",
-    "type": "misc",
+    "type": "PuzzleItem",
     "description": "A magical shield that was once carried by the Greek god Zeus.",
     "roomNumber": 9,
     "puzzle": true
@@ -50,9 +50,9 @@
   },
   "Broken Sword and Shield": {
     "name": "Broken Sword and Shield",
-    "type": "puzzle",
-    "description": "A broken and rusted pair of armory, it looks like it belongs to the statue nearby.",
-    "roomNumber": 7
+    "type": "PuzzleItem",
+    "description": "A broken and rusted pair of armory, it looks like it belongs to the statue nearby."
+
   },
   "Iron": {
     "name": "Iron",
@@ -70,26 +70,28 @@
     "name": "Steel",
     "type": "puzzle",
     "description": "A steel ingot.",
-    "roomNumber": 2
+    "roomNumber": 2,
+    "type": "PuzzleItem",
+    "description": "An iron ingot."
   },
   "Key": {
     "name": "Key",
-    "type": "puzzle",
+    "type": "PuzzleItem",
     "description": "A key that fits many keyholes, but only unlocks one."
   },
   "Rock": {
     "name": "Rock",
-    "type": "puzzle",
+    "type": "PuzzleItem",
     "description": "A large, heavy, rock."
   },
   "Hourglass": {
     "name": "Hourglass",
-    "type": "puzzle",
+    "type": "PuzzleItem",
     "description": "A large hourglass with time slowly ticking."
   },
   "Dynamite": {
     "name": "Dynamite",
-    "type": "puzzle",
+    "type": "PuzzleItem",
     "description": "A large explosive that can be used to tear down large walls."
   }
 }
