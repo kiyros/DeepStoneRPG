@@ -22,9 +22,9 @@ public class GameController {
 
 
     // sets up constructor, default constructor for main class
-    public GameController(Player player, PlayerView view) {
-        this.player = player;
-        this.view = view;
+    public GameController() {
+        this.player = new Player();
+        this.view = new PlayerView();
         userInput = new Scanner(System.in);
     }
 
@@ -99,6 +99,7 @@ public class GameController {
                     break;
                 case "solve puzzle":
                 case "solve":
+                case "sol":
                     solvePuzzle();
                     break;
                 case "health":
@@ -109,6 +110,7 @@ public class GameController {
                     getStats();
                     break;
                 case "engage":
+                case "eng":
                     fight();
                     break;
                 // todo: for testing functions [ put any function you want to test here to test in-game ]
@@ -123,6 +125,7 @@ public class GameController {
         }
     }
 
+    // author: Joseph Ongchangco
     public void mainMenu() throws IOException {
         // show main menu
         view.showMenu();
