@@ -163,11 +163,13 @@ public class GameController {
 
     public void fight() {
         view.notifier("\nEntering fight with monster:\n");
+        int monsterOriginalHealth =  rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth();
         if (rooms.get(player.getCurrentRoom()).getMonsters().size() < 1) {
             view.notifier("No monsters found in the room \n\nExiting fight\n");
             return;
         } else {
             view.notifier("You've encountered " + rooms.get(player.getCurrentRoom()).getMonsters().get(0).getName());
+            view.notifier("Monsters health: " + monsterOriginalHealth);
             view.notifier("\nWhat do you do?");
             String fightCommand = userInput.nextLine().toLowerCase();
             while (player.getHealth() >= 0 && !(fightCommand.equalsIgnoreCase("back")) &&
@@ -181,10 +183,8 @@ public class GameController {
                             break;
                         }
                         view.notifier("The monster retaliates!");
-                        player.setHealth(player.getHealth() - rooms.get(player.getCurrentRoom()).getMonsters().get(0).getAttack());
+                        player.setHealth(player.getHealth() - (rooms.get(player.getCurrentRoom()).getMonsters().get(0).getAttack() - player.getDefense()));
                         view.notifier("Your current health: " + player.getHealth());
-                        break;
-                    case "back":
                         break;
                     case "health":
                     case "hp":
@@ -197,20 +197,20 @@ public class GameController {
                     case "help":
                         view.getHelp();
                         break;
-
+                }
+                if (rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() <= 0) {
+                    break;
                 }
                 if (player.getHealth() <= 0) {
                     break;
                 }
-
-                if (rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() <= 0) {
-                    break;
-                }
-
                 view.notifier("What do you do?");
                 fightCommand = userInput.nextLine().toLowerCase();
             }
-            if (player.getHealth() <= 0) {
+            if (fightCommand.equalsIgnoreCase("back")){
+                rooms.get(player.getCurrentRoom()).getMonsters().get(0).setHealth(monsterOriginalHealth);
+            }
+            else if (player.getHealth() <= 0) {
                 view.notifier("You cannot go on any further! Your health has dropped below 0.");
             } else if (rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() <= 0) {
                 view.notifier("The monster has been defeated!\n");
