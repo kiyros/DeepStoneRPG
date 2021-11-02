@@ -163,11 +163,12 @@ public class GameController {
 
     public void fight() {
         view.notifier("\nEntering fight with monster:\n");
-        int monsterOriginalHealth =  rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth();
+        int monsterOriginalHealth;
         if (rooms.get(player.getCurrentRoom()).getMonsters().size() < 1) {
             view.notifier("No monsters found in the room \n\nExiting fight\n");
             return;
         } else {
+            monsterOriginalHealth =  rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth();
             view.notifier("You've encountered " + rooms.get(player.getCurrentRoom()).getMonsters().get(0).getName());
             view.notifier("Monsters health: " + monsterOriginalHealth);
             view.notifier("\nWhat do you do?");
@@ -177,7 +178,7 @@ public class GameController {
                 switch (fightCommand) {
                     case "fight":
                         view.notifier("You attack the monster!");
-                        rooms.get(player.getCurrentRoom()).getMonsters().get(0).setHealth(rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() - player.getAttack());
+                        rooms.get(player.getCurrentRoom()).getMonsters().get(0).setHealth(rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() - (player.getAttack() - rooms.get(player.getCurrentRoom()).getMonsters().get(0).getDefense()));
                         view.notifier("Monsters health after the attack: " + rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth());
                         if (rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() <= 0) {
                             break;
