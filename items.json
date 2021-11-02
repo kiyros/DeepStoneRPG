@@ -51,6 +51,7 @@
   "Broken Sword and Shield": {
     "name": "Broken Sword and Shield",
     "type": "PuzzleItem",
+    "roomNumber": 7,
     "description": "A broken and rusted pair of armory, it looks like it belongs to the statue nearby."
 
   },
