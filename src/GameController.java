@@ -113,6 +113,7 @@ public class GameController {
                 case "end":
                 case "close":
                     endGame();
+                    view.exitView(player.getName());
                     break;
                 // todo: for testing functions [ put any function you want to test here to test in-game ]
                 case "test":
