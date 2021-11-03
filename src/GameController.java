@@ -406,9 +406,9 @@ public class GameController {
     // load the default room values into the room object
     public void newGame() throws IOException {
         // generate random stats values for player
+        player = new Player();
         randomStatGenerator(player);
         player.setCurrentRoom(7);
-        player = new Player();
         newJsonToRoom("rooms.json", "items.json", "puzzles.json", "monsters.json");
 
         // show the room that the player spawns in
