@@ -47,7 +47,6 @@ public class GameController {
                 case "new":
                 case "new game":
                     newGame();
-                    System.out.println(rooms);
                     break;
                 case "save":
                     saveGame();
@@ -55,7 +54,6 @@ public class GameController {
                 case "lo":
                 case "load":
                     loadGame();
-                    // todo load command
                     break;
                 case "x":
                 case "exit":
@@ -65,7 +63,6 @@ public class GameController {
                 case "ins":
                 case "inspect":
                     inspectItem();
-                    // todo: inspect an item in the room or inventory
                     break;
                 case "look":
                 case "look around":
@@ -113,6 +110,10 @@ public class GameController {
                 case "eng":
                     fight();
                     break;
+                case "end":
+                case "close":
+                    endGame();
+                    break;
                 // todo: for testing functions [ put any function you want to test here to test in-game ]
                 case "test":
                     view.notifier(player.getHealth() + " health");
@@ -152,6 +153,10 @@ public class GameController {
                     view.exitView(player.getName());
                     userInput.close();
                     return;
+                case "end":
+                case "close":
+                    endGame();
+                    break;
                 default:
                     view.error("Command error:  \n try typing in [n]ew or [l]oad to play a game!");
                     break;
@@ -161,7 +166,7 @@ public class GameController {
         commands();
     }
 
-    public void fight() {
+    public void fight() throws IOException {
         view.notifier("\nEntering fight with monster:\n");
         int monsterOriginalHealth;
         if (rooms.get(player.getCurrentRoom()).getMonsters().size() < 1) {
@@ -198,6 +203,10 @@ public class GameController {
                     case "help":
                         view.getHelp();
                         break;
+                    case "end":
+                    case "close":
+                        endGame();
+                        break;
                 }
                 if (rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() <= 0) {
                     break;
@@ -213,7 +222,9 @@ public class GameController {
             }
             else if (player.getHealth() <= 0) {
                 view.notifier("You cannot go on any further! Your health has dropped below 0.");
-            } else if (rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() <= 0) {
+                endGame();
+            }
+            else if (rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() <= 0) {
                 view.notifier("The monster has been defeated!\n");
                 rooms.get(player.getCurrentRoom()).getMonsters().remove(0);
             }
@@ -221,6 +232,30 @@ public class GameController {
         view.notifier("\nExiting fight with monster:\n");
     }
 
+    public void endGame() throws IOException {
+        view.notifier("\n The game is over! Would you like to load game, start a new game, or close?");
+        boolean gameLoaded = gameCheck();
+        switch (userInput.nextLine().toLowerCase()) {
+            case "end":
+            case "close":
+                view.notifier("\nYou have chosen to exit the game. Play again soon!");
+                System.exit(0);
+                break;
+            case "l":
+            case "load":
+            case "lo":
+            case "load game":
+                loadGame();
+                gameLoaded = gameCheck();
+                break;
+            case "n":
+            case "new":
+            case "new game":
+                newGame();
+                gameLoaded = gameCheck();
+                break;
+        }
+    }
 
     // loadCheck
     public boolean gameCheck() {
@@ -373,6 +408,7 @@ public class GameController {
         // generate random stats values for player
         randomStatGenerator(player);
         player.setCurrentRoom(7);
+        player = new Player();
         newJsonToRoom("rooms.json", "items.json", "puzzles.json", "monsters.json");
 
         // show the room that the player spawns in
