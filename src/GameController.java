@@ -44,18 +44,16 @@ public class GameController {
                 case "help":
                     view.getHelp();
                     break;
-//                case "new":
-//                case "new game":
-//                    newGame();
-//                    System.out.println(rooms);
-//                    break;
+                case "new":
+                case "new game":
+                    newGame();
+                    break;
                 case "save":
                     saveGame();
                     break;
                 case "lo":
                 case "load":
                     loadGame();
-                    // todo load command
                     break;
                 case "x":
                 case "exit":
@@ -65,7 +63,6 @@ public class GameController {
                 case "ins":
                 case "inspect":
                     inspectItem();
-                    // todo: inspect an item in the room or inventory
                     break;
                 case "look":
                 case "look around":
@@ -237,9 +234,8 @@ public class GameController {
 
     public void endGame() throws IOException {
         view.notifier("\n The game is over! Would you like to load game, start a new game, or close?");
-        String endingDecision = userInput.nextLine().toLowerCase();
         boolean gameLoaded = gameCheck();
-        switch (endingDecision) {
+        switch (userInput.nextLine().toLowerCase()) {
             case "end":
             case "close":
                 view.notifier("\nYou have chosen to exit the game. Play again soon!");
@@ -260,7 +256,6 @@ public class GameController {
                 break;
         }
     }
-
 
     // loadCheck
     public boolean gameCheck() {
@@ -413,6 +408,7 @@ public class GameController {
         // generate random stats values for player
         randomStatGenerator(player);
         player.setCurrentRoom(7);
+        player = new Player();
         newJsonToRoom("rooms.json", "items.json", "puzzles.json", "monsters.json");
 
         // show the room that the player spawns in
