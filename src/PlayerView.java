@@ -67,6 +67,7 @@ public class PlayerView {
                 "\n : health or hp to see current health" +
                 "\n : stats to see all player stats" +
                 "\n : engage to begin fight with a monster in the room" +
+                "\n : close or end to end the game" +
                 "\n " +
                 "\n ONLY DURING FIGHT SEQUENCE" +
                 "\n : fight to do an attack on the monster" +
