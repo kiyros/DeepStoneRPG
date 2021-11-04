@@ -56,23 +56,21 @@
   },
   "Iron": {
     "name": "Iron",
-    "type": "puzzle",
+    "type": "PuzzleItem",
     "description": "An iron ingot.",
     "roomNumber": 2
   },
   "Gold": {
     "name": "Gold",
-    "type": "puzzle",
+    "type": "PuzzleItem",
     "description": "A gold ingot.",
     "roomNumber": 2
   },
   "Steel": {
     "name": "Steel",
-    "type": "puzzle",
-    "description": "A steel ingot.",
-    "roomNumber": 2,
     "type": "PuzzleItem",
-    "description": "An iron ingot."
+    "description": "A steel ingot.",
+    "roomNumber": 2
   },
   "Key": {
     "name": "Key",
@@ -95,4 +93,3 @@
     "description": "A large explosive that can be used to tear down large walls."
   }
 }
-
