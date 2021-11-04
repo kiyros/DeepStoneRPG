@@ -128,6 +128,6 @@ public class Player extends Entity {
             }
 
         }
-        return "none";
+        return "That item does not exist in your inventory, try spelling it right or selecting the index of the item";
     }
 }
