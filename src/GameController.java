@@ -68,6 +68,11 @@ public class GameController {
                     inspectItem();
                     // todo: inspect an item in the room or inventory
                     break;
+                case "inventory":
+                case "inv":
+                    inventory();
+                    // todo: view player inventory
+                    break;
                 case "look":
                 case "look around":
                 case "explore":
@@ -309,6 +314,17 @@ public class GameController {
     // todo: unequips an item from the player
     public void unEquipItem() {
         throw new UnsupportedOperationException();
+    }
+
+    //todo: views player inventory
+    public void inventory(){
+        view.showInventory(player);
+
+        for (Item playerItem : player.getInventory()) {
+            view.notifier(playerItem.toString());
+            view.notifier(playerItem.getDescription());
+            return;
+        }
     }
 
     // todo: inspects item that is in the room or in the players inventory
