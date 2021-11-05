@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +18,7 @@ public class GameController {
     private final Scanner userInput;
 
 	/*
-	author: Joseph Ongchangco, Brian, Yaris, Jawwad
+	authors: Joseph Ongchangco, Brian, Yaris, Jawwad
 	 */
 
 
@@ -113,6 +114,10 @@ public class GameController {
                 case "eng":
                     fight();
                     break;
+                case "end":
+                case "close":
+                    endGame();
+                    break;
                 // todo: for testing functions [ put any function you want to test here to test in-game ]
                 case "test":
                     view.notifier(player.getHealth() + " health");
@@ -163,7 +168,7 @@ public class GameController {
         commands();
     }
 
-    public void fight() {
+    public void fight() throws IOException { //by: Jawwad Qureshi
         view.notifier("\nEntering fight with monster:\n");
         if (rooms.get(player.getCurrentRoom()).getMonsters().size() < 1) {
             view.notifier("No monsters found in the room \n\nExiting fight\n");
@@ -177,7 +182,13 @@ public class GameController {
                 switch (fightCommand) {
                     case "fight":
                         view.notifier("You attack the monster!");
-                        rooms.get(player.getCurrentRoom()).getMonsters().get(0).setHealth(rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() - player.getAttack());
+                        if (player.getAttack() - rooms.get(player.getCurrentRoom()).getMonsters().get(0).getDefense() > 0) {
+                            rooms.get(player.getCurrentRoom()).getMonsters().get(0).
+                                    setHealth(rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() - (player.getAttack() - rooms.get(player.getCurrentRoom()).getMonsters().get(0).getDefense()));
+                        }
+                        else {
+                            view.notifier("\nYour attack did no damage! The monster's defense is too high compared to your current attack! The monster lost 0 health. \n");
+                        }
                         view.notifier("Monsters health after the attack: " + rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth());
                         if (rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() <= 0) {
                             break;
@@ -199,6 +210,10 @@ public class GameController {
                     case "help":
                         view.getHelp();
                         break;
+                    case "inspect":
+                    case "inspect monster":
+                        inspectMonster();
+                        break;
 
                 }
                 if (player.getHealth() <= 0) {
@@ -214,12 +229,50 @@ public class GameController {
             }
             if (player.getHealth() <= 0) {
                 view.notifier("You cannot go on any further! Your health has dropped below 0.");
+                endGame();
             } else if (rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() <= 0) {
                 view.notifier("The monster has been defeated!\n");
                 rooms.get(player.getCurrentRoom()).getMonsters().remove(0);
             }
         }
         view.notifier("\nExiting fight with monster:\n");
+    }
+
+    public void endGame() throws IOException { //by: Jawwad Qureshi
+        view.notifier("\n" +
+                "  ________    _____      _____  ___________ ____________   _________________________ \n" +
+                " /  _____/   /  _  \\    /     \\ \\_   _____/ \\_____  \\   \\ /   /\\_   _____/\\______   \\\n" +
+                "/   \\  ___  /  /_\\  \\  /  \\ /  \\ |    __)_   /   |   \\   Y   /  |    __)_  |       _/\n" +
+                "\\    \\_\\  \\/    |    \\/    Y    \\|        \\ /    |    \\     /   |        \\ |    |   \\\n" +
+                " \\______  /\\____|__  /\\____|__  /_______  / \\_______  /\\___/   /_______  / |____|_  /\n" +
+                "        \\/         \\/         \\/        \\/          \\/                 \\/         \\/ \n");
+        view.notifier("\n The game is over! Would you like to load game, start a new game, or close?");
+        boolean gameLoaded = gameCheck();
+        switch (userInput.nextLine().toLowerCase()) {
+            case "end":
+            case "close":
+                view.notifier("\nYou have chosen to exit the game. Play again soon!");
+                System.exit(0);
+                break;
+            case "l":
+            case "load":
+            case "lo":
+            case "load game":
+                loadGame();
+                gameLoaded = gameCheck();
+                break;
+            case "n":
+            case "new":
+            case "new game":
+                newGame();
+                gameLoaded = gameCheck();
+                break;
+        }
+    }
+
+    public void inspectMonster() { //by: Jawwad Qureshi
+        view.notifier("Monster's Stats: \n" + "- " + rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() + " health points \n- " +
+                rooms.get(player.getCurrentRoom()).getMonsters().get(0).getAttack() + " attack damage \n- " + rooms.get(player.getCurrentRoom()).getMonsters().get(0).getDefense() + " defense");
     }
 
 
@@ -365,7 +418,12 @@ public class GameController {
 
     // todo: loads the game from a .txt file
     public void loadGame() throws IOException {
-        loadJsonToRoom("saveFiles/userData.json", "saveFiles/roomData.json");
+        if (Files.exists(Paths.get("saveFiles/userData.json")))
+            loadJsonToRoom("saveFiles/userData.json", "saveFiles/roomData.json");
+        else {
+            view.notifier("There is no previous save state.");
+            endGame();
+        }
     }
 
     // todo: starts a new game
@@ -545,6 +603,7 @@ public class GameController {
            view.notifier("There is no puzzle to examine");
        }
     }
+
 
     // get puzzle, returns a puzzle object
     public Puzzle getPuzzle() {

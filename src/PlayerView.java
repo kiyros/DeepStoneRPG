@@ -50,7 +50,7 @@ public class PlayerView {
     }
 
     // help command. prints to console only
-    public void getHelp() {
+    public void getHelp() { //by: Jawwad Qureshi
         System.out.println("\n ----- HELP -----" +
                 "\n : n or new or new game to begin a new game" +
                 "\n : l or lo or load or load game to load a game" +
@@ -67,10 +67,13 @@ public class PlayerView {
                 "\n : health or hp to see current health" +
                 "\n : stats to see all player stats" +
                 "\n : engage to begin fight with a monster in the room" +
+                "\n : end or close to end the game" +
                 "\n " +
                 "\n ONLY DURING FIGHT SEQUENCE" +
                 "\n : fight to do an attack on the monster" +
-                "\n : back to leave the fight and disengage\n");
+                "\n : back to leave the fight and disengage" +
+                "\n : inspect or inspect monster to get the monster's stats\n" +
+                "---------------------------------\n");
     }
 
     // show players inventory
