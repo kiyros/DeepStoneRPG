@@ -71,7 +71,6 @@ public class GameController {
                 case "inventory":
                 case "inv":
                     inventory();
-                    // todo: view player inventory
                     break;
                 case "look":
                 case "look around":
@@ -126,6 +125,7 @@ public class GameController {
                 case "equipment":
                     equipment();
                     break;
+                case "eq":
                 case "equip":
                     equipItem();
                     break;
@@ -196,8 +196,7 @@ public class GameController {
                         if (player.getAttack() - rooms.get(player.getCurrentRoom()).getMonsters().get(0).getDefense() > 0) {
                             rooms.get(player.getCurrentRoom()).getMonsters().get(0).
                                     setHealth(rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth() - (player.getAttack() - rooms.get(player.getCurrentRoom()).getMonsters().get(0).getDefense()));
-                        }
-                        else {
+                        } else {
                             view.notifier("\nYour attack did no damage! The monster's defense is too high compared to your current attack! The monster lost 0 health. \n");
                         }
                         view.notifier("Monsters health after the attack: " + rooms.get(player.getCurrentRoom()).getMonsters().get(0).getHealth());
@@ -316,14 +315,12 @@ public class GameController {
     public void equipItem() {
         if (player.getInventory().size() == 0) {
             view.notifier("\nYou have no items currently.\n");
-        }
-        else {
+        } else {
             view.showInventory(player);
             view.notifier("\nWhat [item] would you like to equip:");
-            EquipItem i = player.equipItem(userInput.nextLine());
+            player.equipItem(userInput.nextLine());
 
             view.notifier("Player attack before: " + player.getAttack());
-            player.setAttack((int) (player.getAttack() + (player.getAttack() * i.getStatBoost())));
             view.notifier("player attack now: " + player.getAttack());
         }
     }
@@ -334,17 +331,16 @@ public class GameController {
     }
 
     //todo: views player inventory
-    public void inventory(){
+    public void inventory() {
         view.showInventory(player);
 
         for (Item playerItem : player.getInventory()) {
-            view.notifier(playerItem.toString());
-            view.notifier(playerItem.getDescription());
-            return;
+            view.notifier(playerItem.toString() + "\n" + playerItem.getDescription() + "\n");
         }
+        return;
     }
 
-    public void equipment(){
+    public void equipment() {
         view.notifier(player.getEquipItems().toString());
     }
 
@@ -593,9 +589,7 @@ public class GameController {
 
         // read values into item
         JsonNode item = rootItems.get(itemName);
-        if (item.get("type").toString().replace("\"", "").equals("weapon")) {
-            tempItem = itemMap.treeToValue(item, WeaponItem.class);
-        } else if (item.get("type").toString().replace("\"", "").equals("equip")) {
+        if (item.get("type").toString().replace("\"", "").equals("equip")) {
             tempItem = itemMap.treeToValue(item, EquipItem.class);
         } else if (item.get("type").toString().replace("\"", "").equals("puzzle")) {
             tempItem = itemMap.treeToValue(item, PuzzleItem.class);
@@ -633,12 +627,13 @@ public class GameController {
             view.notifier("This item is not the correct answer. Or is not in your inventory ");
         }
     }
-    public void examine(){
-       if (getPuzzle() != null){
-           view.notifier(getPuzzle().getRiddle());
-       }else{
-           view.notifier("There is no puzzle to examine");
-       }
+
+    public void examine() {
+        if (getPuzzle() != null) {
+            view.notifier(getPuzzle().getRiddle());
+        } else {
+            view.notifier("There is no puzzle to examine");
+        }
     }
 
 

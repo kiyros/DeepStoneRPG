@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Player extends Entity {
     // player values
@@ -89,19 +90,41 @@ public class Player extends Entity {
         return "That item does not exist in this room, try spelling it right or selecting the index of the item";
     }
 
-    public EquipItem equipItem(String equipment){ //Jawwad Qureshi
-        EquipItem equip = null;
-        for (int i = 0; i < inventory.size(); i++) {
-            if (inventory.get(i).getName().equalsIgnoreCase(equipment) &&
-                    (inventory.get(i).getType().equalsIgnoreCase("weapon") || inventory.get(i).getType().equalsIgnoreCase("equip"))) {
-                equip = (EquipItem) inventory.get(i);
-                equipItems.add( inventory.get(i));
-                inventory.remove(i);
+    public String equipItem(String equipment) { //Jawwad Qureshi and Joseph Ongchangco
 
+        Iterator<Item> it = inventory.iterator();
+        while (it.hasNext()){
+            Item item = it.next();
+
+            System.out.println(item.getName());
+            if(item.getName().equals(equipment)){
+                equipItems.add(item);
+                inventory.remove(item);
+
+                return "Item equipped";
+
+                // TODO: return String here
+//                view.notifier("Player attack before: " + player.getAttack());
+//                player.setAttack((int) (player.getAttack() + (player.getAttack() * i.getStatBoost())));
+//                view.notifier("player attack now: " + player.getAttack());
             }
         }
 
-        return equip;
+        return "Item could not be found";
+
+
+
+        // jawwad code
+//        for (int i = 0; i < inventory.size(); i++) {
+//            if (inventory.get(i).getName().equalsIgnoreCase(equipment) &&
+//                    (inventory.get(i).getType().equalsIgnoreCase("weapon") || inventory.get(i).getType().equalsIgnoreCase("equip"))) {
+//                equip = (EquipItem) inventory.get(i);
+//                equipItems.add(inventory.get(i));
+//                inventory.remove(i);
+//
+//            }
+//        }
+
     }
 
     public String drop(Room room, String item) {
