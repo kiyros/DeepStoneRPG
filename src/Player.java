@@ -4,7 +4,7 @@ public class Player extends Entity {
     // player values
     private int currentRoom = 7;
     private ArrayList<Item> inventory;
-    private ArrayList<EquipItem> equipItems;
+    private ArrayList<Item> equipItems;
 
     //constructor
 
@@ -13,11 +13,11 @@ public class Player extends Entity {
         this.equipItems = new ArrayList<>();
     }
 
-    public ArrayList<EquipItem> getEquipItems() {
+    public ArrayList<Item> getEquipItems() {
         return equipItems;
     }
 
-    public void setEquipItems(ArrayList<EquipItem> equipItems) {
+    public void setEquipItems(ArrayList<Item> equipItems) {
         this.equipItems = equipItems;
     }
 
@@ -87,6 +87,21 @@ public class Player extends Entity {
             }
         }
         return "That item does not exist in this room, try spelling it right or selecting the index of the item";
+    }
+
+    public EquipItem equipItem(String equipment){ //Jawwad Qureshi
+        EquipItem equip = null;
+        for (int i = 0; i < inventory.size(); i++) {
+            if (inventory.get(i).getName().equalsIgnoreCase(equipment) &&
+                    (inventory.get(i).getType().equalsIgnoreCase("weapon") || inventory.get(i).getType().equalsIgnoreCase("equip"))) {
+                equip = (EquipItem) inventory.get(i);
+                equipItems.add( inventory.get(i));
+                inventory.remove(i);
+
+            }
+        }
+
+        return equip;
     }
 
     public String drop(Room room, String item) {

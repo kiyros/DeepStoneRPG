@@ -123,9 +123,15 @@ public class GameController {
                 case "close":
                     endGame();
                     break;
+                case "equipment":
+                    equipment();
+                    break;
+                case "equip":
+                    equipItem();
+                    break;
                 // todo: for testing functions [ put any function you want to test here to test in-game ]
                 case "test":
-                    view.notifier(player.getHealth() + " health");
+                    equipItem();
                     break;
                 case "examine":
                     examine();
@@ -308,7 +314,18 @@ public class GameController {
 
     // todo: equips an item from the players inventory
     public void equipItem() {
-        throw new UnsupportedOperationException();
+        if (player.getInventory().size() == 0) {
+            view.notifier("\nYou have no items currently.\n");
+        }
+        else {
+            view.showInventory(player);
+            view.notifier("\nWhat [item] would you like to equip:");
+            EquipItem i = player.equipItem(userInput.nextLine());
+
+            view.notifier("Player attack before: " + player.getAttack());
+            player.setAttack((int) (player.getAttack() + (player.getAttack() * i.getStatBoost())));
+            view.notifier("player attack now: " + player.getAttack());
+        }
     }
 
     // todo: unequips an item from the player
@@ -325,6 +342,10 @@ public class GameController {
             view.notifier(playerItem.getDescription());
             return;
         }
+    }
+
+    public void equipment(){
+        view.notifier(player.getEquipItems().toString());
     }
 
     // todo: inspects item that is in the room or in the players inventory

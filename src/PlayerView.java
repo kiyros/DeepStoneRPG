@@ -68,6 +68,7 @@ public class PlayerView {
                 "\n : stats to see all player stats" +
                 "\n : engage to begin fight with a monster in the room" +
                 "\n : end or close to end the game" +
+                "\n : equip to equip items" +
                 "\n " +
                 "\n ONLY DURING FIGHT SEQUENCE" +
                 "\n : fight to do an attack on the monster" +
