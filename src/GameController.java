@@ -129,6 +129,9 @@ public class GameController {
                 case "equip":
                     equipItem();
                     break;
+                case "unequip":
+                    unEquipItem();
+                    break;
                 // todo: for testing functions [ put any function you want to test here to test in-game ]
                 case "test":
                     equipItem();
@@ -312,7 +315,7 @@ public class GameController {
     }
 
     // todo: equips an item from the players inventory
-    public void equipItem() {
+    public void equipItem() { // Jawwad Qureshi
         if (player.getInventory().size() == 0) {
             view.notifier("\nYou have no items currently.\n");
         } else {
@@ -320,14 +323,19 @@ public class GameController {
             view.notifier("\nWhat [item] would you like to equip:");
             player.equipItem(userInput.nextLine());
 
-            view.notifier("Player attack before: " + player.getAttack());
-            view.notifier("player attack now: " + player.getAttack());
         }
     }
 
     // todo: unequips an item from the player
-    public void unEquipItem() {
-        throw new UnsupportedOperationException();
+    public void unEquipItem() { // Jawwad Qureshi
+        if (player.getEquipItems().size() == 0) {
+            view.notifier("\nYou have no items currently.\n");
+        } else {
+            view.showEquipment(player);
+            view.notifier("\nWhat [item] would you like to unequip:");
+            player.unequipItem(userInput.nextLine());
+
+        }
     }
 
     //todo: views player inventory
@@ -340,8 +348,13 @@ public class GameController {
         return;
     }
 
-    public void equipment() {
+    public void equipment() { // Jawwad Qureshi
         view.notifier(player.getEquipItems().toString());
+
+        for (Item equipItem : player.getEquipItems()) {
+            view.notifier(equipItem.toString() + "\n" + equipItem.getDescription() + "\n");
+        }
+        return;
     }
 
     // todo: inspects item that is in the room or in the players inventory

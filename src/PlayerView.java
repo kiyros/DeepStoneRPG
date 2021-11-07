@@ -69,6 +69,7 @@ public class PlayerView {
                 "\n : engage to begin fight with a monster in the room" +
                 "\n : end or close to end the game" +
                 "\n : equip to equip items" +
+                "\n : unequip to remove equipped items" +
                 "\n " +
                 "\n ONLY DURING FIGHT SEQUENCE" +
                 "\n : fight to do an attack on the monster" +
@@ -82,4 +83,6 @@ public class PlayerView {
         System.out.println(player.inventoryToString());
     }
 
+    //shows equipment inventory - Jawwad Qureshi
+    public void showEquipment(Player player) { System.out.println(player.equipmentToString());}
 }
