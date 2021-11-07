@@ -48,7 +48,6 @@ public class GameController {
                 case "new":
                 case "new game":
                     newGame();
-                    System.out.println(rooms);
                     break;
                 case "save":
                     saveGame();
@@ -310,7 +309,7 @@ public class GameController {
 
     // displays current health, inventory, equipped items, attack damage, and defense stats
     public void getStats() {
-        view.notifier("Current Stats: \n" + "- " + player.getHealth() + " health points \n- " + player.getInventory() + " in my inventory \n- " +
+        view.notifier("<---- " + player.getName() +" ---->\n"+ "Current Stats: \n" + "- " + player.getHealth() + " health points \n- " + player.getInventory() + " in my inventory \n- " +
                 player.getEquipItems() + " weapon equipped \n- " + player.getAttack() + " attack damage \n- " + player.getDefense() + " defense");
     }
 
@@ -478,6 +477,9 @@ public class GameController {
         // generate random stats values for player
         randomStatGenerator(player);
         player.setCurrentRoom(7);
+        view.notifier("What is your name Adventurer: ");
+        player.setName(userInput.nextLine());
+
         newJsonToRoom("rooms.json", "items.json", "puzzles.json", "monsters.json");
 
         // show the room that the player spawns in

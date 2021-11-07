@@ -113,8 +113,6 @@ public class Player extends Entity {
                 EquipItem eq = (EquipItem) item;
                 System.out.println(eq.getDamage() + " = item damage");
                 System.out.println(eq.getStatBoost() + " = stats");
-
-                // TODO: return String here
                 if (eq.getName().equalsIgnoreCase("The Philosophers sword") || eq.getName().equalsIgnoreCase("Ragnarok")) {
                     System.out.println("Player attack before: " + getAttack());
                     setAttack((getAttack() + eq.getDamage()));
@@ -163,6 +161,7 @@ public class Player extends Entity {
 //        }
 
     }
+
     public String unequipItem(String equipment) { // Jawwad Qureshi
         Iterator<Item> it = equipItems.iterator();
         while (it.hasNext()) {
