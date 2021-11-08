@@ -138,6 +138,12 @@ public class GameController {
                 case "examine":
                     examine();
                     break;
+                case "check":
+                    check();
+                    break;
+                case "status":
+                    puzzleStatus();
+                    break;
                 default:
                     view.error("Invalid command try typing it correctly or type 'h' for help");
                     break;
@@ -179,6 +185,19 @@ public class GameController {
         }
         // start game here
         commands();
+    }
+    public void puzzleStatus(){
+        if(getPuzzle().isSolved() == true){
+            view.notifier("You have solved this puzzle");
+        }
+        else{
+            view.notifier("You have not solved this puzzle ");
+        }
+    }
+    public void check(){
+        view.notifier("Your health is " + player.getHealth());
+        view.notifier("You are in room " + player.getCurrentRoom());
+        getStats();
     }
 
     public void fight() throws IOException { //by: Jawwad Qureshi
@@ -432,6 +451,7 @@ public class GameController {
     // shows ALL the information from the room: items, puzzle, title, monsters, room number.
     public void exploreRoom() {
         view.showRoom(rooms.get(player.getCurrentRoom()));
+
     }
 
     // todo: gets the player name
