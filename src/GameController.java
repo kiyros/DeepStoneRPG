@@ -33,7 +33,6 @@ public class GameController {
         this.rooms = rooms;
     }
 
-    // todo: commands
     // author: Joseph Ongchangco
     public void commands() throws IOException {
         // throws to lowercase to easily verify user commands
@@ -55,7 +54,6 @@ public class GameController {
                 case "lo":
                 case "load":
                     loadGame();
-                    // todo load command
                     break;
                 case "x":
                 case "exit":
@@ -65,7 +63,6 @@ public class GameController {
                 case "ins":
                 case "inspect":
                     inspectItem();
-                    // todo: inspect an item in the room or inventory
                     break;
                 case "inventory":
                 case "inv":
@@ -133,7 +130,6 @@ public class GameController {
                     break;
                 // todo: for testing functions [ put any function you want to test here to test in-game ]
                 case "test":
-                    equipItem();
                     break;
                 case "examine":
                     examine();
@@ -186,15 +182,16 @@ public class GameController {
         // start game here
         commands();
     }
-    public void puzzleStatus(){
-        if(getPuzzle().isSolved() == true){
+
+    public void puzzleStatus() {
+        if (getPuzzle().isSolved() == true) {
             view.notifier("You have solved this puzzle");
-        }
-        else{
+        } else {
             view.notifier("You have not solved this puzzle ");
         }
     }
-    public void check(){
+
+    public void check() {
         view.notifier("Your health is " + player.getHealth());
         view.notifier("You are in room " + player.getCurrentRoom());
         getStats();
@@ -317,22 +314,17 @@ public class GameController {
         view.showMenu();
     }
 
-    // todo: sets the health of the player
-    public void setPlayerHealth() {
-        throw new UnsupportedOperationException();
-    }
-
     public void getPlayerHealth() {
         view.notifier(player.getHealth() + " health points");
     }
 
     // displays current health, inventory, equipped items, attack damage, and defense stats
     public void getStats() {
-        view.notifier("<---- " + player.getName() +" ---->\n"+ "Current Stats: \n" + "- " + player.getHealth() + " health points \n- " + player.getInventory() + " in my inventory \n- " +
+        view.notifier("<---- " + player.getName() + " ---->\n" + "Current Stats: \n" + "- " + player.getHealth() + " health points \n- " + player.getInventory() + " in my inventory \n- " +
                 player.getEquipItems() + " weapon equipped \n- " + player.getAttack() + " attack damage \n- " + player.getDefense() + " defense");
     }
 
-    // todo: equips an item from the players inventory
+    // equips an item from the players inventory
     public void equipItem() { // Jawwad Qureshi
         if (player.getInventory().size() == 0) {
             view.notifier("\nYou have no items currently.\n");
@@ -344,7 +336,7 @@ public class GameController {
         }
     }
 
-    // todo: unequips an item from the player
+    // unequips an item from the player
     public void unEquipItem() { // Jawwad Qureshi
         if (player.getEquipItems().size() == 0) {
             view.notifier("\nYou have no items currently.\n");
@@ -363,7 +355,6 @@ public class GameController {
         for (Item playerItem : player.getInventory()) {
             view.notifier(playerItem.toString() + "\n" + playerItem.getDescription() + "\n");
         }
-        return;
     }
 
     public void equipment() { // Jawwad Qureshi
@@ -372,10 +363,8 @@ public class GameController {
         for (Item equipItem : player.getEquipItems()) {
             view.notifier(equipItem.toString() + "\n" + equipItem.getDescription() + "\n");
         }
-        return;
     }
 
-    // todo: inspects item that is in the room or in the players inventory
     // inspects item that is in the room or in the players inventory
     public void inspectItem() {
         view.showInventory(player);
@@ -406,23 +395,8 @@ public class GameController {
         view.notifier("That item does not seem to exist in your inventory or in the room! \n try again!");
     }
 
-    // todo: sets Rooms when loading a game
-    public void setRooms() {
-        throw new UnsupportedOperationException();
-    }
-
-    // todo: get rooms
-    public HashMap<Integer, Room> getRooms() {
-        return this.rooms;
-    }
-
     public int getCurrentRoomNumber() {
         return player.getCurrentRoom();
-    }
-
-    // todo: set room number into player
-    public void setCurrentRoomNumber() {
-        throw new UnsupportedOperationException();
     }
 
     // moves a player into a room
@@ -454,19 +428,8 @@ public class GameController {
 
     }
 
-    // todo: gets the player name
     public String getPlayerName() {
         return "My name is " + player.getName();
-    }
-
-    // todo: sets the player name
-    public void SetPlayerName() {
-        throw new UnsupportedOperationException();
-    }
-
-    // N/A
-    public void updateView() {
-        throw new UnsupportedOperationException();
     }
 
     // saves game
@@ -481,7 +444,6 @@ public class GameController {
 
     }
 
-    // todo: loads the game from a .txt file
     public void loadGame() throws IOException {
         if (Files.exists(Paths.get("saveFiles/userData.json")))
             loadJsonToRoom("saveFiles/userData.json", "saveFiles/roomData.json");
@@ -491,10 +453,10 @@ public class GameController {
         }
     }
 
-    // todo: starts a new game
     // load the default room values into the room object
     public void newGame() throws IOException {
         // generate random stats values for player
+        player = new Player();
         randomStatGenerator(player);
         player.setCurrentRoom(7);
         view.notifier("What is your name Adventurer: ");
@@ -506,7 +468,6 @@ public class GameController {
         exploreRoom();
     }
 
-    // todo: puzzles, monsters
     // turns the JSON files and reads the information into game Objects and sets the gameController's room to this
     // author: Joseph Ongchangco
     public void newJsonToRoom(String roomPathName, String itemPathName, String puzzlePathName, String monsterPathName) throws IOException {
@@ -529,7 +490,6 @@ public class GameController {
             }
         }
 
-        // todo: monsterJSON to item object(s)
         for (JsonNode monsterJson : rootMonster) {
             Monster tempMonster = new Monster();
 
@@ -585,7 +545,6 @@ public class GameController {
         rooms = tempRoomsHashMap;
     }
 
-    // todo: loadJsonToRoom
     // loads save
     public void loadJsonToRoom(String playerPath, String roomPaths) throws IOException {
         HashMap<Integer, Room> tempRoomsHashMap = new HashMap<>();
@@ -635,7 +594,6 @@ public class GameController {
         return tempItem;
     }
 
-    //todo: solve puzzle, when user types in "solve puzzle", this method should automatically grab the item remove it and set puzzle in the room to solved
     public void solvePuzzle() throws IOException {
         view.notifier("What item would you like to use to solve this puzzle? ");
         view.showInventory(player);
