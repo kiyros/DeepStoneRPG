@@ -1,10 +1,11 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Player extends Entity {
     // player values
     private int currentRoom = 7;
     private ArrayList<Item> inventory;
-    private ArrayList<EquipItem> equipItems;
+    private ArrayList<Item> equipItems;
 
     //constructor
 
@@ -13,11 +14,11 @@ public class Player extends Entity {
         this.equipItems = new ArrayList<>();
     }
 
-    public ArrayList<EquipItem> getEquipItems() {
+    public ArrayList<Item> getEquipItems() {
         return equipItems;
     }
 
-    public void setEquipItems(ArrayList<EquipItem> equipItems) {
+    public void setEquipItems(ArrayList<Item> equipItems) {
         this.equipItems = equipItems;
     }
 
@@ -65,6 +66,15 @@ public class Player extends Entity {
         return inventory.toString();
     }
 
+    public String equipmentToString() { // Jawwad Qureshi
+        StringBuilder equipItems = new StringBuilder("[Equipped Items] : \n");
+        for (Item i : this.equipItems) {
+            equipItems.append(i.getName()).append("\n");
+        }
+
+        return equipItems.toString();
+    }
+
     // picks up an item in the current room by item name or integer
     // author : Joseph Ongchangco
     public String pickupItem(Room room, String item) {
@@ -87,6 +97,113 @@ public class Player extends Entity {
             }
         }
         return "That item does not exist in this room, try spelling it right or selecting the index of the item";
+    }
+
+    public String equipItem(String equipment) { //Jawwad Qureshi and Joseph Ongchangco
+
+        Iterator<Item> it = inventory.iterator();
+        while (it.hasNext()){
+            Item item = it.next();
+
+            //System.out.println(item.getName());
+            if(item.getName().equals(equipment)){
+                equipItems.add(item);
+                inventory.remove(item);
+            try {
+                EquipItem eq = (EquipItem) item;
+                System.out.println(eq.getDamage() + " = item damage");
+                System.out.println(eq.getStatBoost() + " = stats");
+                if (eq.getName().equalsIgnoreCase("The Philosophers sword") || eq.getName().equalsIgnoreCase("Ragnarok")) {
+                    System.out.println("Player attack before: " + getAttack());
+                    setAttack((getAttack() + eq.getDamage()));
+
+                    System.out.println("Player attack now: " + getAttack());
+                } else if (eq.getStatType().equalsIgnoreCase("defense")) {
+                    System.out.println("Player defense before: " + getDefense());
+                    double x = getDefense() + (getAttack() * eq.getStatBoost());
+                    setDefense((int) x);
+                    System.out.println("Player defense now: " + getDefense());
+
+                } else if (eq.getStatType().equalsIgnoreCase("damage")) {
+                    System.out.println("Player attack before: " + getAttack());
+                    double x = (getAttack() + (getAttack() * eq.getStatBoost()));
+                    setAttack((int) x);
+                    System.out.println("Player attack now: " + getAttack());
+
+                } else if (eq.getStatType().equalsIgnoreCase("health")) {
+                    System.out.println("Player health before: " + getHealth());
+                    double x = (getHealth() + (getHealth() * eq.getStatBoost()));
+                    setHealth((int) x);
+                    System.out.println("Player health now: " + getHealth());
+                }
+            }
+            catch (Exception ignore) {
+                return "Item could not be equipped";
+            }
+
+                return "Item equipped";
+            }
+        }
+
+        return "Item could not be found";
+
+
+
+//        jawwad code
+//        for (int i = 0; i < inventory.size(); i++) {
+//            if (inventory.get(i).getName().equalsIgnoreCase(equipment) &&
+//                    (inventory.get(i).getType().equalsIgnoreCase("weapon") || inventory.get(i).getType().equalsIgnoreCase("equip"))) {
+//                equip = (EquipItem) inventory.get(i);
+//                equipItems.add(inventory.get(i));
+//                inventory.remove(i);
+//
+//            }
+//        }
+
+    }
+
+    public String unequipItem(String equipment) { // Jawwad Qureshi
+        Iterator<Item> it = equipItems.iterator();
+        while (it.hasNext()) {
+            Item item = it.next();
+            if(item.getName().equals(equipment)) {
+                inventory.add(item);
+                equipItems.remove(item);
+                try {
+                    EquipItem eq = (EquipItem) item;
+
+                    // TODO: return String here
+                    if (eq.getName().equalsIgnoreCase("The Philosophers sword") || eq.getName().equalsIgnoreCase("Ragnarok")) {
+                        System.out.println("Player attack before: " + getAttack());
+                        setAttack((getAttack() - eq.getDamage()));
+                        System.out.println("Player attack now: " + getAttack());
+
+                    } else if (eq.getStatType().equalsIgnoreCase("defense")) {
+                        System.out.println("Player defense before: " + getDefense());
+                        double x = getDefense() - (getAttack() * eq.getStatBoost());
+                        setDefense((int) x);
+                        System.out.println("Player defense now: " + getDefense());
+
+                    } else if (eq.getStatType().equalsIgnoreCase("damage")) {
+                        System.out.println("Player attack before: " + getAttack());
+                        double x = (getAttack() - (getAttack() * eq.getStatBoost()));
+                        setAttack((int) x);
+                        System.out.println("Player attack now: " + getAttack());
+
+                    } else if (eq.getStatType().equalsIgnoreCase("health")) {
+                        System.out.println("Player health before: " + getHealth());
+                        double x = (getHealth() - (getHealth() * eq.getStatBoost()));
+                        setHealth((int) x);
+                        System.out.println("Player health now: " + getHealth());
+                    }
+                }
+                catch (Exception ignore) {
+                    return "Item could not be unequipped";
+                }
+                return "Item unequipped";
+            }
+        }
+        return "Item could not be found";
     }
 
     public String drop(Room room, String item) {

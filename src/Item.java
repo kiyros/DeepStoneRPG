@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.*;
         {
                 @JsonSubTypes.Type(value = EquipItem.class, name = "equip"),
                 @JsonSubTypes.Type(value = baseItem.class, name = "baseItem"),
-                @JsonSubTypes.Type(value = WeaponItem.class, name = "weapon"),
                 @JsonSubTypes.Type(value = PuzzleItem.class, name = "PuzzleItem"),
         })
 
@@ -88,6 +87,7 @@ class baseItem extends Item {
 class EquipItem extends Item {
     private String statType;
     private double statBoost;
+    private int damage;
 
     public String getStatType() {
         return statType;
@@ -104,11 +104,6 @@ class EquipItem extends Item {
     public void setStatBoost(double statBoost) {
         this.statBoost = statBoost;
     }
-}
-
-@JsonTypeName("weapon")
-class WeaponItem extends Item {
-    private int damage;
 
     // gets the damage from a weapon item
     public int getDamage() {
@@ -119,7 +114,6 @@ class WeaponItem extends Item {
     public void setDamage(int aDamage) {
         this.damage = aDamage;
     }
-
     public String inspect() {
         return getName() + "\nDamage : " + getDamage();
     }

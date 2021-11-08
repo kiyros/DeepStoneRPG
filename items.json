@@ -1,7 +1,7 @@
 {
   "The Philosophers sword": {
     "name": "The Philosophers sword",
-    "type": "weapon",
+    "type": "equip",
     "damage": 15,
     "description": "A powerful sword that was wielded by a great king from the kingdom of Rohan. This sword will deal damage of -15hp to any monster that comes across it.",
     "roomNumber": 7
@@ -44,35 +44,33 @@
   },
   "Ragnarok": {
     "name": "Ragnarok",
-    "type": "weapon",
+    "type": "equip",
     "damage": 30,
     "description": "A God-Slaying Divine sword fused from rage of the gods, capable of mass destruction. Equipping this sword allows the player to do -30 damage to an enemy."
   },
   "Broken Sword and Shield": {
     "name": "Broken Sword and Shield",
     "type": "PuzzleItem",
-    "description": "A broken and rusted pair of armory, it looks like it belongs to the statue nearby."
-
+    "description": "A broken and rusted pair of armory, it looks like it belongs to the statue nearby.",
+    "roomNumber": 7
   },
   "Iron": {
     "name": "Iron",
-    "type": "puzzle",
+    "type": "PuzzleItem",
     "description": "An iron ingot.",
     "roomNumber": 2
   },
   "Gold": {
     "name": "Gold",
-    "type": "puzzle",
+    "type": "PuzzleItem",
     "description": "A gold ingot.",
     "roomNumber": 2
   },
   "Steel": {
     "name": "Steel",
-    "type": "puzzle",
-    "description": "A steel ingot.",
-    "roomNumber": 2,
     "type": "PuzzleItem",
-    "description": "An iron ingot."
+    "description": "A steel ingot.",
+    "roomNumber": 2
   },
   "Key": {
     "name": "Key",
@@ -95,4 +93,3 @@
     "description": "A large explosive that can be used to tear down large walls."
   }
 }
-
