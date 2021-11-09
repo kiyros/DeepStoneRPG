@@ -613,6 +613,12 @@ public class GameController {
     }
 
     public void solvePuzzle() throws IOException {
+        if (rooms.get(player.getCurrentRoom()).getPuzzle().isSolved()) {
+            view.notifier("You already solved this puzzle ");
+            return;
+        }
+
+
         view.notifier("What item would you like to use to solve this puzzle? ");
         view.showInventory(player);
         String command = userInput.nextLine();
@@ -620,6 +626,7 @@ public class GameController {
         int currentRoom = player.getCurrentRoom();
         if (!returnStatement.equals("none") && getPuzzle().getSolution().equals(returnStatement)) {
             getPuzzle().setSolved(true);
+            view.notifier("you solved the puzzle");
 
             if (getPuzzle().getItemReward() != null) {
                 Item thing = fetchJsonToItem(getPuzzle().getItemReward());
