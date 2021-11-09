@@ -620,12 +620,11 @@ public class GameController {
         int currentRoom = player.getCurrentRoom();
         if (!returnStatement.equals("none") && getPuzzle().getSolution().equals(returnStatement)) {
             getPuzzle().setSolved(true);
-            Item thing = fetchJsonToItem(getPuzzle().getItemReward());
-            // rooms.get(currentRoom).getItems().add(thing);
 
             if (getPuzzle().getItemReward() != null) {
-                rooms.get(currentRoom).getItems().add(thing);
+                Item thing = fetchJsonToItem(getPuzzle().getItemReward());
                 view.notifier("Reward Items dropped in room");
+                rooms.get(currentRoom).getItems().add(thing);
 
             }
             if (!rooms.get(currentRoom).getLockedExits().isEmpty()) {
