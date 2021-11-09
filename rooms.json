@@ -195,7 +195,8 @@
     "description": "You walk into a room decorated to look like a swamp. The walls are water based, with small cypress trees growing out of the water.",
     "exits":
       {
-        "west": 22
+        "west": 22,
+        "south": 29
       }
     ,
     "lockedExits": [
