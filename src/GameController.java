@@ -250,6 +250,9 @@ public class GameController {
                     case "stats":
                         getStats();
                         break;
+                    case "heal":
+                        heal();
+                        break;
                     case "h":
                     case "help":
                         view.getHelp();
