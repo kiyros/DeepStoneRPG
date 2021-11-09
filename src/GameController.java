@@ -16,7 +16,7 @@ public class GameController {
     private final PlayerView view;
     private HashMap<Integer, Room> rooms = new HashMap<>();
     private final Scanner userInput;
-
+    private int attempts =3;
 	/*
 	authors: Joseph Ongchangco, Brian, Yaris, Jawwad
 	 */
@@ -140,11 +140,27 @@ public class GameController {
                 case "status":
                     puzzleStatus();
                     break;
+                case "heal":
+                    heal();
                 default:
                     view.error("Invalid command try typing it correctly or type 'h' for help");
                     break;
             }
         }
+    }
+
+    public void heal(){
+        if (attempts != 0 ) {
+            attempts -= 1;
+            int newHealth = player.getHealth() + 100;
+            player.setHealth(newHealth);
+            view.notifier("Your new health score is " + player.getHealth() );
+            view.notifier("You have " + attempts + " heals left.");
+        }
+        else{
+            view.notifier("You have no more heals left");
+        }
+
     }
 
     // author: Joseph Ongchangco
