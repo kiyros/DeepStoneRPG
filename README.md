@@ -3,7 +3,7 @@ A software Development project for class, this project is used to demonstrate ob
 Created by Joseph Ongchangco, Yaris, Brian, and Jawwad Q.
 
 # Main Goal:
-the main goal of this game is to wonder around the rooms and get equipment that makes you stronger.
+the main goal of this game is to wander around the rooms and get equipment that makes you stronger.
 
 # how to play
 
